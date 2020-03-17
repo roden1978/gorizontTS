@@ -1,0 +1,117 @@
+.header {
+    /*background-color: #282c34;*/
+    height: 210px;
+    display: flex;
+    color: coral;
+    position: fixed;
+    width: 100%;
+    flex-wrap: nowrap;
+    justify-content:center;
+    background-image: url("../../assets/backgrounds/headerBkg.jpg");
+    background-size: cover;
+    z-index: 997;
+   /* margin-left: 5vw;*/
+    /*justify-content: center;*/
+}
+
+.logo{
+    display: inline-block;
+    /*border: 1px solid grey;*/
+    width: 50%;
+}
+.zav img{
+    height: 150px;
+    top: 62px;
+    left: 50px;
+    position: absolute;
+}
+.nameContainer{
+    display: inline-block;
+    /*border: 1px solid blue;*/
+    width: 50%;
+    text-align: center;
+}
+.name{
+    font-size: 50px;
+    font-weight: bolder;
+    color: whitesmoke;
+    text-transform: uppercase;
+    text-shadow: 3px 3px 7px black;
+}
+.ooo{
+    font-size: 30px;
+    font-weight: bolder;
+    color: whitesmoke;
+    text-transform: uppercase;
+    text-shadow: 3px 3px 7px black;
+    margin-top: 50px;
+}
+/*flame*/
+.red {
+    width: 40px;
+    height: 40px;
+    background: orangered;
+    box-shadow: 0px 0px 10px 5px orangered;
+}
+.orange {
+    left:5px;
+    width: 30px;
+    height: 30px;
+    background: orange;
+    box-shadow: 0px 0px 12px 6px orange;
+}
+.gold {
+    left:9px;
+    width: 22px;
+    height: 22px;
+    background: gold;
+    box-shadow: 0px 0px 9px 4px gold;
+}
+.white {
+    left:11px;
+    width: 17px;
+    height: 25px;
+    background: lightyellow;
+    box-shadow: 0px 0px 9px 4px lightyellow;
+}
+.blue {
+    left: 18px;
+    width: 4px;
+    height: 4px;
+    bottom: 5px;
+    background: blue;
+    box-shadow: 0px 0px 15px 10px blue;
+}
+.black {
+    left: 20px;
+    width: 5px;
+    height: 5px;
+    bottom:-15px;
+    background: black;
+    box-shadow: 0px 0px 15px 10px black;
+}
+.base {
+    border-radius: 50%;
+    position: absolute;
+}
+.flame_wrapper {
+    position: absolute;
+    animation: flicker 0.5s ease-in infinite;
+    top: 53px;
+    left: 115px;
+    z-index: 999;
+}
+.flame {
+    bottom: 0;
+    position: absolute;
+    border-radius: 50% 0% 50% 50%;
+    transform: rotate(-45deg);
+}
+@keyframes flicker {
+    0% {transform: rotate(-2deg);}
+    20% {transform: rotate(2deg) scaleY(1.3);}
+    40% {transform: rotate(-2deg);}
+    60% {transform: rotate(1deg);}
+    80% {transform: rotate(-2deg) scaleY(1.1);}
+    100% {transform: rotate(1deg);}
+}
