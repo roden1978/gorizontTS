@@ -11,39 +11,8 @@ import {
     SET_PROJECTS_PHOTOS,
     SET_URL_TO_PROJECTS_PHOTOS, SET_ALBUM_ID_FOR_REDIRECT
 } from "../actions/types";
-
-export type ProjectType = {
-    _id?: string
-    title: string
-    description: string
-    text: string
-    albumId: string | null
-    albumName: string | null
-    status: boolean
-    createAt?: string
-}
-
-export type PhotoType = {
-    id: string
-    secret: string
-    server: string
-    farm: number
-    title: string
-    isprimary: string
-    ispublic: number
-    isfriend: number
-    isfamily: number
-    url?: string
-    albumId?: string
-}
-export type PhotoSizesType = {
-    label: string
-    width: number
-    height: number
-    source: string
-    url: string
-    media: string
-}
+import {ProjectType} from "../../tstypes/projectsTypes";
+import {PhotoType, PhotoSizesType} from "../../tstypes/photosTypes";
 
 let initialState = {
     projects: [] as Array<ProjectType>,
@@ -57,7 +26,6 @@ let initialState = {
     projectsCount: null as number | null,
     albumIdForRedirect: null as string | null
 }
-
 export type InitialStateType = typeof initialState
 
 const projects_reducer = (state = initialState, action: any): InitialStateType => {
@@ -148,16 +116,3 @@ const projects_reducer = (state = initialState, action: any): InitialStateType =
 }
 
 export default projects_reducer;
-
-
-/*case SET_PROJECT: {
-            /*копия МАССИВОВ в КВАДРАТНЫХ СКОБКАХ
-            * копия  ПРИМИТИВОВ в ФИГУРНЫХ СКОБКАХ
-            * копия ОБЪЕКТОВ И ПОДОБЪЕКТОВ в ФИГУРНЫХ СКОБКАХ*/
-/*return {
-    ...state, projects: [...state.projects, action.payload]
-};
-}
-"Small"
-"Large"
-*/

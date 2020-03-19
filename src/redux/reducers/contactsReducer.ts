@@ -1,15 +1,15 @@
 import {SET_CONTACTS, SET_IS_CHANGED_CONTACTS, SET_DEFAULT_CONTACTS} from "../actions/types";
+import {ContactsType} from "../../tstypes/contactsTypes";
 
 let initialState = {
-    contacts: [],
+    contacts: [] as Array<ContactsType>,
     isChangedContacts: false
 }
 
-const contacts_reducer = (state = initialState, action) => {
+export type InitialStateType = typeof initialState
 
-    //let copyState;// = {...state};
+const contacts_reducer = (state = initialState, action: any): InitialStateType => {
 
-    //debugger
     switch (action.type) {
         case SET_CONTACTS: {
             /*копия МАССИВОВ в КВАДРАТНЫХ СКОБКАХ

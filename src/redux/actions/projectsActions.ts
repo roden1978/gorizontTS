@@ -13,8 +13,9 @@ import {
     SET_URL_TO_PROJECTS_PHOTOS,
     SET_ALBUM_ID_FOR_REDIRECT
 } from "./types";
+import {ProjectType} from "../../tstypes/projectsTypes";
+import {PhotoType} from "../../tstypes/photosTypes";
 
-import {PhotoType, ProjectType} from "../reducers/projectsReducer";
 
 export type SetProjectsActionType = {
     type: typeof SET_PROJECTS

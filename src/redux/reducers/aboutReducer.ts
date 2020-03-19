@@ -1,11 +1,13 @@
 import {SET_ABOUT, SET_IS_CHANGED_ABOUT, SET_DEFAULT_ABOUT} from "../actions/types";
+import {AboutType} from "../../tstypes/aboutTypes";
 
 let initialState = {
-    about: [],
+    about: [] as Array<AboutType>,
     isChangedAbout: false
 }
 
-const about_reducer = (state = initialState, action) => {
+export type InitialStateType = typeof initialState
+const about_reducer = (state = initialState, action: any): InitialStateType => {
 
     //let copyState;// = {...state};
 
@@ -24,10 +26,12 @@ const about_reducer = (state = initialState, action) => {
                 ...state, isChangedAbout: action.payload
             };
         }
-        case SET_DEFAULT_ABOUT:{
+        case SET_DEFAULT_ABOUT: {
             return {
-                ...state, about: [{_id: '0', text: 'Войдите в панель администирования и создайте контакты ' +
-                        '!!!ВНИМАНИЕ!!! Если страница контактов не отобразилась обновите страницу.'}]
+                ...state, about: [{
+                    _id: '0', text: 'Войдите в панель администирования и создайте контакты ' +
+                        '!!!ВНИМАНИЕ!!! Если страница контактов не отобразилась обновите страницу.'
+                }]
             }
         }
         default:

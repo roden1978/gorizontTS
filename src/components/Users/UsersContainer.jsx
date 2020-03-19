@@ -9,7 +9,7 @@ import {
     deleteUser,
     setIsAllUsers,
     setUsersCount,
-    setSetDefaultUser,
+    setDefaultUser,
     setCreateUserSuccess,
     getAdminRootCount,
     setIsAdminRootCount,
@@ -42,7 +42,7 @@ class UsersContainer extends React.Component {
             this.props.setIsAllUsers(false);
         }
         if( this.props.users.length === 0){
-            this.props.setSetDefaultUser();
+            this.props.setDefaultUser();
         }
 
         if(this.props.isAdminRootCount){
@@ -87,7 +87,7 @@ export default compose(connect(mapStateToProps,
         deleteUser,
         setIsAllUsers,
         setUsersCount,
-        setSetDefaultUser,
+        setDefaultUser,
         setCreateUserSuccess,
         getAdminRootCount,
         setIsAdminRootCount,

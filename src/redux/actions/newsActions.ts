@@ -10,7 +10,7 @@ import {
     SET_DEFAULT_NEWS,
     SET_PROJECT_ID_FOR_REDIRECT
 } from "./types";
-import {NewsType} from "../reducers/newsReducer";
+import {NewsType} from "../../tstypes/newsTypes";
 
 export type SetNewsActionType = {
     type: typeof SET_NEWS

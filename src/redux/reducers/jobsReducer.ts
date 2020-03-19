@@ -6,20 +6,19 @@ import {
     SET_JOBS_COUNT,
     SET_JOBS_ITEM
 } from "../actions/types";
+import {JobType} from "../../tstypes/jobsTypes";
 
 let initialState = {
-    jobs: [],
+    jobs: [] as Array<JobType>,
     getJobsItem: false,
     isAllJobs: false,
-    currentJobsId: null,
-    jobsCount: null
+    currentJobsId: null as string | null,
+    jobsCount: null as number | null
 }
 
-const jobs_reducer = (state = initialState, action) => {
+export type InitialStateType = typeof initialState
 
-    //let copyState;// = {...state};
-
-    //debugger
+const jobs_reducer = (state = initialState, action: any): InitialStateType => {
     switch (action.type) {
         case SET_JOBS: {
             /*копия МАССИВОВ в КВАДРАТНЫХ СКОБКАХ
@@ -27,7 +26,6 @@ const jobs_reducer = (state = initialState, action) => {
             * копия ОБЪЕКТОВ И ПОДОБЪЕКТОВ в ФИГУРНЫХ СКОБКАХ*/
             return {
                 ...state, jobs: action.payload
-                //...state, news:[ ...state.news, {__id:'12345', title: 'title', text: 'text', project: 'project', createAt:'26.11.2019'}]//action.payload
             };
         }
         case  IS_ALL_JOBS:{
@@ -41,9 +39,9 @@ const jobs_reducer = (state = initialState, action) => {
             }
         }
         case CHANGE_JOBS_ITEM:{
-            const jobsItem  = state.jobs.find(item =>item._id === state.currentJobsId)
+            const jobsItem  = state.jobs.find((item: JobType) =>item._id === state.currentJobsId)
             return {
-                ...state, jobs: [jobsItem]
+                ...state, jobs: [jobsItem as JobType]
             }
         }
         case SET_CURRENT_JOBS_ID :{
@@ -69,6 +67,3 @@ const jobs_reducer = (state = initialState, action) => {
 }
 
 export default jobs_reducer;
-
-/* [{__id:'123', title: 'title', text: 'text', project: 'project', createAt:'26.11.2019'},
-        {__id:'1234', title: 'title', text: 'text', project: 'project', createAt:'26.11.2019'}]*/

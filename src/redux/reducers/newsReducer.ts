@@ -3,26 +3,7 @@ import {
     IS_ALL_NEWS, SET_NEWS_ITEM, SET_CURRENT_NEWS_ID,
     SET_NEWS_COUNT, SET_DEFAULT_NEWS, SET_PROJECT_ID_FOR_REDIRECT
 } from "../actions/types";
-
-export type NewsType = {
-    _id?: string
-    title: string
-    text: string
-    project: string | null
-    projectTitle: string | null
-    status: boolean
-    createAt?: string
-}
-
-/*export type InitialStateType2 = {
-    news: Array<NewsType>
-    loadProjects: boolean
-    getNewsItem: boolean
-    isAllNews: boolean
-    currentNewsId: string | null
-    newsCount: number | null
-    projectIdForRedirect: string | null
-}*/
+import {NewsType} from "../../tstypes/newsTypes";
 
 let initialState = {
     news: [] as Array<NewsType>,

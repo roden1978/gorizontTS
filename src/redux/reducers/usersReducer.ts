@@ -4,23 +4,22 @@ import {
     CREATE_USER_SUCCESS, SET_DEFAULT_USER, SET_ADMIN_ROOT_COUNT,
     IS_ADMIN_ROOT_COUNT
 } from "../actions/types";
+import {UsersType} from "../../tstypes/usersTypes";
 
 let initialState = {
-    users: [],
+    users: [] as Array<UsersType>,
     getUserItem: false,
     isAllUsers: false,
-    currentUserId: null,
-    usersCount: null,
-    createUserSuccess: null,
-    adminRootCount: null,
+    currentUserId: null as string | null,
+    usersCount: null as number | null,
+    createUserSuccess: null as boolean | null,
+    adminRootCount: null as number | null,
     isAdminRootCount: false
 }
 
-const users_reducer = (state = initialState, action) => {
+export type InitialStateType = typeof initialState
+const users_reducer = (state = initialState, action: any):InitialStateType => {
 
-    //let copyState;// = {...state};
-
-    //debugger
     switch (action.type) {
         case SET_USERS: {
             /*копия МАССИВОВ в КВАДРАТНЫХ СКОБКАХ
@@ -28,7 +27,6 @@ const users_reducer = (state = initialState, action) => {
             * копия ОБЪЕКТОВ И ПОДОБЪЕКТОВ в ФИГУРНЫХ СКОБКАХ*/
             return {
                 ...state, users: action.payload
-                //...state, news:[ ...state.news, {__id:'12345', title: 'title', text: 'text', project: 'project', createAt:'26.11.2019'}]//action.payload
             };
         }
         case  SET_USERS_ITEM:{
@@ -47,9 +45,9 @@ const users_reducer = (state = initialState, action) => {
             }
         }
         case CHANGE_USERS_ITEM:{
-            const usersItem  = state.users.find(user =>user._id === state.currentUserId)
+            const usersItem  = state.users.find((user: UsersType) =>user._id === state.currentUserId)
             return {
-                ...state, users: [usersItem]
+                ...state, users: [usersItem as UsersType]
             }
         }
         case SET_CURRENT_USERS_ID :{
@@ -70,13 +68,12 @@ const users_reducer = (state = initialState, action) => {
         }
         case SET_DEFAULT_USER :{
             return{
-                ...state, users: [{_id: '0', firstName: 'Войдите в панель администирования и создайте новость',
+                ...state, users: [{_id: '0', firstName: 'Войдите в панель администирования и создайте пользователя',
                     lastName: '!!!ВНИМАНИЕ!!! Если созданный пользователь не отобразился обновите страницу.',
-                    email: '', password: '', root: null}]
+                    email: '', password: '', root: false}]
             }
         }
         case CREATE_USER_SUCCESS:{
-            //debugger
             return {
                 ...state, createUserSuccess: action.payload
             }
@@ -88,6 +85,3 @@ const users_reducer = (state = initialState, action) => {
 }
 
 export default users_reducer;
-
-/* [{__id:'123', title: 'title', text: 'text', project: 'project', createAt:'26.11.2019'},
-        {__id:'1234', title: 'title', text: 'text', project: 'project', createAt:'26.11.2019'}]*/

@@ -7,7 +7,9 @@ let initialState = {
     isUsers: false
 }
 
-const auth_reducer = (state = initialState, action) => {
+export type InitialStateType = typeof initialState
+
+const auth_reducer = (state = initialState, action: any): InitialStateType => {
 
     //debugger
     switch (action.type) {
