@@ -399,14 +399,14 @@ const AdminPanelProjects = (props) => {
 const setInitialData = (props, reset, expandedDelete) => {
     //debugger
     if (reset) {
-        initialData.id = null;
+        initialData.id = 'null';
         initialData.title = '';
         initialData.description = '';
         initialData.text = '';
         initialData.albumId = '';
         initialData.albumName = '';
         initialData.status = true;
-        initialData.createAt = null
+        initialData.createAt = ''
     } else {
         initialData.id = props._id;
         initialData.title = props.title;

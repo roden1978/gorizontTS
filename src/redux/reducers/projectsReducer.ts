@@ -11,24 +11,25 @@ import {
     SET_PROJECTS_PHOTOS,
     SET_URL_TO_PROJECTS_PHOTOS, SET_ALBUM_ID_FOR_REDIRECT
 } from "../actions/types";
-import {ProjectType} from "../../tstypes/projectsTypes";
-import {PhotoType, PhotoSizesType} from "../../tstypes/photosTypes";
+import {ProjectsType} from "../../tstypes/projectsTypes";
+import {PhotoType} from "../../tstypes/photosTypes";
+import {ProjectsActionsTypes} from "../actions/projectsActions";
 
 let initialState = {
-    projects: [] as Array<ProjectType>,
+    projects: [] as Array<ProjectsType>,
     photos:[] as Array<PhotoType>,
     photosWithUrl: [] as Array<PhotoType>,
-    albumsCount: 0 as number,
-    id: null as string | null,
+    albumsCount: 0,
+    id: '',
     loadAlbums: false,
     getProjectsItem: false,
     isAllProjects: false,
-    projectsCount: null as number | null,
-    albumIdForRedirect: null as string | null
+    projectsCount: 0,
+    albumIdForRedirect: ''
 }
 export type InitialStateType = typeof initialState
 
-const projects_reducer = (state = initialState, action: any): InitialStateType => {
+const projects_reducer = (state = initialState, action: ProjectsActionsTypes): InitialStateType => {
 //debugger
     switch (action.type) {
         case SET_PROJECTS: {
@@ -70,9 +71,9 @@ const projects_reducer = (state = initialState, action: any): InitialStateType =
             }
         }
         case CHANGE_PROJECTS_ITEM:{
-            const projectsItem  = state.projects.find((item: ProjectType) =>item._id === state.id)
+            const projectsItem  = state.projects.find((item: ProjectsType) =>item._id === state.id)
             return {
-                ...state, projects: [projectsItem as ProjectType]
+                ...state, projects: [projectsItem as ProjectsType]
             }
         }
         case SET_PROJECTS_COUNT :{
@@ -98,10 +99,10 @@ const projects_reducer = (state = initialState, action: any): InitialStateType =
         }
         case SET_URL_TO_PROJECTS_PHOTOS:{
             //debugger
-            const size = action.payload.sizes.size.find((ph: PhotoSizesType) => ph.label === "Small")
+            const size = action.payload.sizes.size.find(ph => ph.label === "Small")
             return {
                 ...state,
-                photosWithUrl: [...state.photosWithUrl, {...action.card, url: size.source}]
+                photosWithUrl: [...state.photosWithUrl, {...action.card, url: size!.source}]
             }
 
         }

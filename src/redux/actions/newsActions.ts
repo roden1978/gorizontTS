@@ -11,6 +11,12 @@ import {
     SET_PROJECT_ID_FOR_REDIRECT
 } from "./types";
 import {NewsType} from "../../tstypes/newsTypes";
+import {ThunkAction} from "redux-thunk";
+import {AppStateType} from "../store";
+
+export type NewsActionsTypes = SetNewsActionType | SetLoadProjectsActionType | SetIsAllNewsActionType|
+    SetChangeNewsItemActionType | SetNewsItemActionType | SetCurrentNewsIdActionType |
+    SetNewsCountActionType | SetDefaultNewsActionType | SetProjectIdForRedirectActionType
 
 export type SetNewsActionType = {
     type: typeof SET_NEWS
@@ -57,9 +63,9 @@ export const setChangeNewsItem = (): SetChangeNewsItemActionType =>{
 
 export type SetNewsItemActionType = {
     type: typeof SET_NEWS_ITEM
-    payload: NewsType
+    payload: boolean
 }
-export const  setNewsItem = (newsItem: NewsType): SetNewsItemActionType =>{
+export const  setNewsItem = (newsItem: boolean): SetNewsItemActionType =>{
     return {
         type: SET_NEWS_ITEM,
         payload: newsItem
@@ -108,24 +114,26 @@ export const  setProjectIdForRedirect = (id: string): SetProjectIdForRedirectAct
     }
 }
 
+export type NewsThunkType = ThunkAction<Promise<void>, AppStateType, unknown, NewsActionsTypes>
 /*Thunk Creators*/
-export const getNews = () => {
-    return async (dispatch: any) => {
+export const getNews = (): NewsThunkType => {
+    return async (dispatch) => {
         const news = await mongodbAPI.getNews();
         dispatch(setNews(news));
     }
 }
 
-export const getAllNews = () => {
-    return async (dispatch: any) => {
+export const getAllNews = (): NewsThunkType => {
+    return async (dispatch) => {
         const news = await mongodbAPI.getAllNews();
         dispatch(setNews(news));
     }
 }
 
-export const createNews = (title: string, text: string, project: string, projectTitle: string, status: boolean) =>{
+export const createNews = (title: string, text: string, project: string,
+                           projectTitle: string, status: boolean): NewsThunkType =>{
     //debugger
-    return async (dispatch: any) =>{
+    return async (dispatch) =>{
         const data = await mongodbAPI.createNews({title, text, project, projectTitle, status});
         if (data.resultCode === 0) {
             dispatch(getAllNews());
@@ -133,9 +141,10 @@ export const createNews = (title: string, text: string, project: string, project
     }
 }
 
-export const updateNews = (id: string, title: string, text: string, project: string, projectTitle: string, status: string, createAt:string) =>{
+export const updateNews = (id: string, title: string, text: string, project: string,
+                           projectTitle: string, status: boolean, createAt: string): NewsThunkType =>{
     //debugger
-    return async (dispatch: any) =>{
+    return async (dispatch) =>{
         const data = await mongodbAPI.updateNews({id, title, text, project, projectTitle, status, createAt});
         if (data.resultCode === 0) {
             dispatch(getAllNews());
@@ -143,9 +152,9 @@ export const updateNews = (id: string, title: string, text: string, project: str
     }
 }
 
-export const deleteNews = (id: string) =>{
+export const deleteNews = (id: string): NewsThunkType =>{
     //debugger
-    return async (dispatch: any) =>{
+    return async (dispatch) =>{
         const data = await mongodbAPI.deleteNews({id});
         if (data.resultCode === 0) {
             dispatch(getAllNews());
@@ -153,8 +162,8 @@ export const deleteNews = (id: string) =>{
     }
 }
 
-export const checkProject = (id: string) =>{
-    return async (dispatch: any) =>{
+export const checkProject = (id: string): NewsThunkType =>{
+    return async (dispatch) =>{
         const data = await mongodbAPI.getProject(id);
         if (data) {
             dispatch(setProjectIdForRedirect(data._id))

@@ -11,7 +11,7 @@ export type PhotoType = {
     url?: string
     albumId?: string
 }
-export type PhotoSizesType = {
+export type SizeType = {
     label: string
     width: number
     height: number
@@ -19,13 +19,37 @@ export type PhotoSizesType = {
     url: string
     media: string
 }
+
+export type PhotoSizesType = {
+    sizes: SizesType
+    stat: string
+}
+
+export type SizesType = {
+    canblog: number
+    canprint: number
+    candownload: number
+    size: Array<SizeType>
+}
+
 export type TitleType = {
     _content: string
 }
 export type DescriptionType = {
     _content: string
 }
-export type PhotosetType= {
+export type AlbumsType = {
+    photosets: PhotoAlbumsType
+    stat: string
+}
+export type PhotoAlbumsType = {
+    page: number
+    pages: number
+    perpage: number
+    total: number
+    photoset: Array<PhotoAlbumType>
+}
+export type PhotoAlbumType= {
     id: string
     owner: string
     username: string
@@ -47,4 +71,23 @@ export type PhotosetType= {
     visibility_can_see_set: number
     needs_interstitial: number
     url?: string
+}
+
+export type PhotosType = {
+    id: string
+    primary: string
+    owner: string
+    ownername: string
+    photo: Array<PhotoType>
+    page: number
+    per_page: number
+    perpage: number
+    pages: number
+    title: string
+    total: number
+}
+
+export type PhotosetType = {
+    photoset: PhotosType
+    stat: string
 }

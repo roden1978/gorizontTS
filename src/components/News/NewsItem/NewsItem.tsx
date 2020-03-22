@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {FC, useState} from 'react'
 import {useHistory} from 'react-router-dom';
 import {useStyles} from './NewsStyles'
 import Grid from "@material-ui/core/Grid";
@@ -16,30 +16,38 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import RefreshIcon from '@material-ui/icons/Refresh';
 import IconButton from "@material-ui/core/IconButton";
 import Collapse from "@material-ui/core/Collapse";
-import {Field, reduxForm} from "redux-form";
+import {Field, reduxForm, InjectedFormProps} from "redux-form";
 import Button from "@material-ui/core/Button";
 import Tooltip from "@material-ui/core/Tooltip";
 import {renderTextField, renderCheckbox, renderSelectField} from '../../../common/renderFilds'
 import {validate} from '../../../common/validate'
 import FolderIcon from '@material-ui/icons/Folder';
+import {ProjectsType} from "../../../tstypes/projectsTypes";
+import {PropsType} from '../NewsContainer';
+import {NewsType} from "../../../tstypes/newsTypes";
 
-const NewsItem = (props) => {
+
+
+
+type NewsItemPropsType = PropsType & NewsType
+
+const NewsItem: FC<NewsItemPropsType> = (props) => {
     const classes = useStyles();
     const history = useHistory();
     //debugger
     let createAt = moment(props.createAt);
 
-    const redirect =(id)=>{
+    const redirect = (id: string) => {
         const path = '/projects/' + id
         history.push(path);
     }
 
-    if(props.projectIdForRedirect){
-        props.setProjectIdForRedirect(null);
+    if (props.projectIdForRedirect) {
+        props.setProjectIdForRedirect('');
         redirect(props.project);
     }
 
-    const checkPrj = () =>{
+    const checkPrj = () => {
         props.checkProject(props.project)
     }
 
@@ -85,10 +93,7 @@ const NewsItem = (props) => {
                 <Typography className={classes.pos} variant="body2" color="textSecondary" gutterBottom>
                     {createAt.format('LL')}
                 </Typography>
-                {props.adminMode ? <AdminPanelNews setLoadProjects={props.setLoadProjects} projects={props.projects}
-                                                   saveNews={props.saveNews} setNewsCount={props.setNewsCount}
-                                                   count={props.news.length} newsCount={props.newsCount}
-                                                   {...props}/> : ''}
+                {props.adminMode ? <AdminPanelNews {...props}/> : ''}
             </Card>
         </Grid>
     );
@@ -100,15 +105,20 @@ const NewsItem = (props) => {
                          <Button color="primary" href="#outlined-buttons" onClick={checkPrj}>
                                 Обзор проекта
                             </Button>
+
+                        setLoadProjects={props.setLoadProjects} projects={props.projects}
+                                                   saveNews={props.saveNews} setNewsCount={props.setNewsCount}
+                                                   count={props.news.length} newsCount={props.newsCount}
+
  */
 export default NewsItem;
 
-const AdminPanelNews = (props) => {
+const AdminPanelNews: FC<NewsItemPropsType> = (props) => {
     //debugger
     const classes = useStyles();
-    const [expandedCreate, setExpandedCreate] = React.useState(false);
-    const [expandedEdit, setExpandedEdit] = React.useState(false);
-    const [expandedDelete, setExpandedDelete] = React.useState(false);
+    const [expandedCreate, setExpandedCreate] = useState(false);
+    const [expandedEdit, setExpandedEdit] = useState(false);
+    const [expandedDelete, setExpandedDelete] = useState<boolean>(false);
 
     const handleCreateExpandClick = () => {
 
@@ -117,7 +127,7 @@ const AdminPanelNews = (props) => {
             props.setLoadProjects(true);
             props.setCurrentNewsId(props._id);
             props.setNewsItem(true);
-            setInitialData(props, true);
+            setInitialData(props, true, expandedDelete);
         } else {
             props.projects.length = 0;
             props.setIsAllNews(true);
@@ -148,7 +158,7 @@ const AdminPanelNews = (props) => {
             setInitialData(props, false, true);
         } else {
             props.setIsAllNews(true);
-            props.setNewsCount(null);
+            props.setNewsCount(0);
         }
     };
 
@@ -156,7 +166,7 @@ const AdminPanelNews = (props) => {
         props.setIsAllNews(true);
     };
 
-    const showResults = (values) => {
+    const showResults = (values: NewsType) => {
         if (values.project) {
             const position = values.project.indexOf('|', 0);
             let id, title;
@@ -172,7 +182,7 @@ const AdminPanelNews = (props) => {
         }
 
         if (expandedEdit) {
-            props.updateNews(values.id, values.title, values.text, values.project, values.projectTitle, values.status, values.createAt);
+            props.updateNews(values._id, values.title, values.text, values.project, values.projectTitle, values.status, values.createAt);
             handleEditExpandClick();
         }
 
@@ -183,7 +193,7 @@ const AdminPanelNews = (props) => {
         }
 
         if (expandedDelete) {
-            props.deleteNews(values.id);
+            props.deleteNews(values._id);
             handleDeleteExpandClick();
         }
     };
@@ -254,8 +264,6 @@ const AdminPanelNews = (props) => {
                                        expandedCreate={expandedCreate}
                                        expandedEdit={expandedEdit}
                                        expandedDelete={expandedDelete}
-                                       projects={props.projects}
-                                       newsCount={props.newsCount}
                                        {...props}/>
                 </CardContent>
             </Collapse>
@@ -263,51 +271,62 @@ const AdminPanelNews = (props) => {
     )
 }
 
-const setInitialData = (props, reset, expandedDelete) => {
+/*
+                                       projects={props.projects}
+                                       newsCount={props.newsCount}*/
+
+const setInitialData = (props: NewsItemPropsType, reset: boolean, expandedDelete: boolean) => {
     //debugger
     if (reset) {
-        initialData.id = null;
-        initialData.title = '';
-        initialData.text = '';
-        initialData.project = '';
-        initialData.status = true;
-        initialData.projectTitle = '';
-        initialData.createAt = null
+        initialData._id = ''
+        initialData.title = ''
+        initialData.text = ''
+        initialData.project = ''
+        initialData.status = true
+        initialData.projectTitle = ''
+        initialData.createAt = ''
     } else {
-        initialData.id = props._id;
-        initialData.title = props.title;
-        initialData.text = props.text;
-        initialData.project = props.project;
+        initialData._id = props._id
+        initialData.title = props.title
+        initialData.text = props.text
+        initialData.project = props.project
         if (expandedDelete)
-            initialData.status = false;
+            initialData.status = false
         else
-            initialData.status = props.status;
-        initialData.projectTitle = props.projectTitle;
-        initialData.createAt = props.createAt;
+            initialData.status = props.status
+        initialData.projectTitle = props.projectTitle
+        initialData.createAt = props.createAt
     }
 
 }
 
 const initialData = {
-    id: null,
+    _id: '',
     title: '',
     text: '',
     project: '',
     projectTitle: '',
-    status: null,
-    createAt: null
+    status: true,
+    createAt: ''
 }
+type InitialDataType = typeof initialData
+/*type IncomingPropsType = {
+    expandedCreate: boolean
+    expandedEdit: boolean
+    expandedDelete: boolean
+    onSubmit: (values: NewsType) => void
+}*/
+//type EditNewsFormType = InjectedFormProps<any,{IncomingPropsType, NewsItemPropsType}>
 
-const EditNewsForm = (props) => {
+const EditNewsForm: FC<InjectedFormProps<InitialDataType, NewsItemPropsType> & NewsItemPropsType> = (props) => {
     const classes = useStyles();
-    const {handleSubmit, reset, cls, projects} = props;
+    const {handleSubmit, reset, projects} = props;
+    //const {handleSubmit, reset, cls, projects} = props;
     let {pristine, submitting} = props;
-    //debugger
-    //console.log(props.val + " " + props.expandedEdit);
 
     let projectsItems = projects.map(
-        projectItem => <option key={projectItem._id} value={`${projectItem._id}| ${projectItem.title}`}
-                               label={projectItem.title}></option>)
+        (projectItem: ProjectsType) => <option key={projectItem._id} value={`${projectItem._id}| ${projectItem.title}`}
+                                               label={projectItem.title}></option>)
 
     if (props.expandedEdit) {
         pristine = false;
@@ -347,7 +366,6 @@ const EditNewsForm = (props) => {
                     </div>
                     <div>
                         <Field
-                            classes={cls}
                             name="project"
                             component={renderSelectField}
                             label="Проект"
@@ -382,9 +400,9 @@ const EditNewsForm = (props) => {
         </form>
     )
 }
-
-const EditNewsReduxForm = reduxForm({
+//classes={cls}
+const EditNewsReduxForm = reduxForm<InitialDataType, NewsItemPropsType>({
     form: 'EditNewsForm', // a unique identifier for this form
     validate,
-    initialValues: initialData
+    initialValues: initialData as InitialDataType
 })(EditNewsForm)

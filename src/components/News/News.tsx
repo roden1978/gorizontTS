@@ -1,8 +1,9 @@
-import React from 'react'
+import React, {FC} from 'react'
 import NewsItem from './NewsItem/NewsItem'
 import {makeStyles} from '@material-ui/core/styles';
 import Grid from "@material-ui/core/Grid";
 import {Container} from "@material-ui/core";
+import { PropsType } from './NewsContainer';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -16,26 +17,16 @@ const useStyles = makeStyles(theme => ({
         paddingTop: theme.spacing(1),
         paddingBottom: theme.spacing(8),
     },
-}));
+}))
 
-const News = (props) => {
+const News:FC<PropsType> = (props) => {
     //debugger
-    const classes = useStyles();
-    let newsItems;
+    const classes = useStyles()
+    let newsItems
     if (props.news)
         newsItems = props.news.map(
-            newsItem => <NewsItem key={newsItem._id}
+            (newsItem) => <NewsItem key={newsItem._id}
                                   {...newsItem}
-                                  projects={props.projects}
-                                  setLoadProjects={props.setLoadProjects}
-                                  setNewsItem={props.setNewsItem}
-                                  setIsAllNews={props.setIsAllNews}
-                                  setCurrentNewsId={props.setCurrentNewsId}
-                                  createNews={props.createNews}
-                                  updateNews={props.updateNews}
-                                  deleteNews={props.deleteNews}
-                                  setNewsCount={props.setNewsCount}
-                                  newsCount={props.newsCount}
                                   {...props}/>)
 
     return (
@@ -57,3 +48,15 @@ const News = (props) => {
 }
 
 export default News;
+
+/*
+                                  projects={props.projects}
+                                  setLoadProjects={props.setLoadProjects}
+                                  setNewsItem={props.setNewsItem}
+                                  setIsAllNews={props.setIsAllNews}
+                                  setCurrentNewsId={props.setCurrentNewsId}
+                                  createNews={props.createNews}
+                                  updateNews={props.updateNews}
+                                  deleteNews={props.deleteNews}
+                                  setNewsCount={props.setNewsCount}
+                                  newsCount={props.newsCount}*/

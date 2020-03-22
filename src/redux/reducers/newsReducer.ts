@@ -4,20 +4,21 @@ import {
     SET_NEWS_COUNT, SET_DEFAULT_NEWS, SET_PROJECT_ID_FOR_REDIRECT
 } from "../actions/types";
 import {NewsType} from "../../tstypes/newsTypes";
+import {NewsActionsTypes} from "../actions/newsActions";
 
 let initialState = {
     news: [] as Array<NewsType>,
     loadProjects: false,
     getNewsItem: false,
     isAllNews: false,
-    currentNewsId: null as string | null,
-    newsCount: null as number | null,
-    projectIdForRedirect: null as string | null
+    currentNewsId: '',
+    newsCount: 0,
+    projectIdForRedirect: ''
 }
 
 export type InitialStateType = typeof initialState
 
-const news_reducer = (state = initialState, action: any):InitialStateType => {
+const news_reducer = (state = initialState, action: NewsActionsTypes):InitialStateType => {
 
     //let copyState;// = {...state};
 
@@ -47,9 +48,9 @@ const news_reducer = (state = initialState, action: any):InitialStateType => {
             }
         }
         case CHANGE_NEWS_ITEM:{
-            const newsItem = state.news.find(item =>item._id === state.currentNewsId)
+            const newsItem = state.news.find((item) =>item._id === state.currentNewsId)
             return {
-                ...state, news: [newsItem as NewsType]
+                ...state, news: [newsItem!]
             }
         }
         case SET_CURRENT_NEWS_ID :{
@@ -67,7 +68,7 @@ const news_reducer = (state = initialState, action: any):InitialStateType => {
                 ...state, news: [{_id: '0', title: 'Войдите в панель администирования и создайте новость',
                     text: '!!!ВНИМАНИЕ!!! Перед созданием новостей должен быть создан хотя бы один проект, ' +
                         'если созданная новость не отобразилась обновите страницу.',
-                    project: '', projectTitle: '', status: true}]
+                    project: '', projectTitle: '', status: true, createAt: ''}]
             }
         }
         case SET_PROJECT_ID_FOR_REDIRECT :{

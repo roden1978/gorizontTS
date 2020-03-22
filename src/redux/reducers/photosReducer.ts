@@ -6,7 +6,7 @@ import {
     IS_CLICKED,
     SET_URL
 } from "../actions/types";
-import {PhotosetType, PhotoType, PhotoSizesType} from "../../tstypes/photosTypes";
+import {PhotosetType, PhotoType, PhotoSizesType, SizeType} from "../../tstypes/photosTypes";
 
 let initialState = {
     sets: [] as Array<PhotosetType>,
@@ -40,7 +40,7 @@ const photos_reducer = (state = initialState, action: any): InitialStateType => 
             };
         }
         case SET_URL_TO_ALBUMS:{
-            const size = action.payload.sizes.size.find((ph: PhotoSizesType) => ph.label === "Medium")
+            const size: SizeType = action.payload.sizes.size.find((ph: SizeType) => ph.label === "Medium")
             return {
                 ...state,
                 setsWithUrl: [...state.setsWithUrl, {...action.set, primary: size.source}]
@@ -48,7 +48,7 @@ const photos_reducer = (state = initialState, action: any): InitialStateType => 
 
         }
         case SET_URL_TO_PHOTOS:{
-            const size = action.payload.sizes.size.find((ph: PhotoSizesType) => ph.label === "Large")
+            const size: SizeType = action.payload.sizes.size.find((ph: SizeType) => ph.label === "Large")
             return {
                 ...state,
                 photosWithUrl: [...state.photosWithUrl, {...action.card, url: size.source}]
