@@ -1,7 +1,8 @@
-import React from 'react'
+import React, {FC} from 'react'
 import Project from "./Project/Project";
 import {Container, makeStyles} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
+import {PropsType} from "../Projects/ProjectsContainer";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -17,12 +18,12 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const Projects = (props) => {
+const Projects:FC<PropsType> = (props) => {
 
     const classes = useStyles();
 
     let projectItems = props.projects.map(
-        project => <Project key={project._id} id={props.id} getId={props.getId} {...project} {...props}/>
+        project => <Project key={project._id} {...project} {...props}/>
     )
     return (
         <div>

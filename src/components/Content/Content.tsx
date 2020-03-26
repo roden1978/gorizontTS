@@ -1,6 +1,6 @@
 import React from 'react'
 import {useStyles} from './ContentStyles';
-import {Redirect, Route, Switch, withRouter} from 'react-router-dom';
+import {Redirect, Route, Switch, withRouter, RouteComponentProps} from 'react-router-dom';
 import ProjectsContainer from "../Projects/ProjectsContainer";
 import JobsContainer from "../Jobs/JobsContainer";
 import ContactsContainer from "../Contacts/ContactsContainer";
@@ -11,6 +11,12 @@ import NewsContainer from "../News/NewsContainer";
 import GalleryContainer from "../Gallery/GalleryContainer";
 import PhotoAlbumContainer from "../PhotoAlbum/PhotoAlbumContainer";
 
+type MatchParams = {
+    projectId: string
+}
+
+type MatchProps = RouteComponentProps<MatchParams>
+
 const Content = () => {
     const classes = useStyles();
     return (
@@ -19,7 +25,9 @@ const Content = () => {
                 <Route exact path='/'
                        render={() => <Redirect from='/' to='/news'/>}/>
                 <Route path='/news' component={NewsContainer}/>
-                <Route path='/projects/:projectId?' component={ProjectsContainer}/>
+                <Route path='/projects/:projectId?' render = {
+                    ({match}: MatchProps) => <ProjectsContainer projectId = {match.params.projectId}/>
+                }/>
                 <Route path='/gallery' component={GalleryContainer}/>
                 <Route path='/album/:albumId?' component={PhotoAlbumContainer}/>
                 <Route path='/contacts' component={ContactsContainer}/>
@@ -35,3 +43,4 @@ const Content = () => {
 }
 
 export default withRouter(Content)
+//component={ProjectsContainer}/>

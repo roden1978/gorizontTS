@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {FC} from 'react'
 import {useStyles} from './AboutUsStyles';
 import {Container} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
@@ -12,16 +12,21 @@ import IconButton from "@material-ui/core/IconButton";
 import clsx from "clsx";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Collapse from "@material-ui/core/Collapse";
-import {Field, reduxForm} from "redux-form";
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {renderTextField} from "../../common/renderFilds";
 import {validate} from '../../common/validate'
 import Button from "@material-ui/core/Button";
 import RefreshIcon from "@material-ui/icons/Refresh";
+import {PropsType} from "./AboutUsContainer";
+import {UseStateExpandedProps} from "../../tstypes/commonTypes";
+import {AboutType} from "../../tstypes/aboutTypes";
 
-const AboutUs = (props) => {
+type AboutUsWithExpandedProps = PropsType & UseStateExpandedProps
+type InitialDataType = typeof initialData
+
+const AboutUs: FC<PropsType> = (props) => {
     const classes = useStyles();
-    //const info = props.contacts[0];
-//debugger
+
     return (
         <div>
             <div className={classes.root}>
@@ -63,7 +68,7 @@ const AboutUs = (props) => {
 
 export default AboutUs;
 
-const AdminPanelAboutUs = (props) => {
+const AdminPanelAboutUs: FC<AboutUsWithExpandedProps> = (props) => {
     //debugger
     const classes = useStyles();
     const [expandedEdit, setExpandedEdit] = React.useState(false);
@@ -72,7 +77,7 @@ const AdminPanelAboutUs = (props) => {
     const handleCreateExpandClick = () => {
         setExpandedCreate(!expandedCreate);
         if (!expandedCreate) {
-            setInitialData(props, true);
+            setInitialData(props);
         } else {
             props.getAbout();
         }
@@ -94,11 +99,11 @@ const AdminPanelAboutUs = (props) => {
         props.getAbout();
     };
 
-    const showResults = (values) => {
+    const showResults = (values: AboutType) => {
         //      window.alert(`You submitted:\n\n${JSON.stringify(values, null, 2)}`);
 
         if (expandedEdit) {
-            props.updateAbout(values.id, values.text);
+            props.updateAbout(values._id, values.text);
             handleEditExpandClick();
         }
 
@@ -122,7 +127,7 @@ const AdminPanelAboutUs = (props) => {
                                 })}
                                 aria-expanded={expandedCreate}
                                 aria-label="Показать больше"
-                                disabled={props.about.length !== 0 ? props.about[0]._id !== '0' : null}>
+                                disabled={props.about.length !== 0 ? props.about[0]._id !== '0' : false}>
                         <ExpandMoreIcon/>
                     </IconButton>
                 </Tooltip>
@@ -137,13 +142,13 @@ const AdminPanelAboutUs = (props) => {
                                 })}
                                 aria-expanded={expandedEdit}
                                 aria-label="Показать больше"
-                                disabled={expandedCreate || props.about.length !== 0 ? props.about[0]._id === '0' : null}>
+                                disabled={expandedCreate || props.about.length !== 0 ? props.about[0]._id === '0' : false}>
                         <ExpandMoreIcon/>
                     </IconButton>
                 </Tooltip>
                 <Tooltip title={"Обновить"} placement={'top'} arrow>
                     <Button className={classes.buttonSubmit} variant="outlined" size="small"  type="button"
-                            disabled={expandedEdit|| props.about.length !== 0 ? props.about[0]._id === '0' : null}
+                            disabled={expandedEdit|| props.about.length !== 0 ? props.about[0]._id === '0' : false}
                             onClick={handleRefreshClick}
                             startIcon={<RefreshIcon/>}>
                         Обновить
@@ -165,24 +170,22 @@ const AdminPanelAboutUs = (props) => {
     )
 }
 ////////////////////////////////////////////////////////
-const setInitialData = (props) => {
+const setInitialData = (props: PropsType) => {
     //debugger
-    initialData.id = props.about[0]._id;
+    initialData._id = props.about[0]._id;
     initialData.text = props.about[0].text;
 }
 
 const initialData = {
-    id: null,
+    _id: '',
     text: ''
 }
 ///////////////////////////////////////////////////////
 
-const EditAboutForm = (props) => {
+const EditAboutForm: FC<InjectedFormProps<InitialDataType, AboutUsWithExpandedProps> & AboutUsWithExpandedProps> = (props) => {
     const classesStyle = useStyles();
     const {handleSubmit, reset} = props;
     let {pristine, submitting} = props;
-    //debugger
-
 
     if (props.expandedEdit) {
         pristine = false;
@@ -215,8 +218,8 @@ const EditAboutForm = (props) => {
     )
 }
 ////////////////////////////
-const EditAboutReduxForm = reduxForm({
+const EditAboutReduxForm = reduxForm<InitialDataType, AboutUsWithExpandedProps>({
     form: 'EditAboutForm', // a unique identifier for this form
     validate,
-    initialValues: initialData
+    initialValues: initialData as InitialDataType
 })(EditAboutForm)

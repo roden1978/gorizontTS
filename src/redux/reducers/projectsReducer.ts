@@ -1,15 +1,17 @@
 import {
-    SET_PROJECTS,
-    SET_PROJECT,
-    SET_ID,
-    LOAD_ALBUMS,
     CHANGE_PROJECTS_ITEM,
-    SET_PROJECTS_ITEM,
     IS_ALL_PROJECTS,
-    SET_PROJECTS_COUNT,
+    LOAD_ALBUMS,
+    SET_ALBUM_ID_FOR_REDIRECT,
+    SET_CURRENT_PROJECT_ID,
     SET_DEFAULT_PROJECT,
+    SET_ID,
+    SET_PROJECT,
+    SET_PROJECTS,
+    SET_PROJECTS_COUNT,
+    SET_PROJECTS_ITEM,
     SET_PROJECTS_PHOTOS,
-    SET_URL_TO_PROJECTS_PHOTOS, SET_ALBUM_ID_FOR_REDIRECT
+    SET_URL_TO_PROJECTS_PHOTOS
 } from "../actions/types";
 import {ProjectsType} from "../../tstypes/projectsTypes";
 import {PhotoType} from "../../tstypes/photosTypes";
@@ -25,7 +27,8 @@ let initialState = {
     getProjectsItem: false,
     isAllProjects: false,
     projectsCount: 0,
-    albumIdForRedirect: ''
+    albumIdForRedirect: '',
+    currentProjectId:''
 }
 export type InitialStateType = typeof initialState
 
@@ -85,7 +88,7 @@ const projects_reducer = (state = initialState, action: ProjectsActionsTypes): I
             return{
                 ...state, projects: [{_id: '0', title: 'Войдите в панель администирования и создайте проект',
                     description:'!!!ВНИМАНИЕ!!! Если созданный проект не отобразился обновите страницу.',text: '',albumId:'',
-                    albumName: '', status: true}]
+                    albumName: '', status: true, createAt:''}]
             }
         }
         case SET_PROJECTS_PHOTOS:{
@@ -109,6 +112,11 @@ const projects_reducer = (state = initialState, action: ProjectsActionsTypes): I
         case SET_ALBUM_ID_FOR_REDIRECT :{
             return{
                 ...state, albumIdForRedirect: action.payload
+            }
+        }
+        case SET_CURRENT_PROJECT_ID :{
+            return{
+                ...state, currentProjectId: action.payload
             }
         }
         default:

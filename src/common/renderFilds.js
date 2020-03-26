@@ -13,9 +13,7 @@ export const renderTextField = ({
                                     value,
                                     meta: {touched, invalid, error},
                                     inputProps,
-
                                     ...custom
-
                                 }) => (
     <TextField
         label={label}
@@ -29,6 +27,17 @@ export const renderTextField = ({
         {...custom}
     />
 )
+
+/*
+type RenderCheckboxPropsType = {
+    input: HTMLInputElement
+    label: string
+    disabled: boolean
+}
+
+type RenderCheckbox = {
+    renderCheckbox: (props: RenderCheckboxPropsType) => void
+}*/
 
 export const renderCheckbox = ({input, label, disabled}) => (
     <div>

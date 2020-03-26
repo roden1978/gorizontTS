@@ -1,58 +1,59 @@
 import React, {FC, useState} from 'react'
-import {useHistory} from 'react-router-dom';
+import {useHistory} from 'react-router-dom'
 import {useStyles} from './NewsStyles'
-import Grid from "@material-ui/core/Grid";
-import CardHeader from "@material-ui/core/CardHeader";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import Typography from "@material-ui/core/Typography";
-import CardActions from "@material-ui/core/CardActions";
-import Avatar from "@material-ui/core/Avatar";
-import moment from "moment";
+import Grid from "@material-ui/core/Grid"
+import CardHeader from "@material-ui/core/CardHeader"
+import Card from "@material-ui/core/Card"
+import CardContent from "@material-ui/core/CardContent"
+import Typography from "@material-ui/core/Typography"
+import CardActions from "@material-ui/core/CardActions"
+import Avatar from "@material-ui/core/Avatar"
+import moment from "moment"
 import 'moment/locale/ru'
 import katokIcon from '../../../assets/icons/katok.svg'
-import clsx from "clsx";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import RefreshIcon from '@material-ui/icons/Refresh';
-import IconButton from "@material-ui/core/IconButton";
-import Collapse from "@material-ui/core/Collapse";
-import {Field, reduxForm, InjectedFormProps} from "redux-form";
-import Button from "@material-ui/core/Button";
-import Tooltip from "@material-ui/core/Tooltip";
+import clsx from "clsx"
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
+import RefreshIcon from '@material-ui/icons/Refresh'
+import IconButton from "@material-ui/core/IconButton"
+import Collapse from "@material-ui/core/Collapse"
+import {Field, reduxForm, InjectedFormProps} from "redux-form"
+import Button from "@material-ui/core/Button"
+import Tooltip from "@material-ui/core/Tooltip"
 import {renderTextField, renderCheckbox, renderSelectField} from '../../../common/renderFilds'
 import {validate} from '../../../common/validate'
-import FolderIcon from '@material-ui/icons/Folder';
-import {ProjectsType} from "../../../tstypes/projectsTypes";
-import {PropsType} from '../NewsContainer';
-import {NewsType} from "../../../tstypes/newsTypes";
-
+import FolderIcon from '@material-ui/icons/Folder'
+import {ProjectsType} from "../../../tstypes/projectsTypes"
+import {PropsType} from '../NewsContainer'
+import {NewsType} from "../../../tstypes/newsTypes"
+import {UseStateExpandedProps} from "../../../tstypes/commonTypes"
 
 
 
 type NewsItemPropsType = PropsType & NewsType
 
+type InitialDataType = typeof initialData
+
+type NewsItemWithExpandedPropsType = NewsItemPropsType & UseStateExpandedProps
+
 const NewsItem: FC<NewsItemPropsType> = (props) => {
-    const classes = useStyles();
-    const history = useHistory();
-    //debugger
-    let createAt = moment(props.createAt);
+    const classes = useStyles()
+    const history = useHistory()
 
-    const redirect = (id: string) => {
-        const path = '/projects/' + id
-        history.push(path);
-    }
+    let createAt = moment(props.createAt)
 
-    if (props.projectIdForRedirect) {
+    if (props.projectIdForRedirect === props.project && props.currentNewsId === props._id) {
         props.setProjectIdForRedirect('');
-        redirect(props.project);
+        const path = '/projects/' + props.projectIdForRedirect
+        history.push(path);
     }
 
     const checkPrj = () => {
         props.checkProject(props.project)
+        props.setCurrentNewsId(props._id)
     }
 
-    createAt.locale('ru');
-    //console.log(createAt.format('LL'));
+    createAt.locale('ru')
+
     return (
         <Grid item xs={10}>
             <Card className={classes.card}>
@@ -70,7 +71,7 @@ const NewsItem: FC<NewsItemPropsType> = (props) => {
                     <>
                         {props.text.split('\n').map((i, key) => {
                             return <Typography key={key} paragraph variant="body1" color="textPrimary"
-                                               gutterBottom>{i}</Typography>;
+                                               gutterBottom>{i}</Typography>
                         })}
                     </>
                 </CardContent>
@@ -96,107 +97,94 @@ const NewsItem: FC<NewsItemPropsType> = (props) => {
                 {props.adminMode ? <AdminPanelNews {...props}/> : ''}
             </Card>
         </Grid>
-    );
+    )
 }
-/*
- <NavLink to={'/projects/' + props.project}
-                        className={classes.link}>{props.projectTitle}</NavLink>
 
-                         <Button color="primary" href="#outlined-buttons" onClick={checkPrj}>
-                                Обзор проекта
-                            </Button>
-
-                        setLoadProjects={props.setLoadProjects} projects={props.projects}
-                                                   saveNews={props.saveNews} setNewsCount={props.setNewsCount}
-                                                   count={props.news.length} newsCount={props.newsCount}
-
- */
-export default NewsItem;
+export default NewsItem
 
 const AdminPanelNews: FC<NewsItemPropsType> = (props) => {
-    //debugger
-    const classes = useStyles();
-    const [expandedCreate, setExpandedCreate] = useState(false);
-    const [expandedEdit, setExpandedEdit] = useState(false);
-    const [expandedDelete, setExpandedDelete] = useState<boolean>(false);
+
+    const classes = useStyles()
+    const [expandedCreate, setExpandedCreate] = useState(false)
+    const [expandedEdit, setExpandedEdit] = useState(false)
+    const [expandedDelete, setExpandedDelete] = useState<boolean>(false)
 
     const handleCreateExpandClick = () => {
 
-        setExpandedCreate(!expandedCreate);
+        setExpandedCreate(!expandedCreate)
         if (!expandedCreate) {
-            props.setLoadProjects(true);
-            props.setCurrentNewsId(props._id);
-            props.setNewsItem(true);
-            setInitialData(props, true, expandedDelete);
+            props.setLoadProjects(true)
+            props.setCurrentNewsId(props._id)
+            props.setNewsItem(true)
+            setInitialData(props, true, expandedDelete)
         } else {
-            props.projects.length = 0;
-            props.setIsAllNews(true);
+            props.projects.length = 0
+            props.setIsAllNews(true)
         }
-    };
+    }
 
     const handleEditExpandClick = () => {
-        //props.setNewsCount(props.news.length);
-        setExpandedEdit(!expandedEdit);
+        setExpandedEdit(!expandedEdit)
         if (!expandedEdit) {
-            props.setLoadProjects(true);
-            props.setCurrentNewsId(props._id);
-            props.setNewsItem(true);
-            setInitialData(props, false, false);
+            props.setLoadProjects(true)
+            props.setCurrentNewsId(props._id)
+            props.setNewsItem(true)
+            setInitialData(props, false, false)
         } else {
-            props.setIsAllNews(true);
+            props.setIsAllNews(true)
 
         }
-    };
+    }
 
     const handleDeleteExpandClick = () => {
         //debugger
-        props.setNewsCount(props.news.length);
-        setExpandedDelete(!expandedDelete);
+        props.setNewsCount(props.news.length)
+        setExpandedDelete(!expandedDelete)
         if (!expandedDelete) {
-            props.setCurrentNewsId(props._id);
-            props.setNewsItem(true);
-            setInitialData(props, false, true);
+            props.setCurrentNewsId(props._id)
+            props.setNewsItem(true)
+            setInitialData(props, false, true)
         } else {
-            props.setIsAllNews(true);
-            props.setNewsCount(0);
+            props.setIsAllNews(true)
+            props.setNewsCount(0)
         }
-    };
+    }
 
     const handleRefreshClick = () => {
-        props.setIsAllNews(true);
-    };
+        props.setIsAllNews(true)
+    }
 
     const showResults = (values: NewsType) => {
         if (values.project) {
-            const position = values.project.indexOf('|', 0);
-            let id, title;
+            const position = values.project.indexOf('|', 0)
+            let id, title
             if (position > 0) {
-                id = values.project.slice(0, position);
-                title = values.project.slice(position + 1);
-                values.project = id;
-                values.projectTitle = title.trim();
+                id = values.project.slice(0, position)
+                title = values.project.slice(position + 1)
+                values.project = id
+                values.projectTitle = title.trim()
             }
         } else {
-            values.project = '';
-            values.projectTitle = '';
+            values.project = ''
+            values.projectTitle = ''
         }
 
         if (expandedEdit) {
-            props.updateNews(values._id, values.title, values.text, values.project, values.projectTitle, values.status, values.createAt);
-            handleEditExpandClick();
+            props.updateNews(values._id, values.title, values.text, values.project, values.projectTitle, values.status, values.createAt)
+            handleEditExpandClick()
         }
 
 
         if (expandedCreate) {
-            props.createNews(values.title, values.text, values.project, values.projectTitle, values.status);
-            handleCreateExpandClick();
+            props.createNews(values.title, values.text, values.project, values.projectTitle, values.status)
+            handleCreateExpandClick()
         }
 
         if (expandedDelete) {
-            props.deleteNews(values._id);
-            handleDeleteExpandClick();
+            props.deleteNews(values._id)
+            handleDeleteExpandClick()
         }
-    };
+    }
 
     return (
         <>
@@ -271,10 +259,6 @@ const AdminPanelNews: FC<NewsItemPropsType> = (props) => {
     )
 }
 
-/*
-                                       projects={props.projects}
-                                       newsCount={props.newsCount}*/
-
 const setInitialData = (props: NewsItemPropsType, reset: boolean, expandedDelete: boolean) => {
     //debugger
     if (reset) {
@@ -309,28 +293,20 @@ const initialData = {
     status: true,
     createAt: ''
 }
-type InitialDataType = typeof initialData
-/*type IncomingPropsType = {
-    expandedCreate: boolean
-    expandedEdit: boolean
-    expandedDelete: boolean
-    onSubmit: (values: NewsType) => void
-}*/
-//type EditNewsFormType = InjectedFormProps<any,{IncomingPropsType, NewsItemPropsType}>
 
-const EditNewsForm: FC<InjectedFormProps<InitialDataType, NewsItemPropsType> & NewsItemPropsType> = (props) => {
-    const classes = useStyles();
-    const {handleSubmit, reset, projects} = props;
-    //const {handleSubmit, reset, cls, projects} = props;
-    let {pristine, submitting} = props;
+const EditNewsForm: FC<InjectedFormProps<InitialDataType, NewsItemWithExpandedPropsType> & NewsItemWithExpandedPropsType> = (props) => {
+    const classes = useStyles()
+    const {handleSubmit, reset, projects} = props
+    //const {handleSubmit, reset, cls, projects} = props
+    let {pristine, submitting} = props
 
     let projectsItems = projects.map(
         (projectItem: ProjectsType) => <option key={projectItem._id} value={`${projectItem._id}| ${projectItem.title}`}
                                                label={projectItem.title}></option>)
 
     if (props.expandedEdit) {
-        pristine = false;
-        submitting = false;
+        pristine = false
+        submitting = false
     }
 
     let getLabel = () => {
@@ -401,7 +377,7 @@ const EditNewsForm: FC<InjectedFormProps<InitialDataType, NewsItemPropsType> & N
     )
 }
 //classes={cls}
-const EditNewsReduxForm = reduxForm<InitialDataType, NewsItemPropsType>({
+const EditNewsReduxForm = reduxForm<InitialDataType, NewsItemWithExpandedPropsType>({
     form: 'EditNewsForm', // a unique identifier for this form
     validate,
     initialValues: initialData as InitialDataType

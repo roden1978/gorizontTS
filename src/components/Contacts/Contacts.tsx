@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {FC} from 'react'
 import {Container} from "@material-ui/core";
 import {useStyles} from './ContactsStyles';
 import Grid from "@material-ui/core/Grid";
@@ -12,7 +12,7 @@ import IconButton from "@material-ui/core/IconButton";
 import clsx from "clsx";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Collapse from "@material-ui/core/Collapse";
-import {Field, reduxForm} from "redux-form";
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {renderTextField} from "../../common/renderFilds";
 import {validate} from '../../common/validate'
 import Button from "@material-ui/core/Button";
@@ -24,10 +24,16 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import {PropsType} from "./ContactsContainer";
+import {ContactsType} from "../../tstypes/contactsTypes";
+import {UseStateExpandedProps} from "../../tstypes/commonTypes";
 
-const Contacts = (props) => {
+
+type InitialDataType = typeof initialData
+type ContactsWithExpandedPropsType = PropsType & UseStateExpandedProps
+
+const Contacts: FC<PropsType> = (props) => {
     const classes = useStyles();
-//debugger
     return (
         <div className={classes.root}>
             <Container className={classes.cardGrid} maxWidth={props.mobile ? 'xl' : 'lg'}>
@@ -187,47 +193,41 @@ const Contacts = (props) => {
 
 export default Contacts;
 
-const AdminPanelContacts = (props) => {
-    //debugger
+const AdminPanelContacts: FC<ContactsWithExpandedPropsType> = (props) => {
+
     const classes = useStyles();
     const [expandedEdit, setExpandedEdit] = React.useState(false);
     const [expandedCreate, setExpandedCreate] = React.useState(false);
 
     const handleCreateExpandClick = () => {
-        // if(!props.id)
+
         setExpandedCreate(!expandedCreate);
         if (!expandedCreate) {
-            //props.setCurrentContactsId(props._id);
-            //props.setContactsItem(true);
-            setInitialData(props, true);
+            setInitialData(props);
         } else {
             props.getContacts();
         }
-
-        //props.getId(null);
     };
     const handleEditExpandClick = () => {
-        //debugger
+
         setExpandedEdit(!expandedEdit);
         if (!expandedEdit) {
             setInitialData(props);
         } else {
             props.setIsChangedContacts(true);
         }
-
-        //props.getId(null);
     };
     const handleRefreshClick = () => {
-        //setExpandedRefresh(!expandedRefresh);
         props.getContacts();
     };
-    const showResults = (values) => {
+
+    const showResults = (values: ContactsType) => {
         //     window.alert(`You submitted:\n\n${JSON.stringify(values, null, 2)}`);
         //props.saveNews(JSON.stringify(values, null, 2));
 
 
         if (expandedEdit) {
-            props.updateContacts(values.id, values.companyName, values.companyAddress, values.companyEmail
+            props.updateContacts(values._id, values.companyName, values.companyAddress, values.companyEmail
                 , values.companyPhone, values.phoneOwner01, values.phone01, values.phoneOwner02
                 , values.phone02, values.phoneOwner03, values.phone03, values.phoneOwner04
                 , values.phone04, values.phoneOwner05, values.phone05);
@@ -257,7 +257,7 @@ const AdminPanelContacts = (props) => {
                                 })}
                                 aria-expanded={expandedCreate}
                                 aria-label="Показать больше"
-                                disabled={props.contacts.length !== 0 ? props.contacts[0]._id !== '0' : null}>
+                                disabled={props.contacts.length !== 0 ? props.contacts[0]._id !== '0' : false}>
                         <ExpandMoreIcon/>
                     </IconButton>
                 </Tooltip>
@@ -273,13 +273,13 @@ const AdminPanelContacts = (props) => {
                                 })}
                                 aria-expanded={expandedEdit}
                                 aria-label="Показать больше"
-                                disabled={expandedCreate || props.contacts.length !== 0 ? props.contacts[0]._id === '0' : null}>
+                                disabled={expandedCreate || props.contacts.length !== 0 ? props.contacts[0]._id === '0' : false}>
                         <ExpandMoreIcon/>
                     </IconButton>
                 </Tooltip>
                 <Tooltip title={"Обновить"} placement={'top'} arrow>
                     <Button className={classes.buttonSubmit} variant="outlined" size="small" type="button"
-                            disabled={expandedEdit || props.contacts.length !== 0 ? props.contacts[0]._id === '0' : null}
+                            disabled={expandedEdit || props.contacts.length !== 0 ? props.contacts[0]._id === '0' : false}
                             onClick={handleRefreshClick}
                             startIcon={<RefreshIcon/>}>
                         Обновить
@@ -301,9 +301,9 @@ const AdminPanelContacts = (props) => {
     )
 }
 ////////////////////////////////////////////////////////
-const setInitialData = (props) => {
-    //debugger
-    initialData.id = props.contacts[0]._id;
+const setInitialData = (props: PropsType) => {
+
+    initialData._id = props.contacts[0]._id;
     initialData.companyName = props.contacts[0].companyName;
     initialData.companyAddress = props.contacts[0].companyAddress;
     initialData.companyEmail = props.contacts[0].companyEmail;
@@ -321,7 +321,7 @@ const setInitialData = (props) => {
 }
 
 const initialData = {
-    id: null,
+    _id: '',
     companyName: '',
     companyAddress: '',
     companyEmail: '',
@@ -338,11 +338,10 @@ const initialData = {
     phone05: ''
 }
 
-const EditContactsForm = (props) => {
+const EditContactsForm: FC<InjectedFormProps<InitialDataType, ContactsWithExpandedPropsType> & ContactsWithExpandedPropsType> = (props) => {
     const classesStyle = useStyles();
     const {handleSubmit, reset} = props;
     let {pristine, submitting} = props;
-    //debugger
 
     if (props.expandedEdit) {
         pristine = false;
@@ -441,8 +440,8 @@ const EditContactsForm = (props) => {
     )
 }
 ////////////////////////////
-const EditContactsReduxForm = reduxForm({
+const EditContactsReduxForm = reduxForm<InitialDataType, ContactsWithExpandedPropsType>({
     form: 'EditAboutForm', // a unique identifier for this form
     validate,
-    initialValues: initialData
+    initialValues: initialData as InitialDataType
 })(EditContactsForm)

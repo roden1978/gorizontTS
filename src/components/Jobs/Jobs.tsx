@@ -1,8 +1,9 @@
-import React from 'react'
+import React, {FC} from 'react'
 import Job from './Job/Job'
 import {makeStyles} from '@material-ui/core/styles';
 import Grid from "@material-ui/core/Grid";
 import {Container} from "@material-ui/core";
+import {PropsType} from "./JobsContainer";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -18,7 +19,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const Jobs = (props) => {
+const Jobs:FC<PropsType> = (props) => {
     //debugger
     const classes = useStyles();
 
@@ -45,16 +46,3 @@ const Jobs = (props) => {
 }
 
 export default Jobs;
-/*
-import React from 'react'
-import s from './Jobs.module.css'
-
-const Jobs = (props) => {
-    return(
-        <div>
-            Jobs
-        </div>
-    );
-}
-
-export default Jobs;*/

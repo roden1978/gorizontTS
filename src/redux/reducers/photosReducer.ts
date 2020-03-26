@@ -6,11 +6,11 @@ import {
     IS_CLICKED,
     SET_URL
 } from "../actions/types";
-import {PhotosetType, PhotoType, PhotoSizesType, SizeType} from "../../tstypes/photosTypes";
+import { PhotoType, PhotoSizesType, SizeType, PhotoAlbumType} from "../../tstypes/photosTypes";
 
 let initialState = {
-    sets: [] as Array<PhotosetType>,
-    setsWithUrl: [] as Array<PhotosetType>,
+    sets: [] as Array<PhotoAlbumType>,
+    setsWithUrl: [] as Array<PhotoAlbumType>,
     photos: [] as Array<PhotoType>,
     photosWithUrl: [] as Array<PhotoType>,
     photo: [] as Array<PhotoSizesType>,

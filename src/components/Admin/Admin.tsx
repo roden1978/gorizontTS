@@ -1,19 +1,34 @@
-import React from "react";
+import React, {FC} from "react";
 import {useStyles} from "./AdminStyles";
 import {checkUser, setIsUsers} from "../../redux/actions/authActions";
 import {connect} from "react-redux";
 import {Redirect} from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import CardContent from "@material-ui/core/CardContent";
-import {Field, reduxForm} from "redux-form";
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {renderCheckbox, renderTextField} from "../../common/renderFilds";
 import {validate} from "../../common/validate";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import Grid from "@material-ui/core/Grid";
 import {Container} from "@material-ui/core";
+import {AppStateType} from "../../redux/store";
 
-class Admin extends React.Component {
+type MapStateToPropsType = {
+    auth: boolean
+    adminMode: boolean
+    adminRoot: boolean
+    isUsers: boolean
+}
+
+type MapDispatchToPropsType= {
+    checkUser:(email: string, password: string, newUsers: boolean) => void
+    setIsUsers: (isUsers: boolean) => void
+}
+type PropsType = MapStateToPropsType & MapDispatchToPropsType
+type InitialDataType = typeof initialData
+
+class Admin extends React.Component<PropsType> {
 
     componentDidMount() {
     }
@@ -23,12 +38,12 @@ class Admin extends React.Component {
         return (<>
             {this.props.adminMode ? this.props.adminRoot && this.props.isUsers ? <Redirect to='/admin/users'/> :
                 <Redirect to='/news'/> :
-                <Login checkUser={this.props.checkUser} setIsUsers={this.props.setIsUsers}/>}
+                <Login {...this.props}/>}
         </>)
     }
 }
 
-let mapStateToProps = (state) => {
+let mapStateToProps = (state: AppStateType) => {
     return {
         auth: state.auth.isAuthorized,
         adminMode: state.auth.adminMode,
@@ -37,13 +52,14 @@ let mapStateToProps = (state) => {
     }
 
 }
+//checkUser={this.props.checkUser} setIsUsers={this.props.setIsUsers}
 
 export default connect(mapStateToProps, {checkUser, setIsUsers})(Admin)
 
-export const Login = (props) => {
+export const Login:FC<PropsType> = (props) => {
     //debugger
     const classes = useStyles();
-    const showResults = (values) => {
+    const showResults = (values: InitialDataType) => {
 
         //window.alert(`You submitted:\n\n${JSON.stringify(values, null, 2)}`);
         if (values.newUsers)
@@ -80,13 +96,13 @@ export const Login = (props) => {
 }
 
 const initialData = {
-    emailLogin: '',
+    email: '',
     password: '',
     newUsers: false
 }
 ///////////////////////////////////////////////////////
 
-const LoginForm = (props) => {
+const LoginForm: FC<InjectedFormProps<InitialDataType, PropsType> & PropsType> = (props) => {
     const classesStyle = useStyles();
     const {handleSubmit, reset} = props;
     let {pristine, submitting} = props;
@@ -128,8 +144,8 @@ const LoginForm = (props) => {
     )
 }
 
-const LoginReduxForm = reduxForm({
+const LoginReduxForm = reduxForm<InitialDataType, PropsType>({
     form: 'LoginForm', // a unique identifier for this form
     validate,
-    initialValues: initialData
+    initialValues: initialData as InitialDataType
 })(LoginForm)

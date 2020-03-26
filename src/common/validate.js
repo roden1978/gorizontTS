@@ -1,10 +1,13 @@
 export const validate = (values) => {
-    const errors = {}
+
+    const errors = {};
+
     const requiredFields = [
         'title', 'text', 'description', 'price','company',
         'companyName', 'companyAddress', 'companyPhone', 'companyEmail',
         'email', 'password','firstName', 'lastName', 'confPassword', 'password'
     ]
+
     const requiredPhones = ['companyPhone', 'phone01', 'phone02',
         'phone03', 'phone04', 'phone05', 'phone']
 
@@ -27,7 +30,7 @@ export const validate = (values) => {
 
     requiredFields.forEach(field => {
         if (!values[field]) {
-            errors[field] = 'Обязательное поле'
+            errors[field]  = 'Обязательное поле'
         }
     })
 
@@ -69,8 +72,8 @@ export const validate = (values) => {
     })
 
     maxLengthText.forEach(length =>{
-        if(values[length] && values[length].length > 1000)
-            errors[length] = 'Длина должная быть не более 1000 символов'
+        if(values[length] && values[length].length > 5000)
+            errors[length] = 'Длина должная быть не более 5000 символов'
     })
 
     return errors

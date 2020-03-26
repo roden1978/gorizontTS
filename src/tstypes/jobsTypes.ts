@@ -4,8 +4,8 @@ export type JobType = {
     title: string
     description: string
     price: string
-    email: string | null
+    email: string
     phone: string
     status: boolean
-    createAt?: string
+    createAt: string
 }

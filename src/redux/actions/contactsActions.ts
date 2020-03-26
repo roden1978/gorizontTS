@@ -1,6 +1,10 @@
 import {mongodbAPI} from '../../api/api'
 import {SET_CONTACTS, SET_IS_CHANGED_CONTACTS, SET_DEFAULT_CONTACTS} from "./types";
 import {ContactsType} from "../../tstypes/contactsTypes";
+import {ThunkAction} from "redux-thunk";
+import {AppStateType} from "../store";
+
+export type ContactsActionsType = SetContactsActionType | SetIsChangedContactsActionType |SetDefaultContactsActionType
 
 export type SetContactsActionType = {
     type: typeof SET_CONTACTS
@@ -32,10 +36,10 @@ export const setDefaultContacts = (): SetDefaultContactsActionType => {
         type: SET_DEFAULT_CONTACTS
     }
 }
-
+export type ContactsThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ContactsActionsType>
 /*Thunk Creators*/
-export const getContacts = () => {
-    return async (dispatch: any) => {
+export const getContacts = (): ContactsThunkType => {
+    return async (dispatch) => {
         const contacts = await mongodbAPI.getContacts();
         dispatch(setContacts(contacts));
     }
@@ -43,9 +47,9 @@ export const getContacts = () => {
 export const createContacts = (companyName: string, companyAddress: string, companyEmail: string, companyPhone: string,
                                phoneOwner01: string, phone01: string, phoneOwner02: string, phone02: string,
                                phoneOwner03: string, phone03: string, phoneOwner04: string, phone04: string,
-                               phoneOwner05: string, phone05: string) =>{
+                               phoneOwner05: string, phone05: string): ContactsThunkType =>{
     //debugger
-    return async (dispatch: any) =>{
+    return async (dispatch) =>{
         const data = await mongodbAPI.createContacts({companyName, companyAddress,
             companyEmail, companyPhone,
             phoneOwner01, phone01, phoneOwner02, phone02,
@@ -61,9 +65,9 @@ export const updateContacts = (id: string, companyName: string, companyAddress: 
                                companyEmail: string, companyPhone: string,
                                phoneOwner01: string, phone01: string, phoneOwner02: string, phone02: string,
                                phoneOwner03: string, phone03: string, phoneOwner04: string, phone04: string,
-                               phoneOwner05: string, phone05: string) => {
+                               phoneOwner05: string, phone05: string): ContactsThunkType => {
     //debugger
-    return async (dispatch:any) => {
+    return async (dispatch) => {
         const data = await mongodbAPI.updateContacts({
             id, companyName, companyAddress, companyEmail, companyPhone,
             phoneOwner01, phone01, phoneOwner02, phone02,

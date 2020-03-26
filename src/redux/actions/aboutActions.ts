@@ -1,7 +1,11 @@
 import {mongodbAPI} from '../../api/api'
-import {SET_ABOUT, SET_IS_CHANGED_ABOUT, SET_DEFAULT_ABOUT} from "./types";
-import {AboutType} from "../../tstypes/aboutTypes";
+import {SET_ABOUT, SET_IS_CHANGED_ABOUT, SET_DEFAULT_ABOUT} from "./types"
+import {AboutType} from "../../tstypes/aboutTypes"
+import {ThunkAction} from "redux-thunk"
+import {AppStateType} from "../store"
 
+
+type AboutActionsType = SetAboutActionType | SetIsChangedAboutActionType | SetDefaultAboutActionType
 
 export type SetAboutActionType = {
     type: typeof SET_ABOUT
@@ -34,31 +38,31 @@ export const setDefaultAbout = (): SetDefaultAboutActionType =>{
         type: SET_DEFAULT_ABOUT
     }
 }
-
+type AboutThunkType = ThunkAction<Promise<void>, AppStateType, unknown, AboutActionsType>
 /*Thunk Creators*/
-export const getAbout = () => {
-    return async (dispatch: any) => {
-        const about = await mongodbAPI.getAbout();
-        dispatch(setAbout(about));
+export const getAbout = (): AboutThunkType => {
+    return async (dispatch) => {
+        const about = await mongodbAPI.getAbout()
+        dispatch(setAbout(about))
     }
 }
 
-export const updateAbout = (id: string, text: string) =>{
+export const updateAbout = (id: string, text: string): AboutThunkType =>{
     //debugger
-    return async (dispatch: any) =>{
-        const data = await mongodbAPI.updateAbout({id, text});
+    return async (dispatch) =>{
+        const data = await mongodbAPI.updateAbout({id, text})
         if (data.resultCode === 0) {
-            dispatch(getAbout());
+            dispatch(getAbout())
         }
     }
 }
 
-export const createAbout = (text: string) =>{
+export const createAbout = (text: string): AboutThunkType =>{
     //debugger
-    return async (dispatch:any) =>{
-        const data = await mongodbAPI.createAbout({text});
+    return async (dispatch) =>{
+        const data = await mongodbAPI.createAbout({text})
         if (data.resultCode === 0) {
-            dispatch(getAbout());
+            dispatch(getAbout())
         }
     }
 }

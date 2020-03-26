@@ -54,29 +54,20 @@ export type MapDispatchToPropsType = {
     setProjectIdForRedirect: (id: string) => void
 }
 
-export type UseStateProps = {
-    expandedCreate: boolean
-    expandedEdit: boolean
-    expandedDelete: boolean
-}
-
-export type OwnProps  = {
-
-}
-
-export type PropsType = MapStateToPropsType & MapDispatchToPropsType & UseStateProps
+export type PropsType = MapStateToPropsType & MapDispatchToPropsType
+type PrevStateType = MapStateToPropsType
 
 class NewsContainer extends React.Component<PropsType> {
 
     componentDidMount() {
-        //debugger
+
         if (this.props.adminMode)
             this.props.getAllNews();
         else
             this.props.getNews();
     }
 
-    componentDidUpdate(prevProps: PropsType, prevState: MapStateToPropsType) {
+    componentDidUpdate(prevProps: PropsType, prevState: PrevStateType) {
         if (this.props.loadProjects) {
             this.props.getProjects();
             this.props.setLoadProjects(false);
@@ -123,7 +114,7 @@ let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
 /*Создаем контейнерную кмпоненту MyNewsContainer*/
 /*Двойные скобки обозначют что мы вызвали фукцию connect, а она
 * в свою очередь возвращает нам фукцию во вторых скобках*/
-export default connect<MapStateToPropsType, MapDispatchToPropsType, OwnProps, AppStateType>(mapStateToProps,
+export default connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps,
     {
         getNews, getProjects, setLoadProjects,
         setNewsItem, setChangeNewsItem, setIsAllNews,
@@ -131,17 +122,3 @@ export default connect<MapStateToPropsType, MapDispatchToPropsType, OwnProps, Ap
         deleteNews, setNewsCount, setDefaultNews, checkProject,
         setProjectIdForRedirect
     })(NewsContainer);
-
-/*
-news={this.props.news}
-                      setLoadProjects={this.props.setLoadProjects}
-                      setNewsItem={this.props.setNewsItem}
-                      setIsAllNews={this.props.setIsAllNews}
-                      projects={this.props.projects}
-                      setCurrentNewsId={this.props.setCurrentNewsId}
-                      createNews={this.props.createNews}
-                      updateNews={this.props.updateNews}
-                      deleteNews={this.props.deleteNews}
-                      adminMode={this.props.adminMode}
-                      setNewsCount={this.props.setNewsCount}
- */

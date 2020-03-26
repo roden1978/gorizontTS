@@ -4,14 +4,14 @@ export type ContactsType = {
     companyAddress: string
     companyEmail: string
     companyPhone: string
-    phoneOwner01: string | null
-    phone01: string | null
-    phoneOwner02: string | null
-    phone02: string | null
-    phoneOwner03: string | null
-    phone03: string | null
-    phoneOwner04: string | null
-    phone04: string | null
-    phoneOwner05: string | null
-    phone05: string | null
+    phoneOwner01: string
+    phone01: string
+    phoneOwner02: string
+    phone02: string
+    phoneOwner03: string
+    phone03: string
+    phoneOwner04: string
+    phone04: string
+    phoneOwner05: string
+    phone05: string
 }

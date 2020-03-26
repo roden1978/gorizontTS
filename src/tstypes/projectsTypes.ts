@@ -3,8 +3,8 @@ export type ProjectsType = {
     title: string
     description: string
     text: string
-    albumId: string | null
-    albumName: string | null
+    albumId: string
+    albumName: string
     status: boolean
-    createAt?: string
+    createAt: string
 }

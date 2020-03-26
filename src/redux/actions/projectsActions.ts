@@ -1,17 +1,18 @@
 import {flickrAPI, mongodbAPI} from '../../api/api'
 import {
-    SET_PROJECTS,
-    SET_PROJECT,
-    SET_ID,
-    IS_ALL_PROJECTS,
     CHANGE_PROJECTS_ITEM,
-    SET_PROJECTS_ITEM,
-    SET_PROJECTS_COUNT,
+    IS_ALL_PROJECTS,
     LOAD_ALBUMS,
+    SET_ALBUM_ID_FOR_REDIRECT,
+    SET_CURRENT_PROJECT_ID,
     SET_DEFAULT_PROJECT,
+    SET_ID,
+    SET_PROJECT,
+    SET_PROJECTS,
+    SET_PROJECTS_COUNT,
+    SET_PROJECTS_ITEM,
     SET_PROJECTS_PHOTOS,
-    SET_URL_TO_PROJECTS_PHOTOS,
-    SET_ALBUM_ID_FOR_REDIRECT
+    SET_URL_TO_PROJECTS_PHOTOS
 } from "./types";
 import {ProjectsType} from "../../tstypes/projectsTypes";
 import {PhotosetType, PhotoSizesType, PhotoType} from "../../tstypes/photosTypes";
@@ -22,7 +23,8 @@ import {AppStateType} from "../store";
 export type ProjectsActionsTypes = SetProjectsActionType | SetProjectActionType | SetIdActionType |
     SetLoadAlbumsActionType | SetIsAllProjectsActionType | SetChangeProjectsItemActionType |
     SetProjectsItemActionType | SetProjectsCountActionType | SetDefaultProjectActionType |
-    SetProjectsPhotosActionType | SetUrlToPhotosActionType | SetAlbumIdForRedirectActionType
+    SetProjectsPhotosActionType | SetUrlToPhotosActionType | SetAlbumIdForRedirectActionType |
+    SetCurrentProjectIdActionType
 
 export type SetProjectsActionType = {
     type: typeof SET_PROJECTS
@@ -158,6 +160,17 @@ export type SetAlbumIdForRedirectActionType = {
 export const setAlbumIdForRedirect = (id: string): SetAlbumIdForRedirectActionType =>{
     return {
         type: SET_ALBUM_ID_FOR_REDIRECT,
+        payload: id
+    }
+}
+
+export type SetCurrentProjectIdActionType = {
+    type: typeof SET_CURRENT_PROJECT_ID,
+    payload: string
+}
+export const setCurrentProjectId = (id: string): SetCurrentProjectIdActionType =>{
+    return {
+        type: SET_CURRENT_PROJECT_ID,
         payload: id
     }
 }

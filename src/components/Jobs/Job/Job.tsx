@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {FC} from 'react'
 import {useStyles} from './JobsStyles';
 import Grid from "@material-ui/core/Grid";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -20,18 +20,32 @@ import IconButton from "@material-ui/core/IconButton";
 import clsx from "clsx";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Collapse from "@material-ui/core/Collapse";
-import {Field, reduxForm} from "redux-form";
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {renderCheckbox, renderTextField} from "../../../common/renderFilds";
 import Button from "@material-ui/core/Button";
 import {validate} from "../../../common/validate";
 import RefreshIcon from "@material-ui/icons/Refresh";
+import {PropsType} from "../JobsContainer";
+import {JobType} from "../../../tstypes/jobsTypes";
+import {UseStateExpandedProps} from "../../../tstypes/commonTypes"
 
-const Job = (props) => {
+type JobsPropsType = PropsType & JobType
+type JobsWithActivatePropsType = PropsType & JobType & ActivateType
+type JobsPropsWithExpandedPropsType = JobsPropsType & UseStateExpandedProps
+type InitialDataType = typeof initialData
+type ActivateType = {
+    activate: boolean
+}
+
+const Job:FC<JobsPropsType> = (props) => {
+
     const classes = useStyles();
 
-    const currentDate = new Date();
-    const pubDate = new Date(props.createAt);
-    const days = 30 - Math.floor((currentDate - pubDate) / (24 * 60 * 60 * 1000)) + 1;
+    const currentDate: Date = new Date();
+    const pubDate: Date = new Date(props.createAt);
+
+    const days = 30 - Math.floor((currentDate.getMilliseconds() - pubDate.getMilliseconds()) /
+        (24 * 60 * 60 * 1000)) - 1;
 
     let createAt = moment(props.createAt);
 
@@ -39,7 +53,7 @@ const Job = (props) => {
 
     let titleIcon;
 
-    const getRandomInt = (max) => {
+    const getRandomInt = (max: number) => {
         return Math.floor(Math.random() * Math.floor(max));
     }
 
@@ -73,8 +87,8 @@ const Job = (props) => {
             break;
     }
 
-    let xs = 8;
-    let sm = 4;
+    let xs: any = 8; //Избавиться от any
+    let sm: any = 4; //
 
     if (props.adminMode) {
         xs = 12;
@@ -123,7 +137,7 @@ const Job = (props) => {
                 <Typography className={classes.date} variant="body2" color="textSecondary">
                     Дней осталось: {days}
                 </Typography>
-                {props.adminMode ? <AdminPanelJobs {...props}/> : ''}
+                {props.adminMode ? <AdminPanelJobs activate={false} {...props}/> : ''}
             </Card>
         </Grid>
     );
@@ -131,7 +145,7 @@ const Job = (props) => {
 
 export default Job;
 
-const AdminPanelJobs = (props) => {
+const AdminPanelJobs: FC<JobsWithActivatePropsType> = (props) => {
     //debugger
     const classes = useStyles();
     const [expandedCreate, setExpandedCreate] = React.useState(false);
@@ -175,20 +189,21 @@ const AdminPanelJobs = (props) => {
             setInitialData(props, false, true);
         } else {
             props.setIsAllJobs(true);
-            props.setJobsCount(null);
+            props.setJobsCount(0);
         }
     };
 
     const handleRefreshClick = () => {
         props.setIsAllJobs(true);
     };
-    const showResults = (values) => {
+
+    const showResults = (values: InitialDataType) => {
 
         if (values.activate) {
             values.createAt = new Date().toISOString()
         }
         if (expandedEdit) {
-            props.updateJob(values.id, values.company, values.title, values.description,
+            props.updateJob(values._id, values.company, values.title, values.description,
                 values.price, values.email, values.phone, values.status, values.createAt);
             handleEditExpandClick();
         }
@@ -200,7 +215,7 @@ const AdminPanelJobs = (props) => {
         }
 
         if (expandedDelete) {
-            props.deleteJob(values.id);
+            props.deleteJob(values._id);
             handleDeleteExpandClick();
         }
 
@@ -280,10 +295,10 @@ const AdminPanelJobs = (props) => {
     )
 }
 
-const setInitialData = (props, reset, expandedDelete) => {
+const setInitialData = (props: InitialDataType, reset: boolean, expandedDelete?: boolean) => {
     //debugger
     if (reset) {
-        initialData.id = null;
+        initialData._id = '';
         initialData.company = '';
         initialData.title = '';
         initialData.description = '';
@@ -291,10 +306,10 @@ const setInitialData = (props, reset, expandedDelete) => {
         initialData.email = '';
         initialData.phone = '';
         initialData.status = true;
-        initialData.createAt = null;
+        initialData.createAt = '';
         initialData.activate = false;
     } else {
-        initialData.id = props._id;
+        initialData._id = props._id;
         initialData.company = props.company;
         initialData.title = props.title;
         initialData.description = props.description;
@@ -312,21 +327,21 @@ const setInitialData = (props, reset, expandedDelete) => {
 }
 
 const initialData = {
-    id: null,
+    _id: '',
     company: '',
     title: '',
     description: '',
     price: '',
     email: '',
-    phone: null,
-    status: null,
-    createAt: null,
-    activate: null
+    phone: '',
+    status: true,
+    createAt: '',
+    activate: false
 }
 
 ///////////////////////////////////////////////////////
 
-const EditJobsForm = (props) => {
+const EditJobsForm: FC<InjectedFormProps<InitialDataType, JobsPropsWithExpandedPropsType> & JobsPropsWithExpandedPropsType> = (props) => {
     const classesStyle = useStyles();
     const {handleSubmit, reset} = props;
     let {pristine, submitting} = props;
@@ -426,8 +441,8 @@ const EditJobsForm = (props) => {
         </form>
     )
 }
-const EditJobsReduxForm = reduxForm({
+const EditJobsReduxForm = reduxForm<InitialDataType, JobsPropsWithExpandedPropsType>({
     form: 'EditJobsForm', // a unique identifier for this form
     validate,
-    initialValues: initialData
+    initialValues: initialData as InitialDataType
 })(EditJobsForm)

@@ -4,25 +4,75 @@ import {
     setLoadAlbums, getAllProjects, createProject,
     deleteProject, setChangeProjectsItem, setIsAllProjects,
     updateProject, setProjectsCount, setProjectsItem, setDefaultProject,
-    getPhotos, getPhotoWithUrl, checkAlbum, setAlbumIdForRedirect
+    getPhotos, getPhotoWithUrl, checkAlbum, setAlbumIdForRedirect,
+    setCurrentProjectId
 } from '../../redux/actions/projectsActions';
 import {getPhotosets} from '../../redux/actions/photosActions'
 import Projects from "./Projects";
 import {connect} from "react-redux";
 import Spinner from "../../common/Spinner";
+import {AppStateType} from "../../redux/store";
+import {ProjectsType} from "../../tstypes/projectsTypes";
+import {PhotoAlbumType, PhotoType} from "../../tstypes/photosTypes";
 
-class ProjectsContainer extends React.Component {
+export type MapStateToPropsType = {
+    projects: Array<ProjectsType>
+    id: string
+    albums: Array<PhotoAlbumType>
+    loadAlbums: boolean
+    getProjectsItem: boolean
+    isAllProjects: boolean
+    projectsCount: number
+    adminMode: boolean
+    photos: Array<PhotoType>
+    photosWithUrl: Array<PhotoType>
+    albumsCount: number
+    albumIdForRedirect: string
+    currentProjectId: string
+}
+type PrevStateProps = MapStateToPropsType
+
+export type MapDispatchToPropsType = {
+    getProjects: () => void
+    getProject: (projectId: string) => void
+    getId: (projectId: string) => void
+    setLoadAlbums: (setLoadAlbums: boolean) => void
+    getAllProjects: () => void
+    createProject: (title: string, description: string, text: string,
+                    albumId: string, albumName: string, status: boolean) => void
+    deleteProject: (id: string) => void
+    setChangeProjectsItem: () => void
+    setIsAllProjects: (setIsAllProjects: boolean) => void
+    updateProject: (_id: string, title: string, description: string, text: string,
+                    albumId: string, albumName: string, status: boolean, createAt: string) => void
+    setProjectsCount: (count: number) => void
+    setProjectsItem: (setProjectsItem: boolean) => void
+    getPhotosets: () => void
+    setDefaultProject: () => void
+    getPhotos: (id: string) => void
+    getPhotoWithUrl: (id: string, card: PhotoType) => void
+    checkAlbum: (albumId: string) => void
+    setAlbumIdForRedirect: (id: string) => void
+    setCurrentProjectId: (id: string) => void
+}
+
+type OwnProps = {
+    projectId: string
+}
+
+export type PropsType = MapStateToPropsType & MapDispatchToPropsType & OwnProps
+
+class ProjectsContainer extends React.Component<PropsType> {
     updateProjectsData() {
-        if (this.props.match.params.projectId) {
-            this.props.getProject(this.props.match.params.projectId);
-            this.props.getId(this.props.match.params.projectId);
+        if (this.props.projectId) {
+            this.props.getProject(this.props.projectId);
+            this.props.getId(this.props.projectId);
             this.props.getPhotosets();
         } else {
-            if (this.props.adminMode){
+            if (this.props.adminMode) {
                 this.props.getAllProjects();
-            this.props.getPhotosets();
-            }
-            else {
+                this.props.getPhotosets();
+            } else {
                 this.props.getProjects();
                 this.props.getPhotosets();
             }
@@ -34,8 +84,8 @@ class ProjectsContainer extends React.Component {
         this.updateProjectsData()
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.props.match.params.projectId !== prevProps.match.params.projectId)
+    componentDidUpdate(prevProps: PropsType, prevState: PrevStateProps) {
+        if (this.props.projectId !== prevProps.projectId)
             this.updateProjectsData()
 
         if (this.props.loadAlbums) {
@@ -50,13 +100,13 @@ class ProjectsContainer extends React.Component {
         if (this.props.isAllProjects && this.props.adminMode) {
             this.props.getAllProjects();
             this.props.setIsAllProjects(false);
-            setTimeout(null, 2000);
+            //setTimeout(null, 2000);
         }
 
-       /* if (this.props.isAllProjects && !this.props.adminMode) {
-            this.props.getProjects();
-            this.props.setIsAllProjects(false);
-        }*/
+        /* if (this.props.isAllProjects && !this.props.adminMode) {
+             this.props.getProjects();
+             this.props.setIsAllProjects(false);
+         }*/
         if (this.props.projects.length === 0) {
             this.props.setDefaultProject();
         }
@@ -72,7 +122,7 @@ class ProjectsContainer extends React.Component {
     }
 
     componentWillUnmount() {
-        this.props.getId(null);
+        this.props.getId('');
         this.props.projects.length = 0;
     }
 
@@ -87,7 +137,7 @@ class ProjectsContainer extends React.Component {
 
 /*функция принимает state созданный в redux при помощи reducers
 * и возвращает требуемые нам данные из state*/
-let mapStateToProps = (state) => {
+let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
         projects: state.projects.projects,
         id: state.projects.id,
@@ -96,6 +146,7 @@ let mapStateToProps = (state) => {
         getProjectsItem: state.projects.getProjectsItem,
         isAllProjects: state.projects.isAllProjects,
         projectsCount: state.projects.projectsCount,
+        currentProjectId: state.projects.currentProjectId,
         adminMode: state.auth.adminMode,
         photos: state.projects.photos,
         photosWithUrl: state.projects.photosWithUrl,
@@ -107,11 +158,11 @@ let mapStateToProps = (state) => {
 /*Создаем контейнерную кмпоненту MyNewsContainer*/
 /*Двойные скобки обозначют что мы вызвали фукцию connect, а она
 * в свою очередь возвращает нам фукцию во вторых скобках*/
-export default connect(mapStateToProps, {
+export default connect<MapStateToPropsType, MapDispatchToPropsType, OwnProps, AppStateType>(mapStateToProps, {
     getProjects, getProject, getId, setLoadAlbums,
     getAllProjects, createProject, deleteProject,
     setChangeProjectsItem, setIsAllProjects,
     updateProject, setProjectsCount, setProjectsItem,
     getPhotosets, setDefaultProject, getPhotos, getPhotoWithUrl,
-    checkAlbum, setAlbumIdForRedirect
+    checkAlbum, setAlbumIdForRedirect, setCurrentProjectId
 })(ProjectsContainer);

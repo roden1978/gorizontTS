@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {FC} from 'react'
 import {useHistory} from 'react-router-dom';
 import {makeStyles} from '@material-ui/core/styles';
 import clsx from 'clsx';
@@ -18,12 +18,17 @@ import RefreshIcon from '@material-ui/icons/Refresh';
 import moment from "moment";
 import 'moment/locale/ru'
 import Tooltip from "@material-ui/core/Tooltip";
-import {Field, reduxForm} from "redux-form";
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {renderCheckbox, renderSelectField, renderTextField} from "../../../common/renderFilds";
 import {validate} from '../../../common/validate'
 import Button from "@material-ui/core/Button";
 import GridList from "@material-ui/core/GridList";
 import GridListTile from "@material-ui/core/GridListTile";
+import {PropsType} from "../../Projects/ProjectsContainer";
+import {ProjectsType} from "../../../tstypes/projectsTypes";
+import {PhotoType} from "../../../tstypes/photosTypes";
+import {UseStateExpandedProps} from "../../../tstypes/commonTypes";
+
 
 export const useStyles = makeStyles(theme => ({
     price: {
@@ -102,7 +107,18 @@ export const useStyles = makeStyles(theme => ({
     },
 }));
 
-const Project = (props) => {
+
+type ExpandOverType = {
+    expandOver: ()=> void
+}
+
+type ProjectPropsType = PropsType & ProjectsType
+
+type InitialDataType = typeof initialData
+
+type ProjectPropsWithExpandedPropsType = ProjectPropsType & UseStateExpandedProps
+
+const Project:FC<ProjectPropsType> = (props) => {
     //debugger
     const classes = useStyles();
     const history = useHistory();
@@ -111,20 +127,20 @@ const Project = (props) => {
     const handleExpandClick = () => {
         if (!props.id)
             setExpanded(!expanded);
-        props.getId(null);
+        props.getId('');
     };
 
-    const photos = props.photosWithUrl.filter(photo => photo.albumId === props.albumId)
+    const photos = props.photosWithUrl.filter((photo:PhotoType) => photo.albumId === props.albumId)
     photos.length = 4;
 
     const expandOver = () => {
         setExpanded(true);
-        props.getId(null);
+        props.getId('');
     }
 
     const viewAllProjectsClick = () => {
         setExpanded(false);
-        props.getId(null);
+        props.getId('');
         props.setIsAllProjects(true);
          redirectToProjects();
     };
@@ -132,10 +148,10 @@ const Project = (props) => {
     let createAt = moment(props.createAt);
     createAt.locale('ru');
 
-    const redirectToAlbum =(id)=>{
+   /* const redirectToAlbum = (id: string)=>{
         const path = '/album/' + id
         history.push(path);
-    }
+    }*/
 
     const redirectToProjects =()=>{
        props.setIsAllProjects(false);
@@ -143,14 +159,26 @@ const Project = (props) => {
         history.push(path);
     }
 
-    if(props.albumIdForRedirect){
-        props.setAlbumIdForRedirect(null);
-        redirectToAlbum(props.albumId);
+    if(props.albumIdForRedirect === props.albumId && props.currentProjectId === props._id){
+        props.setAlbumIdForRedirect('');
+        //redirectToAlbum(props.albumIdForRedirect);
+        const path = '/album/' + props.albumIdForRedirect
+        history.push(path);
     }
 
     const checkAlbum = () =>{
         props.checkAlbum(props.albumId)
+        props.setCurrentProjectId(props._id)
     }
+
+   /* if(props.albumIdForRedirect){
+        redirectToAlbum(props.albumIdForRedirect);
+        props.setAlbumIdForRedirect('');
+    }
+
+    const checkAlbum = () =>{
+        props.checkAlbum(props.albumId)
+    }*/
 
     return (
         <Grid item xs={10}>
@@ -172,7 +200,7 @@ const Project = (props) => {
                     </Typography>
 
                 </CardContent>
-                <CardActions className={classes.card_act}>
+                <CardActions>
                     {props.albumId ? <>
                             <Typography variant="body2" color="textPrimary">
                                 Полный фотоотчет
@@ -200,7 +228,7 @@ const Project = (props) => {
                         </IconButton>
                     </Tooltip>
                 </CardActions>
-                <Collapse in={expanded || props.id} timeout="auto" unmountOnExit>
+                <Collapse in = {expanded || props.id ? true : false} timeout="auto" unmountOnExit>
                     <CardContent>
                         <>
                             {props.text.split('\n').map((i, key) => {
@@ -230,8 +258,7 @@ const Project = (props) => {
                         </Button>
                     </Tooltip>
                 </> : null}
-                {props.adminMode ? <AdminPanelProjects expandOver={expandOver} count={props.projects.length}
-                                                       {...props}/> : ''}
+                {props.adminMode ? <AdminPanelProjects expandOver={expandOver} {...props}/> : ''}
             </Card>
         </Grid>
     );
@@ -239,7 +266,7 @@ const Project = (props) => {
 // && !props.adminMode
 export default Project;
 
-const AdminPanelProjects = (props) => {
+const AdminPanelProjects:FC<ProjectPropsType & ExpandOverType> = (props) => {
     //debugger
     const classes = useStyles();
     const [expandedCreate, setExpandedCreate] = React.useState(false);
@@ -276,7 +303,7 @@ const AdminPanelProjects = (props) => {
 
     const handleDeleteExpandClick = () => {
         //debugger
-        props.setProjectsCount(props.count);
+        props.setProjectsCount(props.projects.length);
         setExpandedDelete(!expandedDelete);
         if (!expandedDelete) {
             props.getId(props._id);
@@ -285,7 +312,7 @@ const AdminPanelProjects = (props) => {
         } else {
             props.expandOver();
             props.setIsAllProjects(true);
-            props.setProjectsCount(null);
+            props.setProjectsCount(0);
         }
     };
 
@@ -293,7 +320,7 @@ const AdminPanelProjects = (props) => {
         props.setIsAllProjects(true);
     };
 
-    const showResults = (values) => {
+    const showResults = (values: ProjectsType) => {
         const position = values.albumId.indexOf('|', 0);
         let id, title;
         if (position > 0) {
@@ -304,7 +331,7 @@ const AdminPanelProjects = (props) => {
         }
 
         if (expandedEdit) {
-            props.updateProject(values.id, values.title, values.description, values.text, values.albumId, values.albumName, values.status, values.createAt);
+            props.updateProject(values._id, values.title, values.description, values.text, values.albumId, values.albumName, values.status, values.createAt);
             handleEditExpandClick();
         }
 
@@ -315,7 +342,7 @@ const AdminPanelProjects = (props) => {
         }
 
         if (expandedDelete) {
-            props.deleteProject(values.id);
+            props.deleteProject(values._id);
             handleDeleteExpandClick();
         }
     };
@@ -396,10 +423,10 @@ const AdminPanelProjects = (props) => {
     )
 }
 
-const setInitialData = (props, reset, expandedDelete) => {
+const setInitialData = (props: ProjectPropsType, reset: boolean, expandedDelete?: boolean) => {
     //debugger
     if (reset) {
-        initialData.id = 'null';
+        initialData._id = '';
         initialData.title = '';
         initialData.description = '';
         initialData.text = '';
@@ -408,7 +435,7 @@ const setInitialData = (props, reset, expandedDelete) => {
         initialData.status = true;
         initialData.createAt = ''
     } else {
-        initialData.id = props._id;
+        initialData._id = props._id;
         initialData.title = props.title;
         initialData.description = props.description;
         initialData.text = props.text;
@@ -424,20 +451,22 @@ const setInitialData = (props, reset, expandedDelete) => {
 }
 
 const initialData = {
-    id: null,
+    _id: '',
     title: '',
     description: '',
     text: '',
     albumId: '',
     albumName: '',
-    status: null,
-    createAt: null
+    status: true,
+    createAt: ''
 }
+
 ///////////////////////////////////////////////////////
 
-const EditProjectsForm = (props) => {
+const EditProjectsForm: FC<InjectedFormProps<InitialDataType, ProjectPropsWithExpandedPropsType> & ProjectPropsWithExpandedPropsType> = (props) => {
     const classesStyle = useStyles();
-    const {handleSubmit, reset, classes, albums} = props;
+    const {handleSubmit, reset, albums} = props;
+    //const {handleSubmit, reset, classes, albums} = props;
     let {pristine, submitting} = props;
     //debugger
 
@@ -488,7 +517,6 @@ const EditProjectsForm = (props) => {
                     </div>
                     <div>
                         <Field
-                            classes={classes}
                             name="albumId"
                             component={renderSelectField}
                             label="Фотоальбом"
@@ -525,8 +553,11 @@ const EditProjectsForm = (props) => {
     )
 }
 
-const EditProjectsReduxForm = reduxForm({
+const EditProjectsReduxForm = reduxForm<InitialDataType, ProjectPropsWithExpandedPropsType>({
     form: 'EditProjectsForm', // a unique identifier for this form
     validate,
-    initialValues: initialData
+    initialValues: initialData as InitialDataType
 })(EditProjectsForm)
+
+
+// classes={classes}

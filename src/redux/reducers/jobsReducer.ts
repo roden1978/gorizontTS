@@ -10,10 +10,10 @@ import {JobType} from "../../tstypes/jobsTypes";
 
 let initialState = {
     jobs: [] as Array<JobType>,
-    getJobsItem: false,
+    isGetJobsItem: false,
     isAllJobs: false,
-    currentJobsId: null as string | null,
-    jobsCount: null as number | null
+    currentJobsId: '',
+    jobsCount: 0
 }
 
 export type InitialStateType = typeof initialState
@@ -35,7 +35,7 @@ const jobs_reducer = (state = initialState, action: any): InitialStateType => {
         }
         case  SET_JOBS_ITEM:{
             return {
-                ...state, getJobsItem: action.payload
+                ...state, isGetJobsItem: action.payload
             }
         }
         case CHANGE_JOBS_ITEM:{
@@ -58,7 +58,7 @@ const jobs_reducer = (state = initialState, action: any): InitialStateType => {
             return{
                 ...state, jobs: [{_id: '0', company:'', title: 'Войдите в панель администирования и создайте объявление',
                     description: '!!!ВНИМАНИЕ!!! Если созданное объявление не отобразилась обновите страницу.',
-                    price: '', email: '', phone: '', status: true}]
+                    price: '', email: '', phone: '', status: true, createAt: ''}]
             }
         }
         default:

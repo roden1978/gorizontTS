@@ -1,7 +1,10 @@
 import {mongodbAPI} from '../../api/api'
 import {SET_ADMIN_MODE, SET_IS_USERS} from "./types";
 import {stopSubmit} from "redux-form";
+import {ThunkAction} from "redux-thunk";
+import {AppStateType} from "../store";
 
+type AuthActionsType = SetAdminModeActionType | SetIsUsersActionType
 
 export type SetAdminModeActionType = {
     type: typeof SET_ADMIN_MODE
@@ -27,10 +30,10 @@ export const setIsUsers = (isUsers: boolean): SetIsUsersActionType => {
     }
 }
 
+type AuthThunkType = ThunkAction<Promise<void>, AppStateType, unknown, AuthActionsType>
 
-export const checkUser = (email: string, password: string, newUsers: boolean) => {
-    //debugger
-    return async (dispatch: any) => {
+export const checkUser = (email: string, password: string, newUsers: boolean): AuthThunkType => {
+    return async (dispatch) => {
         const data = await mongodbAPI.checkUser({email, password});
         if (data) {
             if (!data.root && newUsers)
