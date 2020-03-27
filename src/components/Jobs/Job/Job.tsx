@@ -1,11 +1,11 @@
 import React, {FC} from 'react'
-import {useStyles} from './JobsStyles';
-import Grid from "@material-ui/core/Grid";
-import CardHeader from "@material-ui/core/CardHeader";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import Typography from "@material-ui/core/Typography";
-import Avatar from "@material-ui/core/Avatar";
+import {useStyles} from './JobsStyles'
+import Grid from "@material-ui/core/Grid"
+import CardHeader from "@material-ui/core/CardHeader"
+import Card from "@material-ui/core/Card"
+import CardContent from "@material-ui/core/CardContent"
+import Typography from "@material-ui/core/Typography"
+import Avatar from "@material-ui/core/Avatar"
 import 'moment/locale/ru'
 import man01 from '../../../assets/icons/man.svg'
 import man02 from '../../../assets/icons/man01.svg'
@@ -13,20 +13,20 @@ import man03 from '../../../assets/icons/man02.svg'
 import man04 from '../../../assets/icons/man03.svg'
 import man05 from '../../../assets/icons/man04.svg'
 import man06 from '../../../assets/icons/man05.svg'
-import moment from "moment";
-import CardActions from "@material-ui/core/CardActions";
-import Tooltip from "@material-ui/core/Tooltip";
-import IconButton from "@material-ui/core/IconButton";
-import clsx from "clsx";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import Collapse from "@material-ui/core/Collapse";
-import {Field, InjectedFormProps, reduxForm} from "redux-form";
-import {renderCheckbox, renderTextField} from "../../../common/renderFilds";
-import Button from "@material-ui/core/Button";
-import {validate} from "../../../common/validate";
-import RefreshIcon from "@material-ui/icons/Refresh";
-import {PropsType} from "../JobsContainer";
-import {JobType} from "../../../tstypes/jobsTypes";
+import moment from "moment"
+import CardActions from "@material-ui/core/CardActions"
+import Tooltip from "@material-ui/core/Tooltip"
+import IconButton from "@material-ui/core/IconButton"
+import clsx from "clsx"
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
+import Collapse from "@material-ui/core/Collapse"
+import {Field, InjectedFormProps, reduxForm} from "redux-form"
+import {renderCheckbox, renderTextField} from "../../../common/renderFilds"
+import Button from "@material-ui/core/Button"
+import {validate} from "../../../common/validate"
+import RefreshIcon from "@material-ui/icons/Refresh"
+import {PropsType} from "../JobsContainer"
+import {JobType} from "../../../tstypes/jobsTypes"
 import {UseStateExpandedProps} from "../../../tstypes/commonTypes"
 
 type JobsPropsType = PropsType & JobType
@@ -39,60 +39,60 @@ type ActivateType = {
 
 const Job:FC<JobsPropsType> = (props) => {
 
-    const classes = useStyles();
+    const classes = useStyles()
 
-    const currentDate: Date = new Date();
-    const pubDate: Date = new Date(props.createAt);
+    const currentDate: Date = new Date()
+    const pubDate: Date = new Date(props.createAt)
 
     const days = 30 - Math.floor((currentDate.getMilliseconds() - pubDate.getMilliseconds()) /
-        (24 * 60 * 60 * 1000)) - 1;
+        (24 * 60 * 60 * 1000)) - 1
 
-    let createAt = moment(props.createAt);
+    let createAt = moment(props.createAt)
 
-    createAt.locale('ru');
+    createAt.locale('ru')
 
-    let titleIcon;
+    let titleIcon
 
     const getRandomInt = (max: number) => {
-        return Math.floor(Math.random() * Math.floor(max));
+        return Math.floor(Math.random() * Math.floor(max))
     }
 
     switch (getRandomInt(7)) {
         case 0: {
-            titleIcon = man01;
-            break;
+            titleIcon = man01
+            break
         }
         case 1: {
-            titleIcon = man02;
-            break;
+            titleIcon = man02
+            break
         }
         case 2: {
-            titleIcon = man03;
-            break;
+            titleIcon = man03
+            break
         }
         case 3: {
-            titleIcon = man04;
-            break;
+            titleIcon = man04
+            break
         }
         case 4: {
-            titleIcon = man05;
-            break;
+            titleIcon = man05
+            break
         }
         case 5: {
-            titleIcon = man06;
-            break;
+            titleIcon = man06
+            break
         }
         default:
-            titleIcon = man01;
-            break;
+            titleIcon = man01
+            break
     }
 
-    let xs: any = 8; //Избавиться от any
-    let sm: any = 4; //
+    let xs: any = 8 //Избавиться от any
+    let sm: any = 4 //
 
     if (props.adminMode) {
-        xs = 12;
-        sm = 12;
+        xs = 12
+        sm = 12
     }
     //debugger
 
@@ -118,7 +118,7 @@ const Job:FC<JobsPropsType> = (props) => {
                     <>
                         {props.description.split('\n').map((i, key) => {
                             return <Typography key={key} paragraph variant="body1" color="textPrimary"
-                                               gutterBottom>{i}</Typography>;
+                                               gutterBottom>{i}</Typography>
                         })}
                     </>
                     <Typography className={classes.pos} variant="body2" color="textPrimary">
@@ -140,62 +140,62 @@ const Job:FC<JobsPropsType> = (props) => {
                 {props.adminMode ? <AdminPanelJobs activate={false} {...props}/> : ''}
             </Card>
         </Grid>
-    );
+    )
 }
 
-export default Job;
+export default Job
 
 const AdminPanelJobs: FC<JobsWithActivatePropsType> = (props) => {
     //debugger
-    const classes = useStyles();
-    const [expandedCreate, setExpandedCreate] = React.useState(false);
-    const [expandedEdit, setExpandedEdit] = React.useState(false);
-    const [expandedDelete, setExpandedDelete] = React.useState(false);
+    const classes = useStyles()
+    const [expandedCreate, setExpandedCreate] = React.useState(false)
+    const [expandedEdit, setExpandedEdit] = React.useState(false)
+    const [expandedDelete, setExpandedDelete] = React.useState(false)
 
     const handleCreateExpandClick = () => {
 
-        setExpandedCreate(!expandedCreate);
+        setExpandedCreate(!expandedCreate)
         if (!expandedCreate) {
-            props.setCurrentJobsId(props._id);
-            props.setJobsItem(true);
-            setInitialData(props, true);
+            props.setCurrentJobsId(props._id)
+            props.setJobsItem(true)
+            setInitialData(props, true)
         } else {
-            props.setIsAllJobs(true);
+            props.setIsAllJobs(true)
         }
 
-    };
+    }
 
     const handleEditExpandClick = () => {
 
-        setExpandedEdit(!expandedEdit);
+        setExpandedEdit(!expandedEdit)
         if (!expandedEdit) {
-            props.setCurrentJobsId(props._id);
-            props.setJobsItem(true);
-            setInitialData(props, false, false);
+            props.setCurrentJobsId(props._id)
+            props.setJobsItem(true)
+            setInitialData(props, false, false)
         } else {
-            props.setIsAllJobs(true);
+            props.setIsAllJobs(true)
 
         }
 
-    };
+    }
 
     const handleDeleteExpandClick = () => {
         //debugger
-        props.setJobsCount(props.jobs.length);
-        setExpandedDelete(!expandedDelete);
+        props.setJobsCount(props.jobs.length)
+        setExpandedDelete(!expandedDelete)
         if (!expandedDelete) {
-            props.setCurrentJobsId(props._id);
-            props.setJobsItem(true);
-            setInitialData(props, false, true);
+            props.setCurrentJobsId(props._id)
+            props.setJobsItem(true)
+            setInitialData(props, false, true)
         } else {
-            props.setIsAllJobs(true);
-            props.setJobsCount(0);
+            props.setIsAllJobs(true)
+            props.setJobsCount(0)
         }
-    };
+    }
 
     const handleRefreshClick = () => {
-        props.setIsAllJobs(true);
-    };
+        props.setIsAllJobs(true)
+    }
 
     const showResults = (values: InitialDataType) => {
 
@@ -204,22 +204,22 @@ const AdminPanelJobs: FC<JobsWithActivatePropsType> = (props) => {
         }
         if (expandedEdit) {
             props.updateJob(values._id, values.company, values.title, values.description,
-                values.price, values.email, values.phone, values.status, values.createAt);
-            handleEditExpandClick();
+                values.price, values.email, values.phone, values.status, values.createAt)
+            handleEditExpandClick()
         }
 
         if (expandedCreate) {
             props.createJob(values.company, values.title, values.description,
-                values.price, values.email, values.phone, values.status);
-            handleCreateExpandClick();
+                values.price, values.email, values.phone, values.status)
+            handleCreateExpandClick()
         }
 
         if (expandedDelete) {
-            props.deleteJob(values._id);
-            handleDeleteExpandClick();
+            props.deleteJob(values._id)
+            handleDeleteExpandClick()
         }
 
-    };
+    }
 
     return (
         <>
@@ -298,30 +298,30 @@ const AdminPanelJobs: FC<JobsWithActivatePropsType> = (props) => {
 const setInitialData = (props: InitialDataType, reset: boolean, expandedDelete?: boolean) => {
     //debugger
     if (reset) {
-        initialData._id = '';
-        initialData.company = '';
-        initialData.title = '';
-        initialData.description = '';
-        initialData.price = '';
-        initialData.email = '';
-        initialData.phone = '';
-        initialData.status = true;
-        initialData.createAt = '';
-        initialData.activate = false;
+        initialData._id = ''
+        initialData.company = ''
+        initialData.title = ''
+        initialData.description = ''
+        initialData.price = ''
+        initialData.email = ''
+        initialData.phone = ''
+        initialData.status = true
+        initialData.createAt = ''
+        initialData.activate = false
     } else {
-        initialData._id = props._id;
-        initialData.company = props.company;
-        initialData.title = props.title;
-        initialData.description = props.description;
-        initialData.price = props.price;
-        initialData.email = props.email;
-        initialData.phone = props.phone;
+        initialData._id = props._id
+        initialData.company = props.company
+        initialData.title = props.title
+        initialData.description = props.description
+        initialData.price = props.price
+        initialData.email = props.email
+        initialData.phone = props.phone
         if (expandedDelete)
-            initialData.status = false;
+            initialData.status = false
         else
-            initialData.status = props.status;
-        initialData.createAt = props.createAt;
-        initialData.activate = false;
+            initialData.status = props.status
+        initialData.createAt = props.createAt
+        initialData.activate = false
     }
 
 }
@@ -342,14 +342,14 @@ const initialData = {
 ///////////////////////////////////////////////////////
 
 const EditJobsForm: FC<InjectedFormProps<InitialDataType, JobsPropsWithExpandedPropsType> & JobsPropsWithExpandedPropsType> = (props) => {
-    const classesStyle = useStyles();
-    const {handleSubmit, reset} = props;
-    let {pristine, submitting} = props;
+    const classesStyle = useStyles()
+    const {handleSubmit, reset} = props
+    let {pristine, submitting} = props
     //debugger
 
     if (props.expandedEdit) {
-        pristine = false;
-        submitting = false;
+        pristine = false
+        submitting = false
     }
 
     let getLabel = () => {

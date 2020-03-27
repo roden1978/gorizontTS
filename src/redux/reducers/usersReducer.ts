@@ -3,8 +3,8 @@ import {
     SET_CURRENT_USERS_ID, SET_USERS_COUNT, IS_ALL_USERS,
     CREATE_USER_SUCCESS, SET_DEFAULT_USER, SET_ADMIN_ROOT_COUNT,
     IS_ADMIN_ROOT_COUNT
-} from "../actions/types";
-import {UsersType} from "../../tstypes/usersTypes";
+} from "../actions/types"
+import {UsersType} from "../../tstypes/usersTypes"
 
 let initialState = {
     users: [] as Array<UsersType>,
@@ -27,7 +27,7 @@ const users_reducer = (state = initialState, action: any):InitialStateType => {
             * копия ОБЪЕКТОВ И ПОДОБЪЕКТОВ в ФИГУРНЫХ СКОБКАХ*/
             return {
                 ...state, users: action.payload
-            };
+            }
         }
         case  SET_USERS_ITEM:{
             return {
@@ -80,8 +80,8 @@ const users_reducer = (state = initialState, action: any):InitialStateType => {
         }
 
         default:
-            return state;
+            return state
     }
 }
 
-export default users_reducer;
+export default users_reducer

@@ -1,5 +1,5 @@
-import {SET_CONTACTS, SET_IS_CHANGED_CONTACTS, SET_DEFAULT_CONTACTS} from "../actions/types";
-import {ContactsType} from "../../tstypes/contactsTypes";
+import {SET_CONTACTS, SET_IS_CHANGED_CONTACTS, SET_DEFAULT_CONTACTS} from "../actions/types"
+import {ContactsType} from "../../tstypes/contactsTypes"
 
 let initialState = {
     contacts: [] as Array<ContactsType>,
@@ -17,7 +17,7 @@ const contacts_reducer = (state = initialState, action: any): InitialStateType =
             * копия ОБЪЕКТОВ И ПОДОБЪЕКТОВ в ФИГУРНЫХ СКОБКАХ*/
             return {
                 ...state, contacts: action.payload
-            };
+            }
         }
         case SET_IS_CHANGED_CONTACTS: {
             /*копия МАССИВОВ в КВАДРАТНЫХ СКОБКАХ
@@ -25,7 +25,7 @@ const contacts_reducer = (state = initialState, action: any): InitialStateType =
             * копия ОБЪЕКТОВ И ПОДОБЪЕКТОВ в ФИГУРНЫХ СКОБКАХ*/
             return {
                 ...state, isChangedContacts: action.payload
-            };
+            }
         }
         case SET_DEFAULT_CONTACTS:{
             return {
@@ -37,8 +37,8 @@ const contacts_reducer = (state = initialState, action: any): InitialStateType =
             }
         }
         default:
-            return state;
+            return state
     }
 }
 
-export default contacts_reducer;
+export default contacts_reducer

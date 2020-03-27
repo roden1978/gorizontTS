@@ -1,9 +1,9 @@
-import React from 'react';
-import {makeStyles} from '@material-ui/core/styles';
-import Modal from '@material-ui/core/Modal';
-import Backdrop from '@material-ui/core/Backdrop';
-import Fade from '@material-ui/core/Fade';
-import ButtonBase from "@material-ui/core/ButtonBase";
+import React from 'react'
+import {makeStyles} from '@material-ui/core/styles'
+import Modal from '@material-ui/core/Modal'
+import Backdrop from '@material-ui/core/Backdrop'
+import Fade from '@material-ui/core/Fade'
+import ButtonBase from "@material-ui/core/ButtonBase"
 
 const useStyles = makeStyles(theme => ({
     modal: {
@@ -20,20 +20,20 @@ const useStyles = makeStyles(theme => ({
     im: {
         width: '100%',
     },
-}));
+}))
 
 const ModalPhoto = (props) => {
-    const classes = useStyles();
-    const [open, setOpen] = React.useState(true);
+    const classes = useStyles()
+    const [open, setOpen] = React.useState(true)
 
     /*const handleOpen = () => {
-        setOpen(true);
-    };*/
+        setOpen(true)
+    }*/
 
     const handleClose = () => {
-        setOpen(false);
-        props.changeClicked(false);
-    };
+        setOpen(false)
+        props.changeClicked(false)
+    }
 
     return (
         <div>
@@ -53,14 +53,14 @@ const ModalPhoto = (props) => {
                         <ButtonBase
                             className={classes.paper}
                             onClick={()=>{
-                            handleClose();
+                            handleClose()
                         }}>
                             <img className={classes.im} src={props.url} alt=''/>
                         </ButtonBase>
                 </Fade>
             </Modal>
         </div>
-    );
+    )
 }
 
-export default ModalPhoto;
+export default ModalPhoto

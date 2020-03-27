@@ -5,8 +5,8 @@ import {
     SET_JOBS,
     SET_JOBS_COUNT,
     SET_JOBS_ITEM
-} from "../actions/types";
-import {JobType} from "../../tstypes/jobsTypes";
+} from "../actions/types"
+import {JobType} from "../../tstypes/jobsTypes"
 
 let initialState = {
     jobs: [] as Array<JobType>,
@@ -26,7 +26,7 @@ const jobs_reducer = (state = initialState, action: any): InitialStateType => {
             * копия ОБЪЕКТОВ И ПОДОБЪЕКТОВ в ФИГУРНЫХ СКОБКАХ*/
             return {
                 ...state, jobs: action.payload
-            };
+            }
         }
         case  IS_ALL_JOBS:{
             return {
@@ -62,8 +62,8 @@ const jobs_reducer = (state = initialState, action: any): InitialStateType => {
             }
         }
         default:
-            return state;
+            return state
     }
 }
 
-export default jobs_reducer;
+export default jobs_reducer

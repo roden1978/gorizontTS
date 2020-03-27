@@ -13,11 +13,11 @@ import {
     SET_PROJECTS_ITEM,
     SET_PROJECTS_PHOTOS,
     SET_URL_TO_PROJECTS_PHOTOS
-} from "./types";
-import {ProjectsType} from "../../tstypes/projectsTypes";
-import {PhotosetType, PhotoSizesType, PhotoType} from "../../tstypes/photosTypes";
-import {ThunkAction} from "redux-thunk";
-import {AppStateType} from "../store";
+} from "./types"
+import {ProjectsType} from "../../tstypes/projectsTypes"
+import {PhotosetType, PhotoSizesType, PhotoType} from "../../tstypes/photosTypes"
+import {ThunkAction} from "redux-thunk"
+import {AppStateType} from "../store"
 
 
 export type ProjectsActionsTypes = SetProjectsActionType | SetProjectActionType | SetIdActionType |
@@ -184,37 +184,37 @@ export type ProjectsThunkType = ThunkAction<Promise<void> | void, AppStateType, 
  */
 export const getProjects = (): ProjectsThunkType => {
     return async (dispatch) => {
-        const projects = await mongodbAPI.getProjects();
-        dispatch(setProjects(projects));
+        const projects = await mongodbAPI.getProjects()
+        dispatch(setProjects(projects))
     }
 }
 
 export const getProject = (id: string): ProjectsThunkType => {
     return async (dispatch) => {
-        const project = await mongodbAPI.getProject(id);
-        dispatch(setProject(project));
+        const project = await mongodbAPI.getProject(id)
+        dispatch(setProject(project))
     }
 }
 
 export const getId = (id: string): ProjectsThunkType => {
     return (dispatch) => {
-        dispatch(setId(id));
+        dispatch(setId(id))
     }
 }
 
 export const getAllProjects = (): ProjectsThunkType => {
     return async (dispatch) => {
-        const projects = await mongodbAPI.getAllProjects();
-        dispatch(setProjects(projects));
+        const projects = await mongodbAPI.getAllProjects()
+        dispatch(setProjects(projects))
     }
 }
 
 export const createProject = (title: string, description: string, text: string,
                               albumId: string, albumName: string, status: boolean): ProjectsThunkType =>{
     return async (dispatch) =>{
-        const data = await mongodbAPI.createProject({title, description, text, albumId, albumName, status});
+        const data = await mongodbAPI.createProject({title, description, text, albumId, albumName, status})
         if (data.resultCode === 0) {
-            dispatch(getAllProjects());
+            dispatch(getAllProjects())
         }
     }
 }
@@ -222,9 +222,9 @@ export const createProject = (title: string, description: string, text: string,
 export const updateProject = (id: string, title: string, description: string, text: string,
                               albumId: string, albumName:string, status: boolean, createAt: string): ProjectsThunkType =>{
     return async (dispatch) =>{
-        const data = await mongodbAPI.updateProject({id, title, description, text, albumId, albumName, status, createAt});
+        const data = await mongodbAPI.updateProject({id, title, description, text, albumId, albumName, status, createAt})
         if (data.resultCode === 0) {
-            dispatch(getAllProjects());
+            dispatch(getAllProjects())
         }
     }
 }
@@ -232,9 +232,9 @@ export const updateProject = (id: string, title: string, description: string, te
 export const deleteProject = (id: string):ProjectsThunkType =>{
     //debugger
     return async (dispatch) =>{
-        const data = await mongodbAPI.deleteProject({id});
+        const data = await mongodbAPI.deleteProject({id})
         if (data.resultCode === 0) {
-            dispatch(getAllProjects());
+            dispatch(getAllProjects())
         }
     }
 }
@@ -242,21 +242,21 @@ export const deleteProject = (id: string):ProjectsThunkType =>{
 export const getPhotos = (id: string): ProjectsThunkType => {
     //debugger
     return async (dispatch) => {
-        const photos = await flickrAPI.getPhotos(id);
-        dispatch(setProjectsPhotos(id, photos));
+        const photos = await flickrAPI.getPhotos(id)
+        dispatch(setProjectsPhotos(id, photos))
     }
 }
 
 export const getPhotoWithUrl = (id: string, card: PhotoType): ProjectsThunkType => {
     return async (dispatch) => {
-        const photo = await flickrAPI.getPhoto(id);
-        dispatch(setUrlToPhotos(photo, card));
+        const photo = await flickrAPI.getPhoto(id)
+        dispatch(setUrlToPhotos(photo, card))
     }
 }
 
 export const checkAlbum = (id: string): ProjectsThunkType =>{
     return async (dispatch) =>{
-        const data = await flickrAPI.getPhotos(id);
+        const data = await flickrAPI.getPhotos(id)
         if (data) {
             dispatch(setAlbumIdForRedirect(data.photoset.id))
         }

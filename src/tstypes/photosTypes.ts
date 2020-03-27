@@ -1,3 +1,4 @@
+//Тип описывающий фотографию
 export type PhotoType = {
     id: string
     secret: string
@@ -11,6 +12,7 @@ export type PhotoType = {
     url?: string
     albumId?: string
 }
+//Тип описывающий размер фотографии
 export type SizeType = {
     label: string
     width: number
@@ -49,7 +51,7 @@ export type PhotoAlbumsType = {
     total: number
     photoset: Array<PhotoAlbumType>
 }
-export type PhotoAlbumType= {
+export type PhotoAlbumType = {
     id: string
     owner: string
     username: string
@@ -72,7 +74,8 @@ export type PhotoAlbumType= {
     needs_interstitial: number
     url?: string
 }
-
+//url?: string
+//Тип описывающий фотоальбом с массивом типов описывающих фотографию
 export type PhotosType = {
     id: string
     primary: string

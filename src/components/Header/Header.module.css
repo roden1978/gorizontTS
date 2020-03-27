@@ -1,5 +1,5 @@
 .header {
-    /*background-color: #282c34;*/
+    /*background-color: #282c34*/
     height: 210px;
     display: flex;
     color: coral;
@@ -10,13 +10,13 @@
     background-image: url("../../assets/backgrounds/headerBkg.jpg");
     background-size: cover;
     z-index: 997;
-   /* margin-left: 5vw;*/
-    /*justify-content: center;*/
+   /* margin-left: 5vw*/
+    /*justify-content: center*/
 }
 
 .logo{
     display: inline-block;
-    /*border: 1px solid grey;*/
+    /*border: 1px solid grey*/
     width: 50%;
 }
 .zav img{
@@ -27,7 +27,7 @@
 }
 .nameContainer{
     display: inline-block;
-    /*border: 1px solid blue;*/
+    /*border: 1px solid blue*/
     width: 50%;
     text-align: center;
 }
@@ -108,10 +108,10 @@
     transform: rotate(-45deg);
 }
 @keyframes flicker {
-    0% {transform: rotate(-2deg);}
-    20% {transform: rotate(2deg) scaleY(1.3);}
-    40% {transform: rotate(-2deg);}
-    60% {transform: rotate(1deg);}
-    80% {transform: rotate(-2deg) scaleY(1.1);}
-    100% {transform: rotate(1deg);}
+    0% {transform: rotate(-2deg)}
+    20% {transform: rotate(2deg) scaleY(1.3)}
+    40% {transform: rotate(-2deg)}
+    60% {transform: rotate(1deg)}
+    80% {transform: rotate(-2deg) scaleY(1.1)}
+    100% {transform: rotate(1deg)}
 }

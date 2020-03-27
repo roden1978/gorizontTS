@@ -5,8 +5,8 @@ import {
     SET_URL_TO_PHOTOS,
     IS_CLICKED,
     SET_URL
-} from "../actions/types";
-import { PhotoType, PhotoSizesType, SizeType, PhotoAlbumType} from "../../tstypes/photosTypes";
+} from "../actions/types"
+import { PhotoType, PhotoSizesType, SizeType, PhotoAlbumType} from "../../tstypes/photosTypes"
 
 let initialState = {
     sets: [] as Array<PhotoAlbumType>,
@@ -15,7 +15,7 @@ let initialState = {
     photosWithUrl: [] as Array<PhotoType>,
     photo: [] as Array<PhotoSizesType>,
     isClicked: false,
-    url: '' as string
+    url: ''
 }
 
 export type InitialStateType = typeof initialState
@@ -29,7 +29,7 @@ const photos_reducer = (state = initialState, action: any): InitialStateType => 
             * копия ОБЪЕКТОВ И ПОДОБЪЕКТОВ в ФИГУРНЫХ СКОБКАХ*/
             return {
                 ...state, sets: action.payload
-            };
+            }
         }
         case SET_PHOTOS: {
             /*копия МАССИВОВ в КВАДРАТНЫХ СКОБКАХ
@@ -37,7 +37,7 @@ const photos_reducer = (state = initialState, action: any): InitialStateType => 
             * копия ОБЪЕКТОВ И ПОДОБЪЕКТОВ в ФИГУРНЫХ СКОБКАХ*/
             return {
                 ...state, photos: action.payload.photoset.photo
-            };
+            }
         }
         case SET_URL_TO_ALBUMS:{
             const size: SizeType = action.payload.sizes.size.find((ph: SizeType) => ph.label === "Medium")
@@ -62,14 +62,14 @@ const photos_reducer = (state = initialState, action: any): InitialStateType => 
             return {...state, url: action.payload}
         }
         default:
-            return state;
+            return state
     }
 }
 
-export default photos_reducer;
+export default photos_reducer
 
 /* case SET_PHOTO: {
             return {
                 ...state, photo: action.payload.sizes.size
-            };
+            }
         }*/

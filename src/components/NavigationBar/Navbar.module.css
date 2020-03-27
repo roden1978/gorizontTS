@@ -31,7 +31,7 @@ div.menuItem a{
 }
 
 div.menuItem a:hover{
-   /* color: lightcoral;*/
+   /* color: lightcoral*/
     width: 180px;
 }
 
@@ -41,37 +41,37 @@ div.menuItem a.activeLink{
 
 
 /*ul li a:hover {
-   !* color: coral;*!
-    background-color: #282c34;
-    display: block;
+   !* color: coral*!
+    background-color: #282c34
+    display: block
 }
 
 ul li a.activeLink {
-    color: coral;
+    color: coral
 
 }*/
 
 /*
 
 .item a{
-    color: white;
-    text-transform: uppercase;
-    text-decoration: none;
-    height: 45px;
-left: 700px;
-display: block;
+    color: white
+    text-transform: uppercase
+    text-decoration: none
+    height: 45px
+left: 700px
+display: block
 }
 
 .item a.activeLink{
-    color: coral;
+    color: coral
 }
 
 .item a:hover{
-    color: green;
-    background-color: darkseagreen;
+    color: green
+    background-color: darkseagreen
 }
 
 .app_nav .item {
-    margin-left: 10px;
-    display: block;
+    margin-left: 10px
+    display: block
 }*/

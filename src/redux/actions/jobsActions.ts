@@ -7,10 +7,10 @@ import {
     SET_JOBS_COUNT,
     SET_JOBS_ITEM,
     SET_DEFAULT_JOB
-} from "./types";
-import {JobType} from "../../tstypes/jobsTypes";
-import {ThunkAction} from "redux-thunk";
-import {AppStateType} from "../store";
+} from "./types"
+import {JobType} from "../../tstypes/jobsTypes"
+import {ThunkAction} from "redux-thunk"
+import {AppStateType} from "../store"
 
 type JobsActionType = SetJobsActionType | SetIsAllJobsActionType | SetChangeJobsItemActionType |
     SetDefaultJobActionType | SetJobsItemActionType | SetCurrentJobsIdActionType |
@@ -93,14 +93,14 @@ export type JobsThunkType = ThunkAction<Promise<void>, AppStateType, unknown, Jo
 /*Thunk Creators*/
 export const getJobs = (): JobsThunkType => {
     return async (dispatch) => {
-        const jobs = await mongodbAPI.getJobs();
-        dispatch(setJobs(jobs));
+        const jobs = await mongodbAPI.getJobs()
+        dispatch(setJobs(jobs))
     }
 }
 export const getAllJobs = (): JobsThunkType => {
     return async (dispatch) => {
-        const jobs = await mongodbAPI.getAllJobs();
-        dispatch(setJobs(jobs));
+        const jobs = await mongodbAPI.getAllJobs()
+        dispatch(setJobs(jobs))
     }
 }
 
@@ -110,9 +110,9 @@ export const createJob = (company: string, title: string, description:string, pr
         const data = await mongodbAPI.createJob({
             company, title, description, price,
             email, phone, status
-        });
+        })
         if (data.resultCode === 0) {
-            dispatch(getAllJobs());
+            dispatch(getAllJobs())
         }
     }
 }
@@ -123,18 +123,18 @@ export const updateJob = (id: string, company: string, title: string, descriptio
         const data = await mongodbAPI.updateJob({
             id, company, title, description, price,
             email, phone, status, createAt
-        });
+        })
         if (data.resultCode === 0) {
-            dispatch(getAllJobs());
+            dispatch(getAllJobs())
         }
     }
 }
 
 export const deleteJob = (id: string): JobsThunkType => {
     return async (dispatch) => {
-        const data = await mongodbAPI.deleteJob({id});
+        const data = await mongodbAPI.deleteJob({id})
         if (data.resultCode === 0) {
-            dispatch(getAllJobs());
+            dispatch(getAllJobs())
         }
     }
 }

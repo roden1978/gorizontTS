@@ -1,13 +1,13 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
-import {Link} from 'react-router-dom';
+import React, {FC} from 'react'
+import { makeStyles } from '@material-ui/core/styles'
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
+import Typography from '@material-ui/core/Typography'
+import IconButton from '@material-ui/core/IconButton'
+import MenuIcon from '@material-ui/icons/Menu'
+import MenuItem from '@material-ui/core/MenuItem'
+import Menu from '@material-ui/core/Menu'
+import {Link} from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -19,21 +19,21 @@ const useStyles = makeStyles(theme => ({
     title: {
         flexGrow: 1,
     },
-}));
+}))
 
-export default function MenuAppBar() {
-    const classes = useStyles();
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const open = Boolean(anchorEl);
+const MenuAppBar:FC<{}> = () =>{
+    const classes = useStyles()
+    const [anchorEl, setAnchorEl] = React.useState(null)
+    const open = Boolean(anchorEl)
 
 
-    const handleMenu = event => {
-        setAnchorEl(event.currentTarget);
-    };
+    const handleMenu = (event: any) => {
+        setAnchorEl(event.currentTarget)
+    }
 
     const handleClose = () => {
-        setAnchorEl(null);
-    };
+        setAnchorEl(null)
+    }
 
      return (
         <div className={classes.root}>
@@ -84,5 +84,7 @@ export default function MenuAppBar() {
                 </Toolbar>
             </AppBar>
         </div>
-    );
+    )
 }
+
+export default MenuAppBar

@@ -1,14 +1,14 @@
-import React from 'react';
+import React from 'react'
 import {
     getJobs, getAllJobs, updateJob, createJob, deleteJob,
     setChangeJobsItem, setCurrentJobsId, setIsAllJobs, setJobsCount,
     setJobsItem, setDefaultJob
-} from '../../redux/actions/jobsActions';
-import Jobs from "./Jobs";
-import {connect} from "react-redux";
-import Spinner from "../../common/Spinner";
-import {JobType} from "../../tstypes/jobsTypes";
-import {AppStateType} from "../../redux/store";
+} from '../../redux/actions/jobsActions'
+import Jobs from "./Jobs"
+import {connect} from "react-redux"
+import Spinner from "../../common/Spinner"
+import {JobType} from "../../tstypes/jobsTypes"
+import {AppStateType} from "../../redux/store"
 
 type MapStateToPropsType = {
     jobs: Array<JobType>
@@ -44,25 +44,25 @@ class JobsContainer extends React.Component<PropsType> {
     componentDidMount() {
         //debugger
         if (this.props.adminMode)
-            this.props.getAllJobs();
+            this.props.getAllJobs()
         else
-            this.props.getJobs();
+            this.props.getJobs()
     }
 
     componentDidUpdate(prevProps: PropsType, prevState: PrevStateType) {
 
         if (this.props.getJobsItem) {
-            this.props.setChangeJobsItem();
-            this.props.setJobsItem(false);
+            this.props.setChangeJobsItem()
+            this.props.setJobsItem(false)
         }
 
         if (this.props.isAllJobs && this.props.adminMode) {
-            //setTimeout(null, 2000);
-            this.props.getAllJobs();
-            this.props.setIsAllJobs(false);
+            //setTimeout(null, 2000)
+            this.props.getAllJobs()
+            this.props.setIsAllJobs(false)
         }
         if (this.props.jobs.length === 0) {
-            this.props.setDefaultJob();
+            this.props.setDefaultJob()
         }
     }
 
@@ -86,7 +86,7 @@ let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
         jobsCount: state.jobs.jobsCount,
         adminMode: state.auth.adminMode
     }
-};
+}
 
 /*Создаем контейнерную кмпоненту MyNewsContainer*/
 /*Двойные скобки обозначют что мы вызвали фукцию connect, а она
@@ -95,7 +95,7 @@ export default connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppState
     getJobs, getAllJobs, updateJob, createJob, deleteJob,
     setChangeJobsItem, setCurrentJobsId, setIsAllJobs,
     setJobsCount, setJobsItem, setDefaultJob
-})(JobsContainer);
+})(JobsContainer)
 /*
 jobs={this.props.jobs}
  */

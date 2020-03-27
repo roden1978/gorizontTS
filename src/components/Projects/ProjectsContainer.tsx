@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import {
     getProjects, getProject, getId,
     setLoadAlbums, getAllProjects, createProject,
@@ -6,14 +6,14 @@ import {
     updateProject, setProjectsCount, setProjectsItem, setDefaultProject,
     getPhotos, getPhotoWithUrl, checkAlbum, setAlbumIdForRedirect,
     setCurrentProjectId
-} from '../../redux/actions/projectsActions';
+} from '../../redux/actions/projectsActions'
 import {getPhotosets} from '../../redux/actions/photosActions'
-import Projects from "./Projects";
-import {connect} from "react-redux";
-import Spinner from "../../common/Spinner";
-import {AppStateType} from "../../redux/store";
-import {ProjectsType} from "../../tstypes/projectsTypes";
-import {PhotoAlbumType, PhotoType} from "../../tstypes/photosTypes";
+import Projects from "./Projects"
+import {connect} from "react-redux"
+import Spinner from "../../common/Spinner"
+import {AppStateType} from "../../redux/store"
+import {ProjectsType} from "../../tstypes/projectsTypes"
+import {PhotoAlbumType, PhotoType} from "../../tstypes/photosTypes"
 
 export type MapStateToPropsType = {
     projects: Array<ProjectsType>
@@ -65,16 +65,16 @@ export type PropsType = MapStateToPropsType & MapDispatchToPropsType & OwnProps
 class ProjectsContainer extends React.Component<PropsType> {
     updateProjectsData() {
         if (this.props.projectId) {
-            this.props.getProject(this.props.projectId);
-            this.props.getId(this.props.projectId);
-            this.props.getPhotosets();
+            this.props.getProject(this.props.projectId)
+            this.props.getId(this.props.projectId)
+            this.props.getPhotosets()
         } else {
             if (this.props.adminMode) {
-                this.props.getAllProjects();
-                this.props.getPhotosets();
+                this.props.getAllProjects()
+                this.props.getPhotosets()
             } else {
-                this.props.getProjects();
-                this.props.getPhotosets();
+                this.props.getProjects()
+                this.props.getPhotosets()
             }
 
         }
@@ -89,26 +89,26 @@ class ProjectsContainer extends React.Component<PropsType> {
             this.updateProjectsData()
 
         if (this.props.loadAlbums) {
-            this.props.getPhotosets();
-            this.props.setLoadAlbums(false);
+            this.props.getPhotosets()
+            this.props.setLoadAlbums(false)
         }
         if (this.props.getProjectsItem) {
-            this.props.setChangeProjectsItem();
-            this.props.setProjectsItem(false);
+            this.props.setChangeProjectsItem()
+            this.props.setProjectsItem(false)
         }
 
         if (this.props.isAllProjects && this.props.adminMode) {
-            this.props.getAllProjects();
-            this.props.setIsAllProjects(false);
-            //setTimeout(null, 2000);
+            this.props.getAllProjects()
+            this.props.setIsAllProjects(false)
+            //setTimeout(null, 2000)
         }
 
         /* if (this.props.isAllProjects && !this.props.adminMode) {
-             this.props.getProjects();
-             this.props.setIsAllProjects(false);
+             this.props.getProjects()
+             this.props.setIsAllProjects(false)
          }*/
         if (this.props.projects.length === 0) {
-            this.props.setDefaultProject();
+            this.props.setDefaultProject()
         }
         //////////////////////////////////
         //debugger
@@ -122,8 +122,8 @@ class ProjectsContainer extends React.Component<PropsType> {
     }
 
     componentWillUnmount() {
-        this.props.getId('');
-        this.props.projects.length = 0;
+        this.props.getId('')
+        this.props.projects.length = 0
     }
 
     render() {
@@ -153,7 +153,7 @@ let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
         albumsCount: state.projects.albumsCount,
         albumIdForRedirect: state.projects.albumIdForRedirect
     }
-};
+}
 
 /*Создаем контейнерную кмпоненту MyNewsContainer*/
 /*Двойные скобки обозначют что мы вызвали фукцию connect, а она
@@ -165,4 +165,4 @@ export default connect<MapStateToPropsType, MapDispatchToPropsType, OwnProps, Ap
     updateProject, setProjectsCount, setProjectsItem,
     getPhotosets, setDefaultProject, getPhotos, getPhotoWithUrl,
     checkAlbum, setAlbumIdForRedirect, setCurrentProjectId
-})(ProjectsContainer);
+})(ProjectsContainer)

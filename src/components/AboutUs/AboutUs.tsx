@@ -1,31 +1,31 @@
 import React, {FC} from 'react'
-import {useStyles} from './AboutUsStyles';
-import {Container} from "@material-ui/core";
-import Grid from "@material-ui/core/Grid";
-import Card from "@material-ui/core/Card";
-import CardHeader from "@material-ui/core/CardHeader";
-import CardContent from "@material-ui/core/CardContent";
-import Typography from "@material-ui/core/Typography";
-import CardActions from "@material-ui/core/CardActions";
-import Tooltip from "@material-ui/core/Tooltip";
-import IconButton from "@material-ui/core/IconButton";
-import clsx from "clsx";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import Collapse from "@material-ui/core/Collapse";
-import {Field, InjectedFormProps, reduxForm} from "redux-form";
-import {renderTextField} from "../../common/renderFilds";
+import {useStyles} from './AboutUsStyles'
+import {Container} from "@material-ui/core"
+import Grid from "@material-ui/core/Grid"
+import Card from "@material-ui/core/Card"
+import CardHeader from "@material-ui/core/CardHeader"
+import CardContent from "@material-ui/core/CardContent"
+import Typography from "@material-ui/core/Typography"
+import CardActions from "@material-ui/core/CardActions"
+import Tooltip from "@material-ui/core/Tooltip"
+import IconButton from "@material-ui/core/IconButton"
+import clsx from "clsx"
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
+import Collapse from "@material-ui/core/Collapse"
+import {Field, InjectedFormProps, reduxForm} from "redux-form"
+import {renderTextField} from "../../common/renderFilds"
 import {validate} from '../../common/validate'
-import Button from "@material-ui/core/Button";
-import RefreshIcon from "@material-ui/icons/Refresh";
-import {PropsType} from "./AboutUsContainer";
-import {UseStateExpandedProps} from "../../tstypes/commonTypes";
-import {AboutType} from "../../tstypes/aboutTypes";
+import Button from "@material-ui/core/Button"
+import RefreshIcon from "@material-ui/icons/Refresh"
+import {PropsType} from "./AboutUsContainer"
+import {UseStateExpandedProps} from "../../tstypes/commonTypes"
+import {AboutType} from "../../tstypes/aboutTypes"
 
 type AboutUsWithExpandedProps = PropsType & UseStateExpandedProps
 type InitialDataType = typeof initialData
 
 const AboutUs: FC<PropsType> = (props) => {
-    const classes = useStyles();
+    const classes = useStyles()
 
     return (
         <div>
@@ -50,7 +50,7 @@ const AboutUs: FC<PropsType> = (props) => {
                                                 {props.about[0].text.split('\n').map((i, key) => {
                                                     return <Typography key={key} paragraph variant="body1"
                                                                        color="textPrimary"
-                                                                       gutterBottom>{i}</Typography>;
+                                                                       gutterBottom>{i}</Typography>
                                                 })}
                                             </>
                                         }
@@ -63,56 +63,56 @@ const AboutUs: FC<PropsType> = (props) => {
                 </Container>
             </div>
         </div>
-    );
+    )
 }
 
-export default AboutUs;
+export default AboutUs
 
 const AdminPanelAboutUs: FC<AboutUsWithExpandedProps> = (props) => {
     //debugger
-    const classes = useStyles();
-    const [expandedEdit, setExpandedEdit] = React.useState(false);
-    const [expandedCreate, setExpandedCreate] = React.useState(false);
+    const classes = useStyles()
+    const [expandedEdit, setExpandedEdit] = React.useState(false)
+    const [expandedCreate, setExpandedCreate] = React.useState(false)
 
     const handleCreateExpandClick = () => {
-        setExpandedCreate(!expandedCreate);
+        setExpandedCreate(!expandedCreate)
         if (!expandedCreate) {
-            setInitialData(props);
+            setInitialData(props)
         } else {
-            props.getAbout();
+            props.getAbout()
         }
 
-    };
+    }
 
     const handleEditExpandClick = () => {
         //debugger
-        setExpandedEdit(!expandedEdit);
+        setExpandedEdit(!expandedEdit)
         if (!expandedEdit) {
-            setInitialData(props);
+            setInitialData(props)
         } else {
-            props.setIsChangedAbout(true);
+            props.setIsChangedAbout(true)
         }
 
-        //props.getId(null);
-    };
+        //props.getId(null)
+    }
     const handleRefreshClick = () => {
-        props.getAbout();
-    };
+        props.getAbout()
+    }
 
     const showResults = (values: AboutType) => {
-        //      window.alert(`You submitted:\n\n${JSON.stringify(values, null, 2)}`);
+        //      window.alert(`You submitted:\n\n${JSON.stringify(values, null, 2)}`)
 
         if (expandedEdit) {
-            props.updateAbout(values._id, values.text);
-            handleEditExpandClick();
+            props.updateAbout(values._id, values.text)
+            handleEditExpandClick()
         }
 
         if (expandedCreate) {
-            props.createAbout(values.text);
-            handleCreateExpandClick();
+            props.createAbout(values.text)
+            handleCreateExpandClick()
         }
 
-    };
+    }
 
     return (
         <>
@@ -172,8 +172,8 @@ const AdminPanelAboutUs: FC<AboutUsWithExpandedProps> = (props) => {
 ////////////////////////////////////////////////////////
 const setInitialData = (props: PropsType) => {
     //debugger
-    initialData._id = props.about[0]._id;
-    initialData.text = props.about[0].text;
+    initialData._id = props.about[0]._id
+    initialData.text = props.about[0].text
 }
 
 const initialData = {
@@ -183,13 +183,13 @@ const initialData = {
 ///////////////////////////////////////////////////////
 
 const EditAboutForm: FC<InjectedFormProps<InitialDataType, AboutUsWithExpandedProps> & AboutUsWithExpandedProps> = (props) => {
-    const classesStyle = useStyles();
-    const {handleSubmit, reset} = props;
-    let {pristine, submitting} = props;
+    const classesStyle = useStyles()
+    const {handleSubmit, reset} = props
+    let {pristine, submitting} = props
 
     if (props.expandedEdit) {
-        pristine = false;
-        submitting = false;
+        pristine = false
+        submitting = false
     }
 
     return (

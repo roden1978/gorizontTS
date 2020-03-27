@@ -1,8 +1,8 @@
 import {mongodbAPI} from '../../api/api'
-import {SET_CONTACTS, SET_IS_CHANGED_CONTACTS, SET_DEFAULT_CONTACTS} from "./types";
-import {ContactsType} from "../../tstypes/contactsTypes";
-import {ThunkAction} from "redux-thunk";
-import {AppStateType} from "../store";
+import {SET_CONTACTS, SET_IS_CHANGED_CONTACTS, SET_DEFAULT_CONTACTS} from "./types"
+import {ContactsType} from "../../tstypes/contactsTypes"
+import {ThunkAction} from "redux-thunk"
+import {AppStateType} from "../store"
 
 export type ContactsActionsType = SetContactsActionType | SetIsChangedContactsActionType |SetDefaultContactsActionType
 
@@ -40,8 +40,8 @@ export type ContactsThunkType = ThunkAction<Promise<void>, AppStateType, unknown
 /*Thunk Creators*/
 export const getContacts = (): ContactsThunkType => {
     return async (dispatch) => {
-        const contacts = await mongodbAPI.getContacts();
-        dispatch(setContacts(contacts));
+        const contacts = await mongodbAPI.getContacts()
+        dispatch(setContacts(contacts))
     }
 }
 export const createContacts = (companyName: string, companyAddress: string, companyEmail: string, companyPhone: string,
@@ -54,9 +54,9 @@ export const createContacts = (companyName: string, companyAddress: string, comp
             companyEmail, companyPhone,
             phoneOwner01, phone01, phoneOwner02, phone02,
             phoneOwner03, phone03, phoneOwner04, phone04,
-            phoneOwner05, phone05});
+            phoneOwner05, phone05})
         if (data.resultCode === 0) {
-            dispatch(getContacts());
+            dispatch(getContacts())
         }
     }
 }
@@ -73,9 +73,9 @@ export const updateContacts = (id: string, companyName: string, companyAddress: 
             phoneOwner01, phone01, phoneOwner02, phone02,
             phoneOwner03, phone03, phoneOwner04, phone04,
             phoneOwner05, phone05
-        });
+        })
         if (data.resultCode === 0) {
-            dispatch(getContacts());
+            dispatch(getContacts())
         }
     }
 }

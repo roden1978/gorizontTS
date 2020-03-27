@@ -1,8 +1,8 @@
 import React, {FC} from 'react'
-import Project from "./Project/Project";
-import {Container, makeStyles} from "@material-ui/core";
-import Grid from "@material-ui/core/Grid";
-import {PropsType} from "../Projects/ProjectsContainer";
+import Project from "./Project/Project"
+import {Container, makeStyles} from "@material-ui/core"
+import Grid from "@material-ui/core/Grid"
+import {PropsType} from "../Projects/ProjectsContainer"
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -16,11 +16,11 @@ const useStyles = makeStyles(theme => ({
         paddingTop: theme.spacing(1),
         paddingBottom: theme.spacing(8),
     }
-}));
+}))
 
 const Projects:FC<PropsType> = (props) => {
 
-    const classes = useStyles();
+    const classes = useStyles()
 
     let projectItems = props.projects.map(
         project => <Project key={project._id} {...project} {...props}/>
@@ -41,8 +41,8 @@ const Projects:FC<PropsType> = (props) => {
                 </Grid>
             </Container>
         </div>
-    );
+    )
 }
 
-export default Projects;
+export default Projects
 //"xs","sm","md","lg","xl"

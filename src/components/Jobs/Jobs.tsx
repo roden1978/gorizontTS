@@ -1,9 +1,9 @@
 import React, {FC} from 'react'
 import Job from './Job/Job'
-import {makeStyles} from '@material-ui/core/styles';
-import Grid from "@material-ui/core/Grid";
-import {Container} from "@material-ui/core";
-import {PropsType} from "./JobsContainer";
+import {makeStyles} from '@material-ui/core/styles'
+import Grid from "@material-ui/core/Grid"
+import {Container} from "@material-ui/core"
+import {PropsType} from "./JobsContainer"
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -17,11 +17,11 @@ const useStyles = makeStyles(theme => ({
         paddingTop: theme.spacing(1),
         paddingBottom: theme.spacing(8),
     }
-}));
+}))
 
 const Jobs:FC<PropsType> = (props) => {
     //debugger
-    const classes = useStyles();
+    const classes = useStyles()
 
     let jobs = props.jobs.map(
         job => <Job key={job._id} {...job} {...props}/>)
@@ -42,7 +42,7 @@ const Jobs:FC<PropsType> = (props) => {
             </Grid>
             </Container>
         </div>
-    );
+    )
 }
 
-export default Jobs;
+export default Jobs

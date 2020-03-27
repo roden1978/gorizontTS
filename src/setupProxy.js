@@ -1,4 +1,4 @@
-const proxy = require("http-proxy-middleware");
+const proxy = require("http-proxy-middleware")
 
 module.exports = function(app) {
     app.use("/api",
@@ -6,8 +6,8 @@ module.exports = function(app) {
             target: "http://194.58.119.89:5005",
             changeOrigin: true
         })
-    );
-};
+    )
+}
 
 /*Для деплоя убрать из package.json строку "proxy": "http://localhost:8080",
 * и переименовать файл _setupProxy.js -> setupProxy.js
@@ -17,7 +17,7 @@ module.exports = function(app) {
         proxy('/api', {
             target: "https://warm-eyrie-80483.herokuapp.com",
             changeOrigin: true })
-    );
+    )
     *
     *
     * app.use(
@@ -34,7 +34,7 @@ module.exports = function(app) {
       target: "https://api.darksky.net/",
       changeOrigin: true
    })
-);
+)
 *
 * http://194.58.119.89:5000
 * */

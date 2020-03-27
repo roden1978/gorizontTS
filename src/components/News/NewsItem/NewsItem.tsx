@@ -42,9 +42,9 @@ const NewsItem: FC<NewsItemPropsType> = (props) => {
     let createAt = moment(props.createAt)
 
     if (props.projectIdForRedirect === props.project && props.currentNewsId === props._id) {
-        props.setProjectIdForRedirect('');
+        props.setProjectIdForRedirect('')
         const path = '/projects/' + props.projectIdForRedirect
-        history.push(path);
+        history.push(path)
     }
 
     const checkPrj = () => {

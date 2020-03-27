@@ -1,33 +1,33 @@
 import React, {FC} from 'react'
-import {useHistory} from 'react-router-dom';
-import {makeStyles} from '@material-ui/core/styles';
-import clsx from 'clsx';
+import {useHistory} from 'react-router-dom'
+import {makeStyles} from '@material-ui/core/styles'
+import clsx from 'clsx'
 import samosvalIcon from '../../../assets/icons/samosval.svg'
-import Card from "@material-ui/core/Card";
-import CardHeader from "@material-ui/core/CardHeader";
-import Typography from "@material-ui/core/Typography";
-import Avatar from "@material-ui/core/Avatar";
-import CardContent from "@material-ui/core/CardContent";
-import Grid from "@material-ui/core/Grid";
-import CardActions from "@material-ui/core/CardActions";
-import IconButton from "@material-ui/core/IconButton";
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import Collapse from "@material-ui/core/Collapse";
-import PhotoLibraryOutlinedIcon from '@material-ui/icons/PhotoLibraryOutlined';
-import RefreshIcon from '@material-ui/icons/Refresh';
-import moment from "moment";
+import Card from "@material-ui/core/Card"
+import CardHeader from "@material-ui/core/CardHeader"
+import Typography from "@material-ui/core/Typography"
+import Avatar from "@material-ui/core/Avatar"
+import CardContent from "@material-ui/core/CardContent"
+import Grid from "@material-ui/core/Grid"
+import CardActions from "@material-ui/core/CardActions"
+import IconButton from "@material-ui/core/IconButton"
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import Collapse from "@material-ui/core/Collapse"
+import PhotoLibraryOutlinedIcon from '@material-ui/icons/PhotoLibraryOutlined'
+import RefreshIcon from '@material-ui/icons/Refresh'
+import moment from "moment"
 import 'moment/locale/ru'
-import Tooltip from "@material-ui/core/Tooltip";
-import {Field, InjectedFormProps, reduxForm} from "redux-form";
-import {renderCheckbox, renderSelectField, renderTextField} from "../../../common/renderFilds";
+import Tooltip from "@material-ui/core/Tooltip"
+import {Field, InjectedFormProps, reduxForm} from "redux-form"
+import {renderCheckbox, renderSelectField, renderTextField} from "../../../common/renderFilds"
 import {validate} from '../../../common/validate'
-import Button from "@material-ui/core/Button";
-import GridList from "@material-ui/core/GridList";
-import GridListTile from "@material-ui/core/GridListTile";
-import {PropsType} from "../../Projects/ProjectsContainer";
-import {ProjectsType} from "../../../tstypes/projectsTypes";
-import {PhotoType} from "../../../tstypes/photosTypes";
-import {UseStateExpandedProps} from "../../../tstypes/commonTypes";
+import Button from "@material-ui/core/Button"
+import GridList from "@material-ui/core/GridList"
+import GridListTile from "@material-ui/core/GridListTile"
+import {PropsType} from "../../Projects/ProjectsContainer"
+import {ProjectsType} from "../../../tstypes/projectsTypes"
+import {PhotoType} from "../../../tstypes/photosTypes"
+import {UseStateExpandedProps} from "../../../tstypes/commonTypes"
 
 
 export const useStyles = makeStyles(theme => ({
@@ -105,7 +105,7 @@ export const useStyles = makeStyles(theme => ({
     im: {
         width: '100%',
     },
-}));
+}))
 
 
 type ExpandOverType = {
@@ -120,50 +120,50 @@ type ProjectPropsWithExpandedPropsType = ProjectPropsType & UseStateExpandedProp
 
 const Project:FC<ProjectPropsType> = (props) => {
     //debugger
-    const classes = useStyles();
-    const history = useHistory();
-    const [expanded, setExpanded] = React.useState(false);
+    const classes = useStyles()
+    const history = useHistory()
+    const [expanded, setExpanded] = React.useState(false)
 
     const handleExpandClick = () => {
         if (!props.id)
-            setExpanded(!expanded);
-        props.getId('');
-    };
+            setExpanded(!expanded)
+        props.getId('')
+    }
 
     const photos = props.photosWithUrl.filter((photo:PhotoType) => photo.albumId === props.albumId)
-    photos.length = 4;
+    photos.length = 4
 
     const expandOver = () => {
-        setExpanded(true);
-        props.getId('');
+        setExpanded(true)
+        props.getId('')
     }
 
     const viewAllProjectsClick = () => {
-        setExpanded(false);
-        props.getId('');
-        props.setIsAllProjects(true);
-         redirectToProjects();
-    };
+        setExpanded(false)
+        props.getId('')
+        props.setIsAllProjects(true)
+         redirectToProjects()
+    }
 
-    let createAt = moment(props.createAt);
-    createAt.locale('ru');
+    let createAt = moment(props.createAt)
+    createAt.locale('ru')
 
    /* const redirectToAlbum = (id: string)=>{
         const path = '/album/' + id
-        history.push(path);
+        history.push(path)
     }*/
 
     const redirectToProjects =()=>{
-       props.setIsAllProjects(false);
+       props.setIsAllProjects(false)
         const path = '/projects'
-        history.push(path);
+        history.push(path)
     }
 
     if(props.albumIdForRedirect === props.albumId && props.currentProjectId === props._id){
-        props.setAlbumIdForRedirect('');
-        //redirectToAlbum(props.albumIdForRedirect);
+        props.setAlbumIdForRedirect('')
+        //redirectToAlbum(props.albumIdForRedirect)
         const path = '/album/' + props.albumIdForRedirect
-        history.push(path);
+        history.push(path)
     }
 
     const checkAlbum = () =>{
@@ -172,8 +172,8 @@ const Project:FC<ProjectPropsType> = (props) => {
     }
 
    /* if(props.albumIdForRedirect){
-        redirectToAlbum(props.albumIdForRedirect);
-        props.setAlbumIdForRedirect('');
+        redirectToAlbum(props.albumIdForRedirect)
+        props.setAlbumIdForRedirect('')
     }
 
     const checkAlbum = () =>{
@@ -233,7 +233,7 @@ const Project:FC<ProjectPropsType> = (props) => {
                         <>
                             {props.text.split('\n').map((i, key) => {
                                 return <Typography key={key} paragraph variant="body1"
-                                                   color="textPrimary" gutterBottom>{i}</Typography>;
+                                                   color="textPrimary" gutterBottom>{i}</Typography>
                             })}
                         </>
                     </CardContent>
@@ -261,91 +261,91 @@ const Project:FC<ProjectPropsType> = (props) => {
                 {props.adminMode ? <AdminPanelProjects expandOver={expandOver} {...props}/> : ''}
             </Card>
         </Grid>
-    );
+    )
 }
 // && !props.adminMode
-export default Project;
+export default Project
 
 const AdminPanelProjects:FC<ProjectPropsType & ExpandOverType> = (props) => {
     //debugger
-    const classes = useStyles();
-    const [expandedCreate, setExpandedCreate] = React.useState(false);
-    const [expandedEdit, setExpandedEdit] = React.useState(false);
-    const [expandedDelete, setExpandedDelete] = React.useState(false);
+    const classes = useStyles()
+    const [expandedCreate, setExpandedCreate] = React.useState(false)
+    const [expandedEdit, setExpandedEdit] = React.useState(false)
+    const [expandedDelete, setExpandedDelete] = React.useState(false)
 
     const handleCreateExpandClick = () => {
-        setExpandedCreate(!expandedCreate);
+        setExpandedCreate(!expandedCreate)
         if (!expandedCreate) {
-            props.setLoadAlbums(true);
-            props.getId(props._id);
-            props.setProjectsItem(true);
-            setInitialData(props, true);
+            props.setLoadAlbums(true)
+            props.getId(props._id)
+            props.setProjectsItem(true)
+            setInitialData(props, true)
         } else {
-            props.expandOver();
-            props.albums.length = 0;
-            props.setIsAllProjects(true);
+            props.expandOver()
+            props.albums.length = 0
+            props.setIsAllProjects(true)
         }
-    };
+    }
 
     const handleEditExpandClick = () => {
-        //props.setProjectsCount(props.count);
-        setExpandedEdit(!expandedEdit);
+        //props.setProjectsCount(props.count)
+        setExpandedEdit(!expandedEdit)
         if (!expandedEdit) {
-            props.setLoadAlbums(true);
-            props.getId(props._id);
-            props.setProjectsItem(true);
-            setInitialData(props, false, false);
+            props.setLoadAlbums(true)
+            props.getId(props._id)
+            props.setProjectsItem(true)
+            setInitialData(props, false, false)
         } else {
-            props.expandOver();
-            props.setIsAllProjects(true);
+            props.expandOver()
+            props.setIsAllProjects(true)
         }
-    };
+    }
 
     const handleDeleteExpandClick = () => {
         //debugger
-        props.setProjectsCount(props.projects.length);
-        setExpandedDelete(!expandedDelete);
+        props.setProjectsCount(props.projects.length)
+        setExpandedDelete(!expandedDelete)
         if (!expandedDelete) {
-            props.getId(props._id);
-            props.setProjectsItem(true);
-            setInitialData(props, false, true);
+            props.getId(props._id)
+            props.setProjectsItem(true)
+            setInitialData(props, false, true)
         } else {
-            props.expandOver();
-            props.setIsAllProjects(true);
-            props.setProjectsCount(0);
+            props.expandOver()
+            props.setIsAllProjects(true)
+            props.setProjectsCount(0)
         }
-    };
+    }
 
     const handleRefreshClick = () => {
-        props.setIsAllProjects(true);
-    };
+        props.setIsAllProjects(true)
+    }
 
     const showResults = (values: ProjectsType) => {
-        const position = values.albumId.indexOf('|', 0);
-        let id, title;
+        const position = values.albumId.indexOf('|', 0)
+        let id, title
         if (position > 0) {
-            id = values.albumId.slice(0, position);
-            title = values.albumId.slice(position + 1);
-            values.albumId = id;
-            values.albumName = title.trim();
+            id = values.albumId.slice(0, position)
+            title = values.albumId.slice(position + 1)
+            values.albumId = id
+            values.albumName = title.trim()
         }
 
         if (expandedEdit) {
-            props.updateProject(values._id, values.title, values.description, values.text, values.albumId, values.albumName, values.status, values.createAt);
-            handleEditExpandClick();
+            props.updateProject(values._id, values.title, values.description, values.text, values.albumId, values.albumName, values.status, values.createAt)
+            handleEditExpandClick()
         }
 
 
         if (expandedCreate) {
-            props.createProject(values.title, values.description, values.text, values.albumId, values.albumName, values.status);
-            handleCreateExpandClick();
+            props.createProject(values.title, values.description, values.text, values.albumId, values.albumName, values.status)
+            handleCreateExpandClick()
         }
 
         if (expandedDelete) {
-            props.deleteProject(values._id);
-            handleDeleteExpandClick();
+            props.deleteProject(values._id)
+            handleDeleteExpandClick()
         }
-    };
+    }
 
     return (
         <>
@@ -426,26 +426,26 @@ const AdminPanelProjects:FC<ProjectPropsType & ExpandOverType> = (props) => {
 const setInitialData = (props: ProjectPropsType, reset: boolean, expandedDelete?: boolean) => {
     //debugger
     if (reset) {
-        initialData._id = '';
-        initialData.title = '';
-        initialData.description = '';
-        initialData.text = '';
-        initialData.albumId = '';
-        initialData.albumName = '';
-        initialData.status = true;
+        initialData._id = ''
+        initialData.title = ''
+        initialData.description = ''
+        initialData.text = ''
+        initialData.albumId = ''
+        initialData.albumName = ''
+        initialData.status = true
         initialData.createAt = ''
     } else {
-        initialData._id = props._id;
-        initialData.title = props.title;
-        initialData.description = props.description;
-        initialData.text = props.text;
-        initialData.albumId = props.albumId;
-        initialData.albumName = props.albumName;
+        initialData._id = props._id
+        initialData.title = props.title
+        initialData.description = props.description
+        initialData.text = props.text
+        initialData.albumId = props.albumId
+        initialData.albumName = props.albumName
         if (expandedDelete)
-            initialData.status = false;
+            initialData.status = false
         else
-            initialData.status = props.status;
-        initialData.createAt = props.createAt;
+            initialData.status = props.status
+        initialData.createAt = props.createAt
     }
 
 }
@@ -464,10 +464,10 @@ const initialData = {
 ///////////////////////////////////////////////////////
 
 const EditProjectsForm: FC<InjectedFormProps<InitialDataType, ProjectPropsWithExpandedPropsType> & ProjectPropsWithExpandedPropsType> = (props) => {
-    const classesStyle = useStyles();
-    const {handleSubmit, reset, albums} = props;
-    //const {handleSubmit, reset, classes, albums} = props;
-    let {pristine, submitting} = props;
+    const classesStyle = useStyles()
+    const {handleSubmit, reset, albums} = props
+    //const {handleSubmit, reset, classes, albums} = props
+    let {pristine, submitting} = props
     //debugger
 
     let albumsItem = albums.map(
@@ -475,8 +475,8 @@ const EditProjectsForm: FC<InjectedFormProps<InitialDataType, ProjectPropsWithEx
                          label={album.description._content}></option>)
 
     if (props.expandedEdit) {
-        pristine = false;
-        submitting = false;
+        pristine = false
+        submitting = false
     }
 
     let getLabel = () => {

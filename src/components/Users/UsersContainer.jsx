@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import {
     getUsers,
     setUserItem,
@@ -14,9 +14,9 @@ import {
     getAdminRootCount,
     setIsAdminRootCount,
     setAdminRootCount
-} from '../../redux/actions/usersActions';
-import Users from "./Users";
-import {connect} from "react-redux";
+} from '../../redux/actions/usersActions'
+import Users from "./Users"
+import {connect} from "react-redux"
 import {compose} from "redux"
 import {withAuthRedirect} from "../../hoc/withAuthRedirect"
 class UsersContainer extends React.Component {
@@ -24,7 +24,7 @@ class UsersContainer extends React.Component {
     componentDidMount() {
         //debugger
         if (this.props.adminMode){
-            this.props.getUsers();
+            this.props.getUsers()
         }
 
     }
@@ -32,21 +32,21 @@ class UsersContainer extends React.Component {
     componentDidUpdate(prevProps, prevState, snapshot) {
 //debugger
         if (this.props.getUserItem) {
-            this.props.setChangeUsersItem();
-            this.props.setUserItem(false);
+            this.props.setChangeUsersItem()
+            this.props.setUserItem(false)
         }
 
         if (this.props.isAllUsers && this.props.adminMode) {
-            setTimeout(null, 2000);
-            this.props.getUsers();
-            this.props.setIsAllUsers(false);
+            setTimeout(null, 2000)
+            this.props.getUsers()
+            this.props.setIsAllUsers(false)
         }
         if( this.props.users.length === 0){
-            this.props.setDefaultUser();
+            this.props.setDefaultUser()
         }
 
         if(this.props.isAdminRootCount){
-            this.props.getAdminRootCount();
+            this.props.getAdminRootCount()
         }
     }
 
@@ -72,7 +72,7 @@ let mapStateToProps = (state) => {
         adminRootCount: state.users.adminRootCount,
         isAdminRootCount: state.users.isAdminRootCount
     }
-};
+}
 /*Создаем контейнерную кмпоненту MyNewsContainer*/
 /*Двойные скобки обозначют что мы вызвали фукцию connect, а она
 * в свою очередь возвращает нам фукцию во вторых скобках*/
@@ -92,4 +92,4 @@ export default compose(connect(mapStateToProps,
         getAdminRootCount,
         setIsAdminRootCount,
         setAdminRootCount
-    }), withAuthRedirect)(UsersContainer);
+    }), withAuthRedirect)(UsersContainer)

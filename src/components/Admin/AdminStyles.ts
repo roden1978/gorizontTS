@@ -1,4 +1,4 @@
-import {makeStyles} from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles"
 
 export const useStyles = makeStyles(theme => ({
     title: {
@@ -26,4 +26,4 @@ export const useStyles = makeStyles(theme => ({
         paddingTop: theme.spacing(1),
         paddingBottom: theme.spacing(8),
     }
-}));
+}))

@@ -1,9 +1,9 @@
-import React from 'react'
+import React, {FC} from 'react'
 import styles from './Header.module.css'
-import Navbar from "../NavigationBar/Navbar";
+import Navbar from "../NavigationBar/Navbar"
 import zavod from '../../assets/icons/zavod.svg'
 
-const Header = (props) => {
+const Header:FC<{}> = () => {
     return (
         <div>
             <header className={styles.header}>

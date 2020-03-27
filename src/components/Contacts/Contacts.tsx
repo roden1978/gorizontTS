@@ -1,39 +1,39 @@
 import React, {FC} from 'react'
-import {Container} from "@material-ui/core";
-import {useStyles} from './ContactsStyles';
-import Grid from "@material-ui/core/Grid";
-import Card from "@material-ui/core/Card";
-import CardHeader from "@material-ui/core/CardHeader";
-import CardContent from "@material-ui/core/CardContent";
-import Typography from "@material-ui/core/Typography";
-import CardActions from "@material-ui/core/CardActions";
-import Tooltip from "@material-ui/core/Tooltip";
-import IconButton from "@material-ui/core/IconButton";
-import clsx from "clsx";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import Collapse from "@material-ui/core/Collapse";
-import {Field, InjectedFormProps, reduxForm} from "redux-form";
-import {renderTextField} from "../../common/renderFilds";
+import {Container} from "@material-ui/core"
+import {useStyles} from './ContactsStyles'
+import Grid from "@material-ui/core/Grid"
+import Card from "@material-ui/core/Card"
+import CardHeader from "@material-ui/core/CardHeader"
+import CardContent from "@material-ui/core/CardContent"
+import Typography from "@material-ui/core/Typography"
+import CardActions from "@material-ui/core/CardActions"
+import Tooltip from "@material-ui/core/Tooltip"
+import IconButton from "@material-ui/core/IconButton"
+import clsx from "clsx"
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
+import Collapse from "@material-ui/core/Collapse"
+import {Field, InjectedFormProps, reduxForm} from "redux-form"
+import {renderTextField} from "../../common/renderFilds"
 import {validate} from '../../common/validate'
-import Button from "@material-ui/core/Button";
-import RefreshIcon from "@material-ui/icons/Refresh";
+import Button from "@material-ui/core/Button"
+import RefreshIcon from "@material-ui/icons/Refresh"
 import maps from '../../assets/pictures/maps.png'
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableCell from '@material-ui/core/TableCell';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import {PropsType} from "./ContactsContainer";
-import {ContactsType} from "../../tstypes/contactsTypes";
-import {UseStateExpandedProps} from "../../tstypes/commonTypes";
+import Table from '@material-ui/core/Table'
+import TableBody from '@material-ui/core/TableBody'
+import TableContainer from '@material-ui/core/TableContainer'
+import TableCell from '@material-ui/core/TableCell'
+import TableRow from '@material-ui/core/TableRow'
+import Paper from '@material-ui/core/Paper'
+import {PropsType} from "./ContactsContainer"
+import {ContactsType} from "../../tstypes/contactsTypes"
+import {UseStateExpandedProps} from "../../tstypes/commonTypes"
 
 
 type InitialDataType = typeof initialData
 type ContactsWithExpandedPropsType = PropsType & UseStateExpandedProps
 
 const Contacts: FC<PropsType> = (props) => {
-    const classes = useStyles();
+    const classes = useStyles()
     return (
         <div className={classes.root}>
             <Container className={classes.cardGrid} maxWidth={props.mobile ? 'xl' : 'lg'}>
@@ -188,60 +188,60 @@ const Contacts: FC<PropsType> = (props) => {
                 </Grid>
             </Container>
         </div>
-    );
+    )
 }
 
-export default Contacts;
+export default Contacts
 
 const AdminPanelContacts: FC<ContactsWithExpandedPropsType> = (props) => {
 
-    const classes = useStyles();
-    const [expandedEdit, setExpandedEdit] = React.useState(false);
-    const [expandedCreate, setExpandedCreate] = React.useState(false);
+    const classes = useStyles()
+    const [expandedEdit, setExpandedEdit] = React.useState(false)
+    const [expandedCreate, setExpandedCreate] = React.useState(false)
 
     const handleCreateExpandClick = () => {
 
-        setExpandedCreate(!expandedCreate);
+        setExpandedCreate(!expandedCreate)
         if (!expandedCreate) {
-            setInitialData(props);
+            setInitialData(props)
         } else {
-            props.getContacts();
+            props.getContacts()
         }
-    };
+    }
     const handleEditExpandClick = () => {
 
-        setExpandedEdit(!expandedEdit);
+        setExpandedEdit(!expandedEdit)
         if (!expandedEdit) {
-            setInitialData(props);
+            setInitialData(props)
         } else {
-            props.setIsChangedContacts(true);
+            props.setIsChangedContacts(true)
         }
-    };
+    }
     const handleRefreshClick = () => {
-        props.getContacts();
-    };
+        props.getContacts()
+    }
 
     const showResults = (values: ContactsType) => {
-        //     window.alert(`You submitted:\n\n${JSON.stringify(values, null, 2)}`);
-        //props.saveNews(JSON.stringify(values, null, 2));
+        //     window.alert(`You submitted:\n\n${JSON.stringify(values, null, 2)}`)
+        //props.saveNews(JSON.stringify(values, null, 2))
 
 
         if (expandedEdit) {
             props.updateContacts(values._id, values.companyName, values.companyAddress, values.companyEmail
                 , values.companyPhone, values.phoneOwner01, values.phone01, values.phoneOwner02
                 , values.phone02, values.phoneOwner03, values.phone03, values.phoneOwner04
-                , values.phone04, values.phoneOwner05, values.phone05);
-            handleEditExpandClick();
+                , values.phone04, values.phoneOwner05, values.phone05)
+            handleEditExpandClick()
         }
         if (expandedCreate) {
             props.createContacts(values.companyName, values.companyAddress, values.companyEmail
                 , values.companyPhone, values.phoneOwner01, values.phone01, values.phoneOwner02
                 , values.phone02, values.phoneOwner03, values.phone03, values.phoneOwner04
-                , values.phone04, values.phoneOwner05, values.phone05);
-            handleCreateExpandClick();
+                , values.phone04, values.phoneOwner05, values.phone05)
+            handleCreateExpandClick()
         }
 
-    };
+    }
 
 
     return (
@@ -303,21 +303,21 @@ const AdminPanelContacts: FC<ContactsWithExpandedPropsType> = (props) => {
 ////////////////////////////////////////////////////////
 const setInitialData = (props: PropsType) => {
 
-    initialData._id = props.contacts[0]._id;
-    initialData.companyName = props.contacts[0].companyName;
-    initialData.companyAddress = props.contacts[0].companyAddress;
-    initialData.companyEmail = props.contacts[0].companyEmail;
-    initialData.companyPhone = props.contacts[0].companyPhone;
-    initialData.phoneOwner01 = props.contacts[0].phoneOwner01;
-    initialData.phone01 = props.contacts[0].phone01;
-    initialData.phoneOwner02 = props.contacts[0].phoneOwner02;
-    initialData.phone02 = props.contacts[0].phone02;
-    initialData.phoneOwner03 = props.contacts[0].phoneOwner03;
-    initialData.phone03 = props.contacts[0].phone03;
-    initialData.phoneOwner04 = props.contacts[0].phoneOwner04;
-    initialData.phone04 = props.contacts[0].phone04;
-    initialData.phoneOwner05 = props.contacts[0].phoneOwner05;
-    initialData.phone05 = props.contacts[0].phone05;
+    initialData._id = props.contacts[0]._id
+    initialData.companyName = props.contacts[0].companyName
+    initialData.companyAddress = props.contacts[0].companyAddress
+    initialData.companyEmail = props.contacts[0].companyEmail
+    initialData.companyPhone = props.contacts[0].companyPhone
+    initialData.phoneOwner01 = props.contacts[0].phoneOwner01
+    initialData.phone01 = props.contacts[0].phone01
+    initialData.phoneOwner02 = props.contacts[0].phoneOwner02
+    initialData.phone02 = props.contacts[0].phone02
+    initialData.phoneOwner03 = props.contacts[0].phoneOwner03
+    initialData.phone03 = props.contacts[0].phone03
+    initialData.phoneOwner04 = props.contacts[0].phoneOwner04
+    initialData.phone04 = props.contacts[0].phone04
+    initialData.phoneOwner05 = props.contacts[0].phoneOwner05
+    initialData.phone05 = props.contacts[0].phone05
 }
 
 const initialData = {
@@ -339,13 +339,13 @@ const initialData = {
 }
 
 const EditContactsForm: FC<InjectedFormProps<InitialDataType, ContactsWithExpandedPropsType> & ContactsWithExpandedPropsType> = (props) => {
-    const classesStyle = useStyles();
-    const {handleSubmit, reset} = props;
-    let {pristine, submitting} = props;
+    const classesStyle = useStyles()
+    const {handleSubmit, reset} = props
+    let {pristine, submitting} = props
 
     if (props.expandedEdit) {
-        pristine = false;
-        submitting = false;
+        pristine = false
+        submitting = false
     }
 
     const rightStyle = {style: {width: '45%', marginLeft: '6%'}}

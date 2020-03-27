@@ -1,10 +1,10 @@
 import {mongodbAPI} from '../../api/api'
-import {SET_ADMIN_MODE, SET_IS_USERS} from "./types";
-import {stopSubmit} from "redux-form";
-import {ThunkAction} from "redux-thunk";
-import {AppStateType} from "../store";
+import {SET_ADMIN_MODE, SET_IS_USERS} from "./types"
+import {FormAction, stopSubmit} from "redux-form"
+import {ThunkAction} from "redux-thunk"
+import {AppStateType} from "../store"
 
-type AuthActionsType = SetAdminModeActionType | SetIsUsersActionType
+type AuthActionsType = SetAdminModeActionType | SetIsUsersActionType | FormAction
 
 export type SetAdminModeActionType = {
     type: typeof SET_ADMIN_MODE
@@ -34,12 +34,12 @@ type AuthThunkType = ThunkAction<Promise<void>, AppStateType, unknown, AuthActio
 
 export const checkUser = (email: string, password: string, newUsers: boolean): AuthThunkType => {
     return async (dispatch) => {
-        const data = await mongodbAPI.checkUser({email, password});
+        const data = await mongodbAPI.checkUser({email, password})
         if (data) {
             if (!data.root && newUsers)
                 dispatch(stopSubmit('LoginForm', {email: "У вас нет прав на администрирование пользователей"}))
             else
-                dispatch(setAdminMode(true, data.root));
+                dispatch(setAdminMode(true, data.root))
         } else {
             dispatch(stopSubmit('LoginForm', {password: "Не верный логин или пароль"}))
         }

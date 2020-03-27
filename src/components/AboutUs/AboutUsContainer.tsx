@@ -38,7 +38,7 @@ class AboutUsContainer extends React.Component<PropsType> {
             this.props.setIsChangedAbout(false)
         }
         if (this.props.about.length === 0) {
-            this.props.setDefaultAbout();
+            this.props.setDefaultAbout()
         }
     }
 
@@ -59,7 +59,7 @@ let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
         adminMode: state.auth.adminMode,
         isChangedAbout: state.about.isChangedAbout
     }
-};
+}
 
 /*Создаем контейнерную кмпоненту MyNewsContainer*/
 /*Двойные скобки обозначют что мы вызвали фукцию connect, а она

@@ -1,9 +1,10 @@
-import React from 'react'
-import PhotoAlbums from "../PhotoAlbums/PhotoAlbums";
-import Container from "@material-ui/core/Container";
-import Typography from "@material-ui/core/Typography";
-import {makeStyles} from "@material-ui/core";
-import Grid from "@material-ui/core/Grid";
+import React, {FC} from 'react'
+import PhotoAlbums from "../PhotoAlbums/PhotoAlbums"
+import Container from "@material-ui/core/Container"
+import Typography from "@material-ui/core/Typography"
+import {makeStyles} from "@material-ui/core"
+import Grid from "@material-ui/core/Grid"
+import {PropsType} from "./GalleryContainer"
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -17,10 +18,14 @@ const useStyles = makeStyles(theme => ({
         paddingTop: theme.spacing(1),
         paddingBottom: theme.spacing(8),
     }
-}));
+}))
 
-const Gallery = (props) => {
-    const classes = useStyles();
+
+
+//export type PropsWithExtrasType = PropsType & PhotoAlbumsExtrasPropsType
+
+const Gallery: FC<PropsType> = (props) => {
+    const classes = useStyles()
     //debugger
 
     let sets = props.setsWithUrl.map(
@@ -28,7 +33,8 @@ const Gallery = (props) => {
                                  id={photoset.id}
                                  title={photoset.title._content}
                                  description={photoset.description._content}
-                                 url={photoset.primary}/>
+                                 url={photoset.primary}
+                                 {...props}/>
     )
 
     return (
@@ -50,8 +56,12 @@ const Gallery = (props) => {
                 </Grid>
             </Container>
         </div>
-    );
+    )
 
 }
 
-export default Gallery;
+export default Gallery
+/*id={photoset.id}
+                                 title={photoset.title._content}
+                                 description={photoset.description._content}
+                                 url={photoset.primary}*/

@@ -1,4 +1,4 @@
-import {makeStyles} from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles'
 
 export const useStyles = makeStyles(theme => ({
     link: {
@@ -57,4 +57,4 @@ export const useStyles = makeStyles(theme => ({
         border: '2px solid grey',
         backgroundColor: '#e9ecf4'
     }
-}));
+}))

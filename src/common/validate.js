@@ -1,6 +1,6 @@
 export const validate = (values) => {
 
-    const errors = {};
+    const errors = {}
 
     const requiredFields = [
         'title', 'text', 'description', 'price','company',

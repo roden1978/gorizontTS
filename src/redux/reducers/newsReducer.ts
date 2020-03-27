@@ -2,9 +2,9 @@ import {
     SET_NEWS, LOAD_PROJECTS, CHANGE_NEWS_ITEM,
     IS_ALL_NEWS, SET_NEWS_ITEM, SET_CURRENT_NEWS_ID,
     SET_NEWS_COUNT, SET_DEFAULT_NEWS, SET_PROJECT_ID_FOR_REDIRECT
-} from "../actions/types";
-import {NewsType} from "../../tstypes/newsTypes";
-import {NewsActionsTypes} from "../actions/newsActions";
+} from "../actions/types"
+import {NewsType} from "../../tstypes/newsTypes"
+import {NewsActionsTypes} from "../actions/newsActions"
 
 let initialState = {
     news: [] as Array<NewsType>,
@@ -20,7 +20,7 @@ export type InitialStateType = typeof initialState
 
 const news_reducer = (state = initialState, action: NewsActionsTypes):InitialStateType => {
 
-    //let copyState;// = {...state};
+    //let copyState// = {...state}
 
     //debugger
     switch (action.type) {
@@ -30,7 +30,7 @@ const news_reducer = (state = initialState, action: NewsActionsTypes):InitialSta
             * копия ОБЪЕКТОВ И ПОДОБЪЕКТОВ в ФИГУРНЫХ СКОБКАХ*/
             return {
                 ...state, news: action.payload
-            };
+            }
         }
         case  LOAD_PROJECTS:{
             return {
@@ -77,8 +77,8 @@ const news_reducer = (state = initialState, action: NewsActionsTypes):InitialSta
             }
         }
         default:
-            return state;
+            return state
     }
 }
 
-export default news_reducer;
+export default news_reducer

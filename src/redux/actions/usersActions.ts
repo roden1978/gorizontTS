@@ -4,8 +4,8 @@ import {
     SET_CURRENT_USERS_ID, SET_USERS_COUNT, IS_ALL_USERS,
     SET_DEFAULT_USER, CREATE_USER_SUCCESS, SET_ADMIN_ROOT_COUNT,
     IS_ADMIN_ROOT_COUNT
-} from "./types";
-import {UsersType} from "../../tstypes/usersTypes";
+} from "./types"
+import {UsersType} from "../../tstypes/usersTypes"
 
 export type SetUsersActionType = {
     type: typeof SET_USERS
@@ -117,15 +117,15 @@ export const setCreateUserSuccess = (success: boolean): SetCreateUserSuccessActi
 /*Thunk Creators*/
 export const getUsers = () => {
     return async (dispatch: any) => {
-        const users = await mongodbAPI.getUsers();
-        dispatch(setUsers(users));
+        const users = await mongodbAPI.getUsers()
+        dispatch(setUsers(users))
     }
 }
 
 export const getAdminRootCount = () =>{
     return async (dispatch: any) => {
-        const count = await mongodbAPI.getAdminRootCount();
-        dispatch(setAdminRootCount(count));
+        const count = await mongodbAPI.getAdminRootCount()
+        dispatch(setAdminRootCount(count))
     }
 }
 
@@ -134,17 +134,17 @@ export const createUser = (firstName: string, lastName: string, email: string,
                            password: string, root: boolean) =>{
     //debugger
     return async (dispatch: any) =>{
-        const data = await mongodbAPI.createUser({firstName, lastName, email, password, root});
+        const data = await mongodbAPI.createUser({firstName, lastName, email, password, root})
         if (data === false) {
-            //dispatch(setCreateUserSuccess(false));
-            //dispatch(stopSubmit('EditUsersForm', {email: `Пользователь "${email}" уже есть в БД!`}));
+            //dispatch(setCreateUserSuccess(false))
+            //dispatch(stopSubmit('EditUsersForm', {email: `Пользователь "${email}" уже есть в БД!`}))
             //
-            alert(`ОШИБКА!!!: Пользователь ${email} уже есть в БД!`);
+            alert(`ОШИБКА!!!: Пользователь ${email} уже есть в БД!`)
         }
         else{
-            //dispatch(setCreateUserSuccess(true));
-            alert(`Пользователь ${email} успешно добавлен в БД!`);
-            dispatch(getUsers());
+            //dispatch(setCreateUserSuccess(true))
+            alert(`Пользователь ${email} успешно добавлен в БД!`)
+            dispatch(getUsers())
         }
     }
 }
@@ -153,9 +153,9 @@ export const updateUser = (id: string, firstName: string, lastName: string,
                            email: string, password: string, root: boolean) =>{
     //debugger
     return async (dispatch: any) =>{
-        const data = await mongodbAPI.updateUser({id, firstName, lastName, email, password, root});
+        const data = await mongodbAPI.updateUser({id, firstName, lastName, email, password, root})
         if (data) {
-            dispatch(getUsers());
+            dispatch(getUsers())
         }
     }
 }
@@ -163,9 +163,9 @@ export const updateUser = (id: string, firstName: string, lastName: string,
 export const deleteUser = (id: string) =>{
     //debugger
     return async (dispatch: any) =>{
-        const data = await mongodbAPI.deleteUser({id});
+        const data = await mongodbAPI.deleteUser({id})
         if (data) {
-            dispatch(getUsers());
+            dispatch(getUsers())
         }
     }
 }

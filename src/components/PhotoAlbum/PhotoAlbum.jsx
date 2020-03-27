@@ -1,13 +1,13 @@
 import React from 'react'
-import GridList from "@material-ui/core/GridList";
-import {makeStyles} from "@material-ui/core";
-import GridListTile from '@material-ui/core/GridListTile';
-import GridListTileBar from '@material-ui/core/GridListTileBar';
-import ButtonBase from '@material-ui/core/ButtonBase';
-import greyder from "../../assets/icons/greyder.svg";
-import Avatar from "@material-ui/core/Avatar";
-import ModalPhoto from "../../common/ModalPhoto";
-import Container from "@material-ui/core/Container";
+import GridList from "@material-ui/core/GridList"
+import {makeStyles} from "@material-ui/core"
+import GridListTile from '@material-ui/core/GridListTile'
+import GridListTileBar from '@material-ui/core/GridListTileBar'
+import ButtonBase from '@material-ui/core/ButtonBase'
+import greyder from "../../assets/icons/greyder.svg"
+import Avatar from "@material-ui/core/Avatar"
+import ModalPhoto from "../../common/ModalPhoto"
+import Container from "@material-ui/core/Container"
 
 const PhotoAlbum = (props) => {
 
@@ -43,9 +43,9 @@ const PhotoAlbum = (props) => {
             background:
                 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
         },
-    }));
+    }))
 
-    const classes = useStyles();
+    const classes = useStyles()
 
 //debugger
     return (
@@ -56,8 +56,8 @@ const PhotoAlbum = (props) => {
                 {props.cards.map(card => (
                     <GridListTile key={card.url ? card.url : greyder} >
                         <ButtonBase   onClick={()=>{
-                            props.changeClicked(true);
-                            props.getUrl(card.url);
+                            props.changeClicked(true)
+                            props.getUrl(card.url)
                         }}>
                             <img className={classes.im} src={card.url ? card.url : greyder} alt={card.title}/>
                         </ButtonBase>
@@ -77,7 +77,7 @@ const PhotoAlbum = (props) => {
             {props.isClicked ? <ModalPhoto changeClicked = {props.changeClicked} url = {props.url}/> : null}
 
         </div>
-    );
+    )
 }
 
-export default PhotoAlbum;
+export default PhotoAlbum

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import {
     getNews,
     setLoadProjects,
@@ -14,13 +14,13 @@ import {
     setDefaultNews,
     checkProject,
     setProjectIdForRedirect
-} from '../../redux/actions/newsActions';
-import {getProjects} from "../../redux/actions/projectsActions";
-import News from "./News";
-import {connect} from "react-redux";
-import Spinner from "../../common/Spinner";
-import {AppStateType} from "../../redux/store";
-import {NewsType} from "../../tstypes/newsTypes";
+} from '../../redux/actions/newsActions'
+import {getProjects} from "../../redux/actions/projectsActions"
+import News from "./News"
+import {connect} from "react-redux"
+import Spinner from "../../common/Spinner"
+import {AppStateType} from "../../redux/store"
+import {NewsType} from "../../tstypes/newsTypes"
 import {ProjectsType} from "../../tstypes/projectsTypes"
 
 export type MapStateToPropsType = {
@@ -62,27 +62,27 @@ class NewsContainer extends React.Component<PropsType> {
     componentDidMount() {
 
         if (this.props.adminMode)
-            this.props.getAllNews();
+            this.props.getAllNews()
         else
-            this.props.getNews();
+            this.props.getNews()
     }
 
     componentDidUpdate(prevProps: PropsType, prevState: PrevStateType) {
         if (this.props.loadProjects) {
-            this.props.getProjects();
-            this.props.setLoadProjects(false);
+            this.props.getProjects()
+            this.props.setLoadProjects(false)
         }
         if (this.props.getNewsItem) {
-            this.props.setChangeNewsItem();
-            this.props.setNewsItem(false);
+            this.props.setChangeNewsItem()
+            this.props.setNewsItem(false)
         }
 
         if (this.props.isAllNews && this.props.adminMode) {
-            this.props.getAllNews();
-            this.props.setIsAllNews(false);
+            this.props.getAllNews()
+            this.props.setIsAllNews(false)
         }
         if (this.props.news && this.props.news.length === 0) {
-            this.props.setDefaultNews();
+            this.props.setDefaultNews()
         }
     }
 
@@ -109,7 +109,7 @@ let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
         adminMode: state.auth.adminMode,
         projectIdForRedirect: state.news.projectIdForRedirect
     }
-};
+}
 
 /*Создаем контейнерную кмпоненту MyNewsContainer*/
 /*Двойные скобки обозначют что мы вызвали фукцию connect, а она
@@ -121,4 +121,4 @@ export default connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppState
         setCurrentNewsId, createNews, updateNews, getAllNews,
         deleteNews, setNewsCount, setDefaultNews, checkProject,
         setProjectIdForRedirect
-    })(NewsContainer);
+    })(NewsContainer)

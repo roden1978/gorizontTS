@@ -1,12 +1,12 @@
-//import * as axios from "axios/index";
+//import * as axios from "axios/index"
 
 import axios from 'axios'
 //import auth0 from 'auth0-js'
 
-//import {connect} from "react-redux";
-//import {getAuthorize} from "../redux/actions/authActions";
+//import {connect} from "react-redux"
+//import {getAuthorize} from "../redux/actions/authActions"
 
-const instance = axios.create();
+const instance = axios.create()
 /*let auth = new auth0.WebAuth({
     domain: 'dev-8e4ti4s2.auth0.com',
     clientID: 'bOS225UZ986RtJmRgZCZG2SzZPGPJGJZ',
@@ -52,7 +52,7 @@ export const mongodbAPI = {
     updateNews(newsData) {
         return instance.post('/api/news/upd', newsData)
             .then(response => {
-                return response.data;
+                return response.data
             })
             .catch(err =>
                 console.log(err)
@@ -62,7 +62,7 @@ export const mongodbAPI = {
     createNews(newsData) {
         return instance.post('/api/news/', newsData)
             .then(response => {
-                return response.data;
+                return response.data
             })
             .catch(err =>
                 console.log(err)
@@ -72,7 +72,7 @@ export const mongodbAPI = {
     deleteNews(newsData) {
         return instance.delete('/api/news/' + newsData.id)
             .then(response => {
-                return response.data;
+                return response.data
             })
             .catch(err =>
                 console.log(err)
@@ -115,7 +115,7 @@ export const mongodbAPI = {
         //debugger
         return instance.post('/api/projects/upd', projectData)
             .then(response => {
-                return response.data;
+                return response.data
             })
             .catch(err =>
                 console.log(err)
@@ -125,7 +125,7 @@ export const mongodbAPI = {
     createProject(projectData) {
         return instance.post('/api/projects/', projectData)
             .then(response => {
-                return response.data;
+                return response.data
             })
             .catch(err =>
                 console.log(err)
@@ -135,7 +135,7 @@ export const mongodbAPI = {
     deleteProject(projectData) {
         return instance.delete('/api/projects/' + projectData.id)
             .then(response => {
-                return response.data;
+                return response.data
             })
             .catch(err =>
                 console.log(err)
@@ -177,7 +177,7 @@ export const mongodbAPI = {
     updateJob(jobData) {
         return instance.post('/api/job/upd', jobData)
             .then(response => {
-                return response.data;
+                return response.data
             })
             .catch(err =>
                 console.log(err)
@@ -187,7 +187,7 @@ export const mongodbAPI = {
     createJob(jobData) {
         return instance.post('/api/job/', jobData)
             .then(response => {
-                return response.data;
+                return response.data
             })
             .catch(err =>
                 console.log(err)
@@ -197,7 +197,7 @@ export const mongodbAPI = {
     deleteJob(jobData) {
         return instance.delete('/api/job/' + jobData.id)
             .then(response => {
-                return response.data;
+                return response.data
             })
             .catch(err =>
                 console.log(err)
@@ -218,7 +218,7 @@ export const mongodbAPI = {
     createContacts(contactsData) {
         return instance.post('/api/contacts/', contactsData)
             .then(response => {
-                return response.data;
+                return response.data
             })
             .catch(err =>
                 console.log(err)
@@ -228,7 +228,7 @@ export const mongodbAPI = {
     updateContacts(contactsData) {
         return instance.post('/api/contacts/upd', contactsData)
             .then(response => {
-                return response.data;
+                return response.data
             })
             .catch(err =>
                 console.log(err)
@@ -250,7 +250,7 @@ export const mongodbAPI = {
         //debugger
         return instance.post('/api/about/', aboutData)
             .then(response => {
-                return response.data;
+                return response.data
             })
             .catch(err =>
                 console.log(err)
@@ -260,7 +260,7 @@ export const mongodbAPI = {
     updateAbout(aboutData) {
         return instance.post('/api/about/upd', aboutData)
             .then(response => {
-                return response.data;
+                return response.data
             })
             .catch(err =>
                 console.log(err)
@@ -293,7 +293,7 @@ export const mongodbAPI = {
     updateUser(userData) {
         return instance.post('/api/users/upd', userData)
             .then(response => {
-                return response.data;
+                return response.data
             })
             .catch(err =>
                 console.log(err)
@@ -304,7 +304,7 @@ export const mongodbAPI = {
         return instance.post('/api/users/', userData)
             .then(response => {
                 console.log(response.data.err)
-                return response.data;
+                return response.data
             })
             .catch(err =>
                 console.log(err)
@@ -314,7 +314,7 @@ export const mongodbAPI = {
     deleteUser(userData) {
         return instance.delete('/api/users/' + userData.id)
             .then(response => {
-                return response.data;
+                return response.data
             })
             .catch(err =>
                 console.log(err)
@@ -334,10 +334,10 @@ export const mongodbAPI = {
         return instance.post('/api/users/login', userData)
             .then(response => {
                 if (response.data) {
-                    return response.data;
+                    return response.data
                 }
                 else{
-                    return false;
+                    return false
                 }
             })
             .catch(err =>
@@ -352,7 +352,7 @@ export const flickrAPI = {
         //debugger
         return instance.get('/api/albums')
             .then(response => {
-                return response.data.photosets.photoset
+                return response.data.photosets.photoset //массив фотоальбомов
             })
             .catch(err =>
                 console.log(err)

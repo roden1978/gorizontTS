@@ -9,10 +9,10 @@ import {
     SET_NEWS_COUNT,
     SET_DEFAULT_NEWS,
     SET_PROJECT_ID_FOR_REDIRECT
-} from "./types";
-import {NewsType} from "../../tstypes/newsTypes";
-import {ThunkAction} from "redux-thunk";
-import {AppStateType} from "../store";
+} from "./types"
+import {NewsType} from "../../tstypes/newsTypes"
+import {ThunkAction} from "redux-thunk"
+import {AppStateType} from "../store"
 
 export type NewsActionsTypes = SetNewsActionType | SetLoadProjectsActionType | SetIsAllNewsActionType|
     SetChangeNewsItemActionType | SetNewsItemActionType | SetCurrentNewsIdActionType |
@@ -118,15 +118,15 @@ export type NewsThunkType = ThunkAction<Promise<void>, AppStateType, unknown, Ne
 /*Thunk Creators*/
 export const getNews = (): NewsThunkType => {
     return async (dispatch) => {
-        const news = await mongodbAPI.getNews();
-        dispatch(setNews(news));
+        const news = await mongodbAPI.getNews()
+        dispatch(setNews(news))
     }
 }
 
 export const getAllNews = (): NewsThunkType => {
     return async (dispatch) => {
-        const news = await mongodbAPI.getAllNews();
-        dispatch(setNews(news));
+        const news = await mongodbAPI.getAllNews()
+        dispatch(setNews(news))
     }
 }
 
@@ -134,9 +134,9 @@ export const createNews = (title: string, text: string, project: string,
                            projectTitle: string, status: boolean): NewsThunkType =>{
     //debugger
     return async (dispatch) =>{
-        const data = await mongodbAPI.createNews({title, text, project, projectTitle, status});
+        const data = await mongodbAPI.createNews({title, text, project, projectTitle, status})
         if (data.resultCode === 0) {
-            dispatch(getAllNews());
+            dispatch(getAllNews())
         }
     }
 }
@@ -145,9 +145,9 @@ export const updateNews = (id: string, title: string, text: string, project: str
                            projectTitle: string, status: boolean, createAt: string): NewsThunkType =>{
     //debugger
     return async (dispatch) =>{
-        const data = await mongodbAPI.updateNews({id, title, text, project, projectTitle, status, createAt});
+        const data = await mongodbAPI.updateNews({id, title, text, project, projectTitle, status, createAt})
         if (data.resultCode === 0) {
-            dispatch(getAllNews());
+            dispatch(getAllNews())
         }
     }
 }
@@ -155,16 +155,16 @@ export const updateNews = (id: string, title: string, text: string, project: str
 export const deleteNews = (id: string): NewsThunkType =>{
     //debugger
     return async (dispatch) =>{
-        const data = await mongodbAPI.deleteNews({id});
+        const data = await mongodbAPI.deleteNews({id})
         if (data.resultCode === 0) {
-            dispatch(getAllNews());
+            dispatch(getAllNews())
         }
     }
 }
 
 export const checkProject = (id: string): NewsThunkType =>{
     return async (dispatch) =>{
-        const data = await mongodbAPI.getProject(id);
+        const data = await mongodbAPI.getProject(id)
         if (data) {
             dispatch(setProjectIdForRedirect(data._id))
         }

@@ -1,21 +1,21 @@
 import React from 'react'
-import {makeStyles} from '@material-ui/core/styles';
-import Grid from "@material-ui/core/Grid";
-import CardHeader from "@material-ui/core/CardHeader";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import Typography from "@material-ui/core/Typography";
-import CardActions from "@material-ui/core/CardActions";
-import Avatar from "@material-ui/core/Avatar";
+import {makeStyles} from '@material-ui/core/styles'
+import Grid from "@material-ui/core/Grid"
+import CardHeader from "@material-ui/core/CardHeader"
+import Card from "@material-ui/core/Card"
+import CardContent from "@material-ui/core/CardContent"
+import Typography from "@material-ui/core/Typography"
+import CardActions from "@material-ui/core/CardActions"
+import Avatar from "@material-ui/core/Avatar"
 import katokIcon from '../../../assets/icons/katok.svg'
-import clsx from "clsx";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import RefreshIcon from '@material-ui/icons/Refresh';
-import IconButton from "@material-ui/core/IconButton";
-import Collapse from "@material-ui/core/Collapse";
-import {Field, reduxForm} from "redux-form";
-import Button from "@material-ui/core/Button";
-import Tooltip from "@material-ui/core/Tooltip";
+import clsx from "clsx"
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
+import RefreshIcon from '@material-ui/icons/Refresh'
+import IconButton from "@material-ui/core/IconButton"
+import Collapse from "@material-ui/core/Collapse"
+import {Field, reduxForm} from "redux-form"
+import Button from "@material-ui/core/Button"
+import Tooltip from "@material-ui/core/Tooltip"
 import {renderTextField, renderCheckbox} from '../../../common/renderFilds'
 import {validate} from '../../../common/validate'
 
@@ -70,13 +70,13 @@ const useStyles = makeStyles(theme => ({
         border: '2px solid grey',
         backgroundColor: '#e9ecf4'
     },
-}));
+}))
 
 /*linear-gradient(to right, #0d47a1, #ffff #f5f6f7)
 * 'linear-gradient(to right, #0d47a1 90%, coral)'
 * backgroundColor: '#3b5998',//#0d47a1*/
 const User = (props) => {
-    const classes = useStyles();
+    const classes = useStyles()
 
     return (
         <Grid item xs={10}>
@@ -103,89 +103,89 @@ const User = (props) => {
                 {props.adminMode ? <AdminPanelUsers {...props}/> : ''}
             </Card>
         </Grid>
-    );
+    )
 }
 
-export default User;
+export default User
 
 const AdminPanelUsers = (props) => {
     //debugger
-    const classes = useStyles();
-    const [expandedCreate, setExpandedCreate] = React.useState(false);
-    const [expandedEdit, setExpandedEdit] = React.useState(false);
-    const [expandedDelete, setExpandedDelete] = React.useState(false);
+    const classes = useStyles()
+    const [expandedCreate, setExpandedCreate] = React.useState(false)
+    const [expandedEdit, setExpandedEdit] = React.useState(false)
+    const [expandedDelete, setExpandedDelete] = React.useState(false)
 
     const handleCreateExpandClick = () => {
         //debugger
 
-        setExpandedCreate(!expandedCreate);
+        setExpandedCreate(!expandedCreate)
 
         if (!expandedCreate) {
-            props.setCurrentUsersId(props._id);
-            props.setUserItem(true);
-            setInitialData(props, true);
+            props.setCurrentUsersId(props._id)
+            props.setUserItem(true)
+            setInitialData(props, true)
         } else {
-            props.setIsAllUsers(true);
+            props.setIsAllUsers(true)
         }
 
-        //props.getId(null);
-    };
+        //props.getId(null)
+    }
 
     const handleEditExpandClick = () => {
-        props.setIsAdminRootCount(true);
-        setExpandedEdit(!expandedEdit);
+        props.setIsAdminRootCount(true)
+        setExpandedEdit(!expandedEdit)
         if (!expandedEdit) {
-            props.setCurrentUsersId(props._id);
-            props.setUserItem(true);
-            setInitialData(props, false, false);
+            props.setCurrentUsersId(props._id)
+            props.setUserItem(true)
+            setInitialData(props, false, false)
         } else {
-            props.setIsAllUsers(true);
-            props.setIsAdminRootCount(false);
-            props.setAdminRootCount(0);
+            props.setIsAllUsers(true)
+            props.setIsAdminRootCount(false)
+            props.setAdminRootCount(0)
         }
-    };
+    }
 
     const handleDeleteExpandClick = () => {
         //debugger
-        props.setUsersCount(props.users.length);
-        props.setIsAdminRootCount(true);
-        setExpandedDelete(!expandedDelete);
+        props.setUsersCount(props.users.length)
+        props.setIsAdminRootCount(true)
+        setExpandedDelete(!expandedDelete)
         if (!expandedDelete) {
-            props.setCurrentUsersId(props._id);
-            props.setUserItem(true);
-            setInitialData(props, false, true);
+            props.setCurrentUsersId(props._id)
+            props.setUserItem(true)
+            setInitialData(props, false, true)
         } else {
-            props.setIsAllUsers(true);
-            props.setUsersCount(null);
-            props.setIsAdminRootCount(false);
-            props.setAdminRootCount(0);
+            props.setIsAllUsers(true)
+            props.setUsersCount(null)
+            props.setIsAdminRootCount(false)
+            props.setAdminRootCount(0)
         }
-    };
+    }
 
     const handleRefreshClick = () => {
-        //setExpandedRefresh(!expandedRefresh);
-        props.setIsAllUsers(true);
-    };
+        //setExpandedRefresh(!expandedRefresh)
+        props.setIsAllUsers(true)
+    }
 
     const showResults = (values) => {
-        //window.alert(`You submitted:\n\n${JSON.stringify(values, null, 2)}`);
+        //window.alert(`You submitted:\n\n${JSON.stringify(values, null, 2)}`)
 
         if (expandedEdit) {
-            props.updateUser(values.id, values.firstName, values.lastName, values.email, values.password, values.root);
-            handleEditExpandClick();
+            props.updateUser(values.id, values.firstName, values.lastName, values.email, values.password, values.root)
+            handleEditExpandClick()
         }
 
 
         if (expandedCreate) {
-            props.createUser(values.firstName, values.lastName, values.email, values.password, values.root);
-            handleCreateExpandClick();
+            props.createUser(values.firstName, values.lastName, values.email, values.password, values.root)
+            handleCreateExpandClick()
         }
 
         if (expandedDelete) {
-            props.deleteUser(values.id);
-            handleDeleteExpandClick();
+            props.deleteUser(values.id)
+            handleDeleteExpandClick()
         }
-    };
+    }
 
     return (
         <>
@@ -263,22 +263,22 @@ const AdminPanelUsers = (props) => {
 const setInitialData = (props, reset, expandedDelete) => {
     //debugger
     if (reset) {
-        initialData.id = null;
-        initialData.firstName = '';
-        initialData.lastName = '';
-        initialData.email = '';
-        initialData.password = '';
-        initialData.root = false;
+        initialData.id = null
+        initialData.firstName = ''
+        initialData.lastName = ''
+        initialData.email = ''
+        initialData.password = ''
+        initialData.root = false
     } else {
-        initialData.id = props._id;
-        initialData.firstName = props.firstName;
-        initialData.lastName = props.lastName;
-        initialData.email = props.email;
-        initialData.password = '';
+        initialData.id = props._id
+        initialData.firstName = props.firstName
+        initialData.lastName = props.lastName
+        initialData.email = props.email
+        initialData.password = ''
         if (expandedDelete)
-            initialData.root = false;
+            initialData.root = false
         else
-            initialData.root = props.root;
+            initialData.root = props.root
     }
 
 }
@@ -294,19 +294,19 @@ const initialData = {
 ///////////////////////////////////////////////////////
 
 const EditUsersForm = (props) => {
-    const classesStyle = useStyles();
-    const {handleSubmit, reset} = props;
-    let {pristine, submitting} = props;
+    const classesStyle = useStyles()
+    const {handleSubmit, reset} = props
+    let {pristine, submitting} = props
     //debugger
-    //console.log(props.val + " " + props.expandedEdit);
+    //console.log(props.val + " " + props.expandedEdit)
 
     /*let projectsItems = projects.map(
         projectItem => <option key={projectItem._id} value={`${projectItem._id}| ${projectItem.title}`}
                                label={projectItem.title}></option>)*/
 
     if (props.expandedEdit) {
-        pristine = false;
-        submitting = false;
+        pristine = false
+        submitting = false
     }
 
     let getLabel = () => {
@@ -395,7 +395,7 @@ const EditUsersReduxForm = reduxForm({
 * <>
                         {props.text.split('\n').map((i, key) => {
                             return <Typography key={key} paragraph variant="body1" color="textPrimary"
-                                               gutterBottom>{i}</Typography>;
+                                               gutterBottom>{i}</Typography>
                         })}
                     </>
                     *

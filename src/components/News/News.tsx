@@ -1,9 +1,9 @@
 import React, {FC} from 'react'
 import NewsItem from './NewsItem/NewsItem'
-import {makeStyles} from '@material-ui/core/styles';
-import Grid from "@material-ui/core/Grid";
-import {Container} from "@material-ui/core";
-import { PropsType } from './NewsContainer';
+import {makeStyles} from '@material-ui/core/styles'
+import Grid from "@material-ui/core/Grid"
+import {Container} from "@material-ui/core"
+import { PropsType } from './NewsContainer'
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -44,10 +44,10 @@ const News:FC<PropsType> = (props) => {
                 </Grid>
             </Container>
         </div>
-    );
+    )
 }
 
-export default News;
+export default News
 
 /*
                                   projects={props.projects}

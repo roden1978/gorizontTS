@@ -5,16 +5,20 @@ import {
     SET_URL_TO_ALBUMS,
     SET_URL_TO_PHOTOS,
     IS_CLICKED, SET_URL
-} from "./types";
-import {PhotosetType, PhotoSizesType, PhotoType} from "../../tstypes/photosTypes";
+} from "./types"
+import {PhotoAlbumType, PhotoSizesType, PhotoType} from "../../tstypes/photosTypes"
+import {ThunkAction} from "redux-thunk"
+import {AppStateType} from "../store"
 
+type PhotosActionsType = SetPhotosetsActionType | SetPhotosActionType | SetUrlToAlbumsActionType |
+    SetUrlToPhotosActionType | SetClickedActionType | SetUrlActionType
 
 export type SetPhotosetsActionType = {
     type: typeof SET_PHOTO_ALBUMS
-    payload: Array<PhotosetType>
+    payload: Array<PhotoAlbumType>
 }
 /*Создаем объект action с обязательным свойством type*/
-export const setPhotosets = (photosets: Array<PhotosetType>): SetPhotosetsActionType => {
+export const setPhotosets = (photosets: Array<PhotoAlbumType>): SetPhotosetsActionType => {
     return {
         type: SET_PHOTO_ALBUMS,
         payload: photosets
@@ -42,9 +46,9 @@ export const setPhotos = (photos: Array<PhotoType>): SetPhotosActionType => {
 export type SetUrlToAlbumsActionType = {
     type: typeof SET_URL_TO_ALBUMS
     payload: PhotoSizesType
-    set: PhotosetType
+    set: PhotoAlbumType
 }
-export const setUrlToAlbums = (photo: PhotoSizesType, set: PhotosetType): SetUrlToAlbumsActionType => {
+export const setUrlToAlbums = (photo: PhotoSizesType, set: PhotoAlbumType): SetUrlToAlbumsActionType => {
     return {
         type: SET_URL_TO_ALBUMS,
         payload: photo,
@@ -55,9 +59,9 @@ export const setUrlToAlbums = (photo: PhotoSizesType, set: PhotosetType): SetUrl
 export type SetUrlToPhotosActionType = {
     type: typeof SET_URL_TO_PHOTOS
     payload: PhotoType
-    card: PhotoSizesType
+    card: PhotoType
 }
-export const setUrlToPhotos = (photo: PhotoType, card: PhotoSizesType): SetUrlToPhotosActionType => {
+export const setUrlToPhotos = (photo: PhotoType, card: PhotoType): SetUrlToPhotosActionType => {
     return {
         type: SET_URL_TO_PHOTOS,
         payload: photo,
@@ -87,49 +91,51 @@ export const setUrl = (url: string): SetUrlActionType =>{
     }
 }
 
+type PhotosThunkType = ThunkAction<Promise<void> | void, AppStateType, unknown, PhotosActionsType>
+
 /*Thunk Creators*/
-export const getPhotosets = () => {
-    return async (dispatch: any) => {
-        const photosets = await flickrAPI.getAlbums();
+export const getPhotosets = (): PhotosThunkType => {
+    return async (dispatch) => {
+        const photosets = await flickrAPI.getAlbums()
         //debugger
-        dispatch(setPhotosets(photosets));
+        dispatch(setPhotosets(photosets))
     }
 }
 
-export const getPhotos = (id: string) => {
-    return async (dispatch: any) => {
-        const photos = await flickrAPI.getPhotos(id);
-        dispatch(setPhotos(photos));
+export const getPhotos = (id: string): PhotosThunkType => {
+    return async (dispatch) => {
+        const photos = await flickrAPI.getPhotos(id)
+        dispatch(setPhotos(photos))
     }
 }
 
 /*export const getPhoto = (id) => {
     return async (dispatch) => {
-        const photo = await flickrAPI.getPhoto(id);
-        dispatch(setPhoto(photo));
+        const photo = await flickrAPI.getPhoto(id)
+        dispatch(setPhoto(photo))
     }
 }*/
 
-export const getAlbumsWithUrl = (id: string, set: PhotosetType) => {
-    return async (dispatch: any) => {
-        const photo = await flickrAPI.getPhoto(id);
-        dispatch(setUrlToAlbums(photo, set));
+export const getAlbumsWithUrl = (id: string, set: PhotoAlbumType): PhotosThunkType => {
+    return async (dispatch) => {
+        const photo = await flickrAPI.getPhoto(id)
+        dispatch(setUrlToAlbums(photo, set))
     }
 }
-export const getPhotoWithUrl = (id: string, card:PhotoSizesType) => {
-    return async (dispatch: any) => {
-        const photo = await flickrAPI.getPhoto(id);
-        dispatch(setUrlToPhotos(photo, card));
+export const getPhotoWithUrl = (id: string, card:PhotoType): PhotosThunkType => {
+    return async (dispatch) => {
+        const photo = await flickrAPI.getPhoto(id)
+        dispatch(setUrlToPhotos(photo, card))
     }
 }
-export const changeClicked = (click: boolean) =>{
-    return (dispatch: any) =>{
+export const changeClicked = (click: boolean): PhotosThunkType =>{
+    return (dispatch) =>{
         dispatch(setClicked(click))
     }
 }
 
-export const getUrl = (url: string) =>{
-    return(dispatch: any) =>{
+export const getUrl = (url: string): PhotosThunkType =>{
+    return(dispatch) =>{
         dispatch(setUrl(url))
     }
 }

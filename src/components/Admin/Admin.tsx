@@ -1,18 +1,18 @@
-import React, {FC} from "react";
-import {useStyles} from "./AdminStyles";
-import {checkUser, setIsUsers} from "../../redux/actions/authActions";
-import {connect} from "react-redux";
-import {Redirect} from "react-router-dom";
-import Button from "@material-ui/core/Button";
-import CardContent from "@material-ui/core/CardContent";
-import {Field, InjectedFormProps, reduxForm} from "redux-form";
-import {renderCheckbox, renderTextField} from "../../common/renderFilds";
-import {validate} from "../../common/validate";
-import Card from "@material-ui/core/Card";
-import CardHeader from "@material-ui/core/CardHeader";
-import Grid from "@material-ui/core/Grid";
-import {Container} from "@material-ui/core";
-import {AppStateType} from "../../redux/store";
+import React, {FC} from "react"
+import {useStyles} from "./AdminStyles"
+import {checkUser, setIsUsers} from "../../redux/actions/authActions"
+import {connect} from "react-redux"
+import {Redirect} from "react-router-dom"
+import Button from "@material-ui/core/Button"
+import CardContent from "@material-ui/core/CardContent"
+import {Field, InjectedFormProps, reduxForm} from "redux-form"
+import {renderCheckbox, renderTextField} from "../../common/renderFilds"
+import {validate} from "../../common/validate"
+import Card from "@material-ui/core/Card"
+import CardHeader from "@material-ui/core/CardHeader"
+import Grid from "@material-ui/core/Grid"
+import {Container} from "@material-ui/core"
+import {AppStateType} from "../../redux/store"
 
 type MapStateToPropsType = {
     auth: boolean
@@ -58,16 +58,16 @@ export default connect(mapStateToProps, {checkUser, setIsUsers})(Admin)
 
 export const Login:FC<PropsType> = (props) => {
     //debugger
-    const classes = useStyles();
+    const classes = useStyles()
     const showResults = (values: InitialDataType) => {
 
-        //window.alert(`You submitted:\n\n${JSON.stringify(values, null, 2)}`);
+        //window.alert(`You submitted:\n\n${JSON.stringify(values, null, 2)}`)
         if (values.newUsers)
-            props.setIsUsers(true);
+            props.setIsUsers(true)
 
-        props.checkUser(values.email, values.password, values.newUsers);
+        props.checkUser(values.email, values.password, values.newUsers)
 
-    };
+    }
 
     return (
         <div className={classes.root}>
@@ -84,7 +84,7 @@ export const Login:FC<PropsType> = (props) => {
                         <Card className={classes.card}>
                             <CardHeader title='Логин' className={classes.title}/>
                             <CardContent>
-                                <LoginReduxForm onSubmit={showResults}/>
+                                <LoginReduxForm onSubmit={showResults} {...props}/>
                             </CardContent>
                         </Card>
                     </Grid>
@@ -102,10 +102,10 @@ const initialData = {
 }
 ///////////////////////////////////////////////////////
 
-const LoginForm: FC<InjectedFormProps<InitialDataType, PropsType> & PropsType> = (props) => {
-    const classesStyle = useStyles();
-    const {handleSubmit, reset} = props;
-    let {pristine, submitting} = props;
+const LoginForm: FC<InjectedFormProps<InitialDataType, PropsType> & PropsType > = (props) => {
+    const classesStyle = useStyles()
+    const {handleSubmit, reset} = props
+    let {pristine, submitting} = props
     //debugger
     return (
         <form onSubmit={handleSubmit}>

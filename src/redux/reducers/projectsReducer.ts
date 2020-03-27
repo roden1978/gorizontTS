@@ -12,10 +12,10 @@ import {
     SET_PROJECTS_ITEM,
     SET_PROJECTS_PHOTOS,
     SET_URL_TO_PROJECTS_PHOTOS
-} from "../actions/types";
-import {ProjectsType} from "../../tstypes/projectsTypes";
-import {PhotoType} from "../../tstypes/photosTypes";
-import {ProjectsActionsTypes} from "../actions/projectsActions";
+} from "../actions/types"
+import {ProjectsType} from "../../tstypes/projectsTypes"
+import {PhotoType} from "../../tstypes/photosTypes"
+import {ProjectsActionsTypes} from "../actions/projectsActions"
 
 let initialState = {
     projects: [] as Array<ProjectsType>,
@@ -41,7 +41,7 @@ const projects_reducer = (state = initialState, action: ProjectsActionsTypes): I
             * копия ОБЪЕКТОВ И ПОДОБЪЕКТОВ в ФИГУРНЫХ СКОБКАХ*/
             return {
                 ...state, projects: action.payload
-            };
+            }
             // break
         }
         case SET_PROJECT: {
@@ -50,7 +50,7 @@ const projects_reducer = (state = initialState, action: ProjectsActionsTypes): I
             * копия ОБЪЕКТОВ И ПОДОБЪЕКТОВ в ФИГУРНЫХ СКОБКАХ*/
             return {
                 ...state, projects: [action.payload]
-            };
+            }
             // break
         }
             case SET_ID: {
@@ -98,7 +98,7 @@ const projects_reducer = (state = initialState, action: ProjectsActionsTypes): I
 
             return {
                 ...state, photos: [...state.photos, ...photosWithAlbumId], albumsCount: state.albumsCount + 1
-            };
+            }
         }
         case SET_URL_TO_PROJECTS_PHOTOS:{
             //debugger
@@ -120,8 +120,8 @@ const projects_reducer = (state = initialState, action: ProjectsActionsTypes): I
             }
         }
         default:
-            return state;
+            return state
     }
 }
 
-export default projects_reducer;
+export default projects_reducer
