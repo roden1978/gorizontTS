@@ -1,5 +1,4 @@
-import React from 'react'
-import {makeStyles} from '@material-ui/core/styles'
+import React, {FC} from 'react'
 import Grid from "@material-ui/core/Grid"
 import CardHeader from "@material-ui/core/CardHeader"
 import Card from "@material-ui/core/Card"
@@ -13,69 +12,21 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
 import RefreshIcon from '@material-ui/icons/Refresh'
 import IconButton from "@material-ui/core/IconButton"
 import Collapse from "@material-ui/core/Collapse"
-import {Field, reduxForm} from "redux-form"
+import {Field, InjectedFormProps, reduxForm} from "redux-form"
 import Button from "@material-ui/core/Button"
 import Tooltip from "@material-ui/core/Tooltip"
 import {renderTextField, renderCheckbox} from '../../../common/renderFilds'
 import {validate} from '../../../common/validate'
+import {useStyles} from "./UserStyles";
+import {PropsType} from "../UsersContainer";
+import {UsersType} from "../../../tstypes/usersTypes";
+import {UseStateExpandedProps} from "../../../tstypes/commonTypes";
 
-const useStyles = makeStyles(theme => ({
-    link: {
-        color: 'coral', // blueGrey[400],
-        textDecoration: 'none',
-        textTransform: 'uppercase',
-        fontWeight: 'lighter',
-        fontSize: 14,
-    },
-    title: {
-        fontSize: 16,
-        background:
-            'linear-gradient(to bottom, #4e69a2, #3b5998 50%)',
-        color: '#FFFFFF',
-    },
-    pos: {
-        marginLeft: 12,
-    },
-    buttonSubmit: {
-        margin: 10,
-    },
-    avatar: {
-        backgroundColor: '#e9ecf4',
-        width: 50,
-        height: 50,
-    },
-    katok: {
-        width: 45,
-    },
-    expand: {
-        transform: 'rotate(0deg)',
-        marginLeft: 'auto',
-        backgroundColor: '#f5f6f7',
-        transition: theme.transitions.create('transform', {
-            duration: theme.transitions.duration.shortest,
-        }),
-    },
-    expandOpen: {
-        transform: 'rotate(180deg)',
-    },
-    card: {
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-    },
-    wi: {
-        backgroundColor: '#e9ecf4'
-    },
-    adminPanel: {
-        border: '2px solid grey',
-        backgroundColor: '#e9ecf4'
-    },
-}))
+type UsersPropsType = PropsType & UsersType
+type InitialDataType = typeof initialData
+type UsersWithExpandedPropsType = UsersPropsType & UseStateExpandedProps
 
-/*linear-gradient(to right, #0d47a1, #ffff #f5f6f7)
-* 'linear-gradient(to right, #0d47a1 90%, coral)'
-* backgroundColor: '#3b5998',//#0d47a1*/
-const User = (props) => {
+const User:FC<UsersPropsType> = (props) => {
     const classes = useStyles()
 
     return (
@@ -108,22 +59,20 @@ const User = (props) => {
 
 export default User
 
-const AdminPanelUsers = (props) => {
-    //debugger
+const AdminPanelUsers:FC<UsersPropsType> = (props) => {
+
     const classes = useStyles()
     const [expandedCreate, setExpandedCreate] = React.useState(false)
     const [expandedEdit, setExpandedEdit] = React.useState(false)
     const [expandedDelete, setExpandedDelete] = React.useState(false)
 
     const handleCreateExpandClick = () => {
-        //debugger
-
         setExpandedCreate(!expandedCreate)
 
         if (!expandedCreate) {
             props.setCurrentUsersId(props._id)
             props.setUserItem(true)
-            setInitialData(props, true)
+            setInitialData(props, true, false)
         } else {
             props.setIsAllUsers(true)
         }
@@ -156,22 +105,21 @@ const AdminPanelUsers = (props) => {
             setInitialData(props, false, true)
         } else {
             props.setIsAllUsers(true)
-            props.setUsersCount(null)
+            props.setUsersCount(0)
             props.setIsAdminRootCount(false)
             props.setAdminRootCount(0)
         }
     }
 
     const handleRefreshClick = () => {
-        //setExpandedRefresh(!expandedRefresh)
         props.setIsAllUsers(true)
     }
 
-    const showResults = (values) => {
+    const showResults = (values: UsersType) => {
         //window.alert(`You submitted:\n\n${JSON.stringify(values, null, 2)}`)
 
         if (expandedEdit) {
-            props.updateUser(values.id, values.firstName, values.lastName, values.email, values.password, values.root)
+            props.updateUser(values._id, values.firstName, values.lastName, values.email, values.password, values.root)
             handleEditExpandClick()
         }
 
@@ -182,7 +130,7 @@ const AdminPanelUsers = (props) => {
         }
 
         if (expandedDelete) {
-            props.deleteUser(values.id)
+            props.deleteUser(values._id)
             handleDeleteExpandClick()
         }
     }
@@ -260,17 +208,16 @@ const AdminPanelUsers = (props) => {
     )
 }
 
-const setInitialData = (props, reset, expandedDelete) => {
-    //debugger
+const setInitialData = (props: UsersPropsType, reset: boolean, expandedDelete: boolean) => {
     if (reset) {
-        initialData.id = null
+        initialData._id = ''
         initialData.firstName = ''
         initialData.lastName = ''
         initialData.email = ''
         initialData.password = ''
         initialData.root = false
     } else {
-        initialData.id = props._id
+        initialData._id = props._id
         initialData.firstName = props.firstName
         initialData.lastName = props.lastName
         initialData.email = props.email
@@ -284,25 +231,19 @@ const setInitialData = (props, reset, expandedDelete) => {
 }
 
 const initialData = {
-    id: null,
+    _id: '',
     firstName: '',
     lastName: '',
     email: '',
     password: '',
-    root: null,
+    root: false,
 }
 ///////////////////////////////////////////////////////
 
-const EditUsersForm = (props) => {
+const EditUsersForm: FC<InjectedFormProps<InitialDataType, UsersWithExpandedPropsType> & UsersWithExpandedPropsType> = (props) => {
     const classesStyle = useStyles()
     const {handleSubmit, reset} = props
     let {pristine, submitting} = props
-    //debugger
-    //console.log(props.val + " " + props.expandedEdit)
-
-    /*let projectsItems = projects.map(
-        projectItem => <option key={projectItem._id} value={`${projectItem._id}| ${projectItem.title}`}
-                               label={projectItem.title}></option>)*/
 
     if (props.expandedEdit) {
         pristine = false
@@ -383,35 +324,8 @@ const EditUsersForm = (props) => {
     )
 }
 
-const EditUsersReduxForm = reduxForm({
+const EditUsersReduxForm = reduxForm<InitialDataType, UsersWithExpandedPropsType>({
     form: 'EditUsersForm', // a unique identifier for this form
     validate,
-    initialValues: initialData
+    initialValues: initialData as InitialDataType
 })(EditUsersForm)
-
-
-/*
- || props.expandedCreate? true : false
-* <>
-                        {props.text.split('\n').map((i, key) => {
-                            return <Typography key={key} paragraph variant="body1" color="textPrimary"
-                                               gutterBottom>{i}</Typography>
-                        })}
-                    </>
-                    *
-                    *
-                    * <div>
-                        <Field
-                            classes={classes}
-                            name="project"
-                            component={renderSelectField}
-                            label="Проект"
-                        >
-                            {props.expandedEdit ? <>
-                                    <option value={props.project} label={props.projectTitle}/>
-                                    <option value=''/>
-                                </> :
-                                <option value=''/>}
-                            {projectsItems}
-                        </Field>
-                    </div>*/

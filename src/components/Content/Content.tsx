@@ -6,7 +6,7 @@ import JobsContainer from "../Jobs/JobsContainer"
 import ContactsContainer from "../Contacts/ContactsContainer"
 import AboutUsContainer from "../AboutUs/AboutUsContainer"
 import Admin from "../Admin/Admin"
-import Users from "../Users/UsersContainer"
+import UsersContainer from "../Users/UsersContainer"
 import NewsContainer from "../News/NewsContainer"
 import GalleryContainer from "../Gallery/GalleryContainer"
 import PhotoAlbumContainer from "../PhotoAlbum/PhotoAlbumContainer"
@@ -37,7 +37,7 @@ const Content:FC<{}> = () => {
                 <Route path='/about' component={AboutUsContainer}/>
                 <Route path='/job' component={JobsContainer}/>
                 <Route exact path='/admin' component={Admin}/>
-                <Route exact path='/admin/users' component={Users}/>
+                <Route exact path='/admin/users' component={UsersContainer}/>
                 <Route path='*'
                        render={() => <div>Page not found: error 404</div>}/>
             </Switch>

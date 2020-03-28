@@ -6,6 +6,12 @@ import {
     IS_ADMIN_ROOT_COUNT
 } from "./types"
 import {UsersType} from "../../tstypes/usersTypes"
+import {ThunkAction} from "redux-thunk";
+import {AppStateType} from "../store";
+
+export type UsersActionsType = SetUsersActionType | SetAdminRootCountActionType | SetIsAllUsersActionType |
+    SetIsAdminRootCountActionType | SetChangeUsersItemActionType | SetUserItemActionType |
+    SetCurrentUsersIdActionType | SetUsersCountActionType | SetDefaultUserActionType | SetCreateUserSuccessActionType
 
 export type SetUsersActionType = {
     type: typeof SET_USERS
@@ -34,7 +40,7 @@ export type SetIsAllUsersActionType = {
     type: typeof IS_ALL_USERS
     payload: boolean
 }
-export const setIsAllUsers = (isAllUsers:boolean): SetIsAllUsersActionType =>{
+export const setIsAllUsers = (isAllUsers: boolean): SetIsAllUsersActionType =>{
     return{
         type: IS_ALL_USERS,
         payload: isAllUsers
@@ -63,13 +69,13 @@ export const setChangeUsersItem = (): SetChangeUsersItemActionType =>{
 
 export type SetUserItemActionType = {
     type: typeof SET_USERS_ITEM
-    payload: UsersType
+    payload: boolean
 }
 
-export const setUserItem = (user: UsersType): SetUserItemActionType =>{
+export const setUserItem = (isSetUserItem: boolean): SetUserItemActionType =>{
     return {
         type: SET_USERS_ITEM,
-        payload: user
+        payload: isSetUserItem
     }
 }
 
@@ -114,16 +120,19 @@ export const setCreateUserSuccess = (success: boolean): SetCreateUserSuccessActi
         payload: success
     }
 }
+
+export type UsersThunkActionType = ThunkAction<Promise<void>, AppStateType, unknown, UsersActionsType>
+
 /*Thunk Creators*/
-export const getUsers = () => {
-    return async (dispatch: any) => {
+export const getUsers = (): UsersThunkActionType => {
+    return async (dispatch) => {
         const users = await mongodbAPI.getUsers()
         dispatch(setUsers(users))
     }
 }
 
-export const getAdminRootCount = () =>{
-    return async (dispatch: any) => {
+export const getAdminRootCount = (): UsersThunkActionType =>{
+    return async (dispatch) => {
         const count = await mongodbAPI.getAdminRootCount()
         dispatch(setAdminRootCount(count))
     }
@@ -131,14 +140,11 @@ export const getAdminRootCount = () =>{
 
 
 export const createUser = (firstName: string, lastName: string, email: string,
-                           password: string, root: boolean) =>{
-    //debugger
-    return async (dispatch: any) =>{
+                           password: string, root: boolean): UsersThunkActionType =>{
+
+    return async (dispatch) =>{
         const data = await mongodbAPI.createUser({firstName, lastName, email, password, root})
         if (data === false) {
-            //dispatch(setCreateUserSuccess(false))
-            //dispatch(stopSubmit('EditUsersForm', {email: `Пользователь "${email}" уже есть в БД!`}))
-            //
             alert(`ОШИБКА!!!: Пользователь ${email} уже есть в БД!`)
         }
         else{
@@ -150,9 +156,9 @@ export const createUser = (firstName: string, lastName: string, email: string,
 }
 
 export const updateUser = (id: string, firstName: string, lastName: string,
-                           email: string, password: string, root: boolean) =>{
-    //debugger
-    return async (dispatch: any) =>{
+                           email: string, password: string, root: boolean): UsersThunkActionType =>{
+
+    return async (dispatch) =>{
         const data = await mongodbAPI.updateUser({id, firstName, lastName, email, password, root})
         if (data) {
             dispatch(getUsers())
@@ -160,9 +166,9 @@ export const updateUser = (id: string, firstName: string, lastName: string,
     }
 }
 
-export const deleteUser = (id: string) =>{
-    //debugger
-    return async (dispatch: any) =>{
+export const deleteUser = (id: string): UsersThunkActionType =>{
+
+    return async (dispatch) =>{
         const data = await mongodbAPI.deleteUser({id})
         if (data) {
             dispatch(getUsers())

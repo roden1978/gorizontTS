@@ -5,20 +5,21 @@ import {
     IS_ADMIN_ROOT_COUNT
 } from "../actions/types"
 import {UsersType} from "../../tstypes/usersTypes"
+import {UsersActionsType} from "../actions/usersActions";
 
 let initialState = {
     users: [] as Array<UsersType>,
-    getUserItem: false,
+    isGetUserItem: false,
     isAllUsers: false,
-    currentUserId: null as string | null,
-    usersCount: null as number | null,
-    createUserSuccess: null as boolean | null,
-    adminRootCount: null as number | null,
+    currentUserId: '',
+    usersCount: 0,
+    createUserSuccess: false,
+    adminRootCount: 0,
     isAdminRootCount: false
 }
 
 export type InitialStateType = typeof initialState
-const users_reducer = (state = initialState, action: any):InitialStateType => {
+const users_reducer = (state = initialState, action: UsersActionsType):InitialStateType => {
 
     switch (action.type) {
         case SET_USERS: {
@@ -31,7 +32,7 @@ const users_reducer = (state = initialState, action: any):InitialStateType => {
         }
         case  SET_USERS_ITEM:{
             return {
-                ...state, getUserItem: action.payload
+                ...state, isGetUserItem: action.payload
             }
         }
         case  IS_ALL_USERS:{
