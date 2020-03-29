@@ -94,12 +94,14 @@ export type JobsThunkType = ThunkAction<Promise<void>, AppStateType, unknown, Jo
 export const getJobs = (): JobsThunkType => {
     return async (dispatch) => {
         const jobs = await mongodbAPI.getJobs()
+        if(jobs)
         dispatch(setJobs(jobs))
     }
 }
 export const getAllJobs = (): JobsThunkType => {
     return async (dispatch) => {
         const jobs = await mongodbAPI.getAllJobs()
+        if(jobs)
         dispatch(setJobs(jobs))
     }
 }
@@ -117,11 +119,11 @@ export const createJob = (company: string, title: string, description:string, pr
     }
 }
 
-export const updateJob = (id: string, company: string, title: string, description: string, price: string,
+export const updateJob = (_id: string, company: string, title: string, description: string, price: string,
                            email: string, phone: string, status:boolean, createAt: string): JobsThunkType => {
     return async (dispatch) => {
         const data = await mongodbAPI.updateJob({
-            id, company, title, description, price,
+            _id, company, title, description, price,
             email, phone, status, createAt
         })
         if (data.resultCode === 0) {
@@ -130,9 +132,9 @@ export const updateJob = (id: string, company: string, title: string, descriptio
     }
 }
 
-export const deleteJob = (id: string): JobsThunkType => {
+export const deleteJob = (_id: string): JobsThunkType => {
     return async (dispatch) => {
-        const data = await mongodbAPI.deleteJob({id})
+        const data = await mongodbAPI.deleteJob(_id)
         if (data.resultCode === 0) {
             dispatch(getAllJobs())
         }

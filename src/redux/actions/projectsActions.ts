@@ -185,6 +185,7 @@ export type ProjectsThunkType = ThunkAction<Promise<void> | void, AppStateType, 
 export const getProjects = (): ProjectsThunkType => {
     return async (dispatch) => {
         const projects = await mongodbAPI.getProjects()
+        if(projects)
         dispatch(setProjects(projects))
     }
 }
@@ -192,6 +193,7 @@ export const getProjects = (): ProjectsThunkType => {
 export const getProject = (id: string): ProjectsThunkType => {
     return async (dispatch) => {
         const project = await mongodbAPI.getProject(id)
+        if(project)
         dispatch(setProject(project))
     }
 }
@@ -205,6 +207,7 @@ export const getId = (id: string): ProjectsThunkType => {
 export const getAllProjects = (): ProjectsThunkType => {
     return async (dispatch) => {
         const projects = await mongodbAPI.getAllProjects()
+        if(projects)
         dispatch(setProjects(projects))
     }
 }
@@ -219,10 +222,10 @@ export const createProject = (title: string, description: string, text: string,
     }
 }
 
-export const updateProject = (id: string, title: string, description: string, text: string,
+export const updateProject = (_id: string, title: string, description: string, text: string,
                               albumId: string, albumName:string, status: boolean, createAt: string): ProjectsThunkType =>{
     return async (dispatch) =>{
-        const data = await mongodbAPI.updateProject({id, title, description, text, albumId, albumName, status, createAt})
+        const data = await mongodbAPI.updateProject({_id, title, description, text, albumId, albumName, status, createAt})
         if (data.resultCode === 0) {
             dispatch(getAllProjects())
         }
@@ -232,7 +235,7 @@ export const updateProject = (id: string, title: string, description: string, te
 export const deleteProject = (id: string):ProjectsThunkType =>{
     //debugger
     return async (dispatch) =>{
-        const data = await mongodbAPI.deleteProject({id})
+        const data = await mongodbAPI.deleteProject(id)
         if (data.resultCode === 0) {
             dispatch(getAllProjects())
         }
@@ -243,6 +246,7 @@ export const getPhotos = (id: string): ProjectsThunkType => {
     //debugger
     return async (dispatch) => {
         const photos = await flickrAPI.getPhotos(id)
+        if(photos)
         dispatch(setProjectsPhotos(id, photos))
     }
 }
@@ -250,6 +254,7 @@ export const getPhotos = (id: string): ProjectsThunkType => {
 export const getPhotoWithUrl = (id: string, card: PhotoType): ProjectsThunkType => {
     return async (dispatch) => {
         const photo = await flickrAPI.getPhoto(id)
+        if(photo)
         dispatch(setUrlToPhotos(photo, card))
     }
 }

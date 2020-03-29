@@ -43,14 +43,14 @@ type AboutThunkType = ThunkAction<Promise<void>, AppStateType, unknown, AboutAct
 export const getAbout = (): AboutThunkType => {
     return async (dispatch) => {
         const about = await mongodbAPI.getAbout()
+        if(about)
         dispatch(setAbout(about))
     }
 }
 
-export const updateAbout = (id: string, text: string): AboutThunkType =>{
-    //debugger
+export const updateAbout = (_id: string, text: string): AboutThunkType =>{
     return async (dispatch) =>{
-        const data = await mongodbAPI.updateAbout({id, text})
+        const data = await mongodbAPI.updateAbout({_id, text})
         if (data.resultCode === 0) {
             dispatch(getAbout())
         }

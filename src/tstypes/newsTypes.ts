@@ -7,3 +7,11 @@ export type NewsType = {
     status: boolean
     createAt: string
 }
+
+export type NewsCreateType = {
+    title: string
+    text: string
+    project: string
+    projectTitle: string
+    status: boolean
+}

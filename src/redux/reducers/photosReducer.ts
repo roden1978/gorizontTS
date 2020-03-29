@@ -36,7 +36,7 @@ const photos_reducer = (state = initialState, action: any): InitialStateType => 
             * копия  ПРИМИТИВОВ в ФИГУРНЫХ СКОБКАХ
             * копия ОБЪЕКТОВ И ПОДОБЪЕКТОВ в ФИГУРНЫХ СКОБКАХ*/
             return {
-                ...state, photos: action.payload.photoset.photo
+                ...state, photos: action.payload
             }
         }
         case SET_URL_TO_ALBUMS:{

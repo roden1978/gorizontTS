@@ -4,7 +4,7 @@ import {ContactsType} from "../../tstypes/contactsTypes"
 import {ThunkAction} from "redux-thunk"
 import {AppStateType} from "../store"
 
-export type ContactsActionsType = SetContactsActionType | SetIsChangedContactsActionType |SetDefaultContactsActionType
+export type ContactsActionsType = SetContactsActionType | SetIsChangedContactsActionType | SetDefaultContactsActionType
 
 export type SetContactsActionType = {
     type: typeof SET_CONTACTS
@@ -41,27 +41,30 @@ export type ContactsThunkType = ThunkAction<Promise<void>, AppStateType, unknown
 export const getContacts = (): ContactsThunkType => {
     return async (dispatch) => {
         const contacts = await mongodbAPI.getContacts()
-        dispatch(setContacts(contacts))
+        if (contacts)
+            dispatch(setContacts(contacts))
     }
 }
 export const createContacts = (companyName: string, companyAddress: string, companyEmail: string, companyPhone: string,
                                phoneOwner01: string, phone01: string, phoneOwner02: string, phone02: string,
                                phoneOwner03: string, phone03: string, phoneOwner04: string, phone04: string,
-                               phoneOwner05: string, phone05: string): ContactsThunkType =>{
+                               phoneOwner05: string, phone05: string): ContactsThunkType => {
     //debugger
-    return async (dispatch) =>{
-        const data = await mongodbAPI.createContacts({companyName, companyAddress,
+    return async (dispatch) => {
+        const data = await mongodbAPI.createContacts({
+            companyName, companyAddress,
             companyEmail, companyPhone,
             phoneOwner01, phone01, phoneOwner02, phone02,
             phoneOwner03, phone03, phoneOwner04, phone04,
-            phoneOwner05, phone05})
+            phoneOwner05, phone05
+        })
         if (data.resultCode === 0) {
             dispatch(getContacts())
         }
     }
 }
 
-export const updateContacts = (id: string, companyName: string, companyAddress: string,
+export const updateContacts = (_id: string, companyName: string, companyAddress: string,
                                companyEmail: string, companyPhone: string,
                                phoneOwner01: string, phone01: string, phoneOwner02: string, phone02: string,
                                phoneOwner03: string, phone03: string, phoneOwner04: string, phone04: string,
@@ -69,7 +72,7 @@ export const updateContacts = (id: string, companyName: string, companyAddress: 
     //debugger
     return async (dispatch) => {
         const data = await mongodbAPI.updateContacts({
-            id, companyName, companyAddress, companyEmail, companyPhone,
+            _id, companyName, companyAddress, companyEmail, companyPhone,
             phoneOwner01, phone01, phoneOwner02, phone02,
             phoneOwner03, phone03, phoneOwner04, phone04,
             phoneOwner05, phone05

@@ -1,25 +1,19 @@
-//import * as axios from "axios/index"
-
 import axios from 'axios'
-//import auth0 from 'auth0-js'
-
-//import {connect} from "react-redux"
-//import {getAuthorize} from "../redux/actions/authActions"
+import {NewsCreateType, NewsType} from "../tstypes/newsTypes";
+import {ProjectCreateType, ProjectsType} from "../tstypes/projectsTypes";
+import {JobCreateType, JobType} from "../tstypes/jobsTypes";
+import {ContactsCreateType, ContactsType} from "../tstypes/contactsTypes";
+import {AboutCreateType, AboutType} from "../tstypes/aboutTypes";
+import {CheckUserType, UsersCreateType, UsersType} from "../tstypes/usersTypes";
+import {AlbumsType, PhotosetType, PhotoSizesType} from "../tstypes/photosTypes";
 
 const instance = axios.create()
-/*let auth = new auth0.WebAuth({
-    domain: 'dev-8e4ti4s2.auth0.com',
-    clientID: 'bOS225UZ986RtJmRgZCZG2SzZPGPJGJZ',
-    redirectUri: 'http://localhost:3000/login',
-    responseType: 'token id_token',
-    scope: 'email'
-})*/
+
 //API для новостей
 export const mongodbAPI = {
     //Получить новости с условием
     getNews() {
-        //debugger
-        return instance.get('/api/news/')
+        return instance.get<Array<NewsType>>('/api/news/')
             .then(response => {
                 return response.data
             })
@@ -29,8 +23,7 @@ export const mongodbAPI = {
     },
     //Получить все новости
     getAllNews() {
-        //debugger
-        return instance.get('/api/news/all')
+        return instance.get<Array<NewsType>>('/api/news/all')
             .then(response => {
                 return response.data
             })
@@ -39,8 +32,8 @@ export const mongodbAPI = {
             )
     },
     //Получить новости с ИД
-    getNewsItem(id) {
-        return instance.get('/api/news/' + id)
+    getNewsItem(/*ИД_Новости*/id: string) {
+        return instance.get<NewsType>('/api/news/' + id)
             .then(response => {
                 return response.data
             })
@@ -49,7 +42,8 @@ export const mongodbAPI = {
             )
     },
     //Обновить новость
-    updateNews(newsData) {
+    updateNews(/*Объект_с_измененными_данными_новости*/newsData: NewsType) {
+        debugger
         return instance.post('/api/news/upd', newsData)
             .then(response => {
                 return response.data
@@ -59,8 +53,8 @@ export const mongodbAPI = {
             )
     },
     //Создать новость
-    createNews(newsData) {
-        return instance.post('/api/news/', newsData)
+    createNews(/*Объект_с_новыми_данными_новости*/newsCreateData: NewsCreateType) {
+        return instance.post('/api/news/', newsCreateData)
             .then(response => {
                 return response.data
             })
@@ -69,8 +63,9 @@ export const mongodbAPI = {
             )
     },
     //Удалить новость из БД
-    deleteNews(newsData) {
-        return instance.delete('/api/news/' + newsData.id)
+
+    deleteNews(/*Объект_с_ИД_новости_для_удаления*/_id: string) {
+        return instance.delete('/api/news/' + _id)
             .then(response => {
                 return response.data
             })
@@ -81,7 +76,7 @@ export const mongodbAPI = {
 //API для проектов
     //Полусть проекты с условием
     getProjects() {
-        return instance.get('/api/projects')
+        return instance.get<Array<ProjectsType>>('/api/projects')
             .then(response => {
                 return response.data
             })
@@ -90,8 +85,8 @@ export const mongodbAPI = {
             )
     },
 //Получить проект с ИД
-    getProject(id) {
-        return instance.get('/api/projects/' + id)
+    getProject(/*ИД_проекта*/id: string) {
+        return instance.get<ProjectsType>('/api/projects/' + id)
             .then(response => {
                 return response.data
             })
@@ -102,7 +97,7 @@ export const mongodbAPI = {
     //Получить все проекты
     getAllProjects() {
         //debugger
-        return instance.get('/api/projects/all')
+        return instance.get<Array<ProjectsType>>('/api/projects/all')
             .then(response => {
                 return response.data
             })
@@ -111,7 +106,7 @@ export const mongodbAPI = {
             )
     },
     //Обновить проект
-    updateProject(projectData) {
+    updateProject(/*Объект_с_измененными_данными_проекта*/projectData: ProjectsType) {
         //debugger
         return instance.post('/api/projects/upd', projectData)
             .then(response => {
@@ -122,8 +117,8 @@ export const mongodbAPI = {
             )
     },
     //Создать проект
-    createProject(projectData) {
-        return instance.post('/api/projects/', projectData)
+    createProject(/*Объект_с_новыми_данными_проекта*/projectCreateData: ProjectCreateType) {
+        return instance.post('/api/projects/', projectCreateData)
             .then(response => {
                 return response.data
             })
@@ -132,8 +127,8 @@ export const mongodbAPI = {
             )
     },
     //Удалить проект из БД
-    deleteProject(projectData) {
-        return instance.delete('/api/projects/' + projectData.id)
+    deleteProject(/*Объект_с_ИД_новости_для_удаления*/_id: string) {
+        return instance.delete('/api/projects/' + _id)
             .then(response => {
                 return response.data
             })
@@ -143,8 +138,7 @@ export const mongodbAPI = {
     },
     //API для объявлений
     getJobs() {
-        //debugger
-        return instance.get('/api/job')
+        return instance.get<Array<JobType>>('/api/job')
             .then(response => {
                 return response.data
             })
@@ -154,8 +148,7 @@ export const mongodbAPI = {
     },
     //Получить все объявления
     getAllJobs() {
-        //debugger
-        return instance.get('/api/job/all')
+        return instance.get<Array<JobType>>('/api/job/all')
             .then(response => {
                 return response.data
             })
@@ -164,8 +157,8 @@ export const mongodbAPI = {
             )
     },
     //Получить объявление с ИД
-    getJobsItem(id) {
-        return instance.get('/api/job/' + id)
+    getJobsItem(/*ИД_объявления*/id: string) {
+        return instance.get<JobType>('/api/job/' + id)
             .then(response => {
                 return response.data
             })
@@ -174,7 +167,7 @@ export const mongodbAPI = {
             )
     },
     //Обновить объявление
-    updateJob(jobData) {
+    updateJob(/*Объект_с_измененными_данными_объявления*/jobData: JobType) {
         return instance.post('/api/job/upd', jobData)
             .then(response => {
                 return response.data
@@ -184,8 +177,8 @@ export const mongodbAPI = {
             )
     },
     //Создать объявление
-    createJob(jobData) {
-        return instance.post('/api/job/', jobData)
+    createJob(/*Объект_с_новыми_данными_объявления*/jobCreateData: JobCreateType) {
+        return instance.post('/api/job/', jobCreateData)
             .then(response => {
                 return response.data
             })
@@ -194,8 +187,8 @@ export const mongodbAPI = {
             )
     },
     //Удалить объявление из БД
-    deleteJob(jobData) {
-        return instance.delete('/api/job/' + jobData.id)
+    deleteJob(/*Объект_с_ИД_для_удаления_объявления*/_id: string) {
+        return instance.delete('/api/job/' + _id)
             .then(response => {
                 return response.data
             })
@@ -205,8 +198,7 @@ export const mongodbAPI = {
     },
     //API для контактов
     getContacts() {
-        //debugger
-        return instance.get('/api/contacts')
+        return instance.get<Array<ContactsType>>('/api/contacts')
             .then(response => {
                 return response.data
             })
@@ -215,8 +207,8 @@ export const mongodbAPI = {
             )
     },
     //Создать контакты
-    createContacts(contactsData) {
-        return instance.post('/api/contacts/', contactsData)
+    createContacts(/*Объект_с_новыми_данными_контактов*/contactsCreateData: ContactsCreateType) {
+        return instance.post('/api/contacts/', contactsCreateData)
             .then(response => {
                 return response.data
             })
@@ -225,7 +217,7 @@ export const mongodbAPI = {
             )
     },
     //Обновить контакты
-    updateContacts(contactsData) {
+    updateContacts(/*Объект_с_измененными_данными_контактов*/contactsData: ContactsType) {
         return instance.post('/api/contacts/upd', contactsData)
             .then(response => {
                 return response.data
@@ -236,8 +228,7 @@ export const mongodbAPI = {
     },
     //API для о нас
     getAbout() {
-        //debugger
-        return instance.get('/api/about')
+        return instance.get<Array<AboutType>>('/api/about')
             .then(response => {
                 return response.data
             })
@@ -246,9 +237,8 @@ export const mongodbAPI = {
             )
     },
     //Создать о нас
-    createAbout(aboutData) {
-        //debugger
-        return instance.post('/api/about/', aboutData)
+    createAbout(/*Объект_с_новыми_данными_о_компании*/aboutCreateData: AboutCreateType) {
+        return instance.post('/api/about/', aboutCreateData)
             .then(response => {
                 return response.data
             })
@@ -257,7 +247,7 @@ export const mongodbAPI = {
             )
     },
     //Обновить инфу о нас
-    updateAbout(aboutData) {
+    updateAbout(/*Объект_с_измененными_данными_о_компании*/aboutData: AboutType) {
         return instance.post('/api/about/upd', aboutData)
             .then(response => {
                 return response.data
@@ -269,8 +259,7 @@ export const mongodbAPI = {
 
     //Получить пользователей
     getUsers() {
-        //debugger
-        return instance.get('/api/users/')
+        return instance.get<Array<UsersType>>('/api/users/')
             .then(response => {
                 return response.data
             })
@@ -280,7 +269,7 @@ export const mongodbAPI = {
     },
 
 //Получить пользователя с ИД
-    getUser(id) {
+   /* getUser(id) {
         return instance.get('/api/users/' + id)
             .then(response => {
                 return response.data
@@ -288,9 +277,9 @@ export const mongodbAPI = {
             .catch(err =>
                 console.log(err)
             )
-    },
+    },*/
 //Обновить пользователя
-    updateUser(userData) {
+    updateUser(/*Объект_с_измененными_данными_пользователя*/userData: UsersType) {
         return instance.post('/api/users/upd', userData)
             .then(response => {
                 return response.data
@@ -300,8 +289,8 @@ export const mongodbAPI = {
             )
     },
 //Создать пользователя
-    createUser(userData) {
-        return instance.post('/api/users/', userData)
+    createUser(/*Объект_с_новыми_данными_пользователя*/userCreateData: UsersCreateType) {
+        return instance.post('/api/users/', userCreateData)
             .then(response => {
                 console.log(response.data.err)
                 return response.data
@@ -311,8 +300,8 @@ export const mongodbAPI = {
             )
     },
 //Удалить пользователя из БД
-    deleteUser(userData) {
-        return instance.delete('/api/users/' + userData.id)
+    deleteUser(/*Объект_с_ИД_для_удаления_пользователя*/_id: string) {
+        return instance.delete('/api/users/' + _id)
             .then(response => {
                 return response.data
             })
@@ -321,7 +310,7 @@ export const mongodbAPI = {
             )
     },
     getAdminRootCount(){
-        return instance.get('/api/users/count')
+        return instance.get<number>('/api/users/count')
             .then(response => {
                 return response.data
             })
@@ -329,9 +318,8 @@ export const mongodbAPI = {
                 console.log(err)
             )
     },
-    checkUser(userData) {
-        //debugger
-        return instance.post('/api/users/login', userData)
+    checkUser(/*Объект_с_данными_для_проверки_пользователя*/checkUserData: CheckUserType) {
+        return instance.post<UsersType>('/api/users/login', checkUserData)
             .then(response => {
                 if (response.data) {
                     return response.data
@@ -350,17 +338,17 @@ export const flickrAPI = {
     //Получить список альбомов
     getAlbums() {
         //debugger
-        return instance.get('/api/albums')
+        return instance.get<AlbumsType>('/api/albums')
             .then(response => {
-                return response.data.photosets.photoset //массив фотоальбомов
+                return response.data //массив фотоальбомов
             })
             .catch(err =>
                 console.log(err)
             )
     },
     //Получить список фотографий из альбома с ID
-    getPhotos(id/*Id PhotoAlbum*/) {
-        return instance.get('/api/photos/' + id)
+    getPhotos(/*ИД_Фотоальбома*/id: string) {
+        return instance.get<PhotosetType>('/api/photos/' + id)
             .then(response => {
                 return response.data
             })
@@ -369,8 +357,8 @@ export const flickrAPI = {
             )
     },
     //Получить объект со ссылками на фото по ID с разными размерами фото
-    getPhoto(id/*Id Photo*/) {
-        return instance.get('/api/photos/photo/' + id)
+    getPhoto(/*ИД_Фотографии*/id: string) {
+        return instance.get<PhotoSizesType>('/api/photos/photo/' + id)
             .then(response => {
                 return response.data
             })

@@ -20,7 +20,7 @@ import News from "./News"
 import {connect} from "react-redux"
 import Spinner from "../../common/Spinner"
 import {AppStateType} from "../../redux/store"
-import {NewsType} from "../../tstypes/newsTypes"
+import {NewsCreateType, NewsType} from "../../tstypes/newsTypes"
 import {ProjectsType} from "../../tstypes/projectsTypes"
 
 export type MapStateToPropsType = {
@@ -46,14 +46,13 @@ export type MapDispatchToPropsType = {
     setDefaultNews: () => void
     setCurrentNewsId: (id: string) => void
     createNews: (title: string, text: string, project: string, projectTitle: string, status: boolean) => void
-    updateNews: (id: string, title: string, text: string, project: string,
+    updateNews: (_id: string, title: string, text: string, project: string,
                  projectTitle: string, status: boolean, createAt: string) => void
     deleteNews: (id: string) => void
     setNewsCount: (count: number) => void
     checkProject: (id: string) => void
     setProjectIdForRedirect: (id: string) => void
 }
-
 export type PropsType = MapStateToPropsType & MapDispatchToPropsType
 type PrevStateType = MapStateToPropsType
 

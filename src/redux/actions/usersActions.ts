@@ -127,6 +127,7 @@ export type UsersThunkActionType = ThunkAction<Promise<void>, AppStateType, unkn
 export const getUsers = (): UsersThunkActionType => {
     return async (dispatch) => {
         const users = await mongodbAPI.getUsers()
+        if(users)
         dispatch(setUsers(users))
     }
 }
@@ -134,6 +135,7 @@ export const getUsers = (): UsersThunkActionType => {
 export const getAdminRootCount = (): UsersThunkActionType =>{
     return async (dispatch) => {
         const count = await mongodbAPI.getAdminRootCount()
+        if(count)
         dispatch(setAdminRootCount(count))
     }
 }
@@ -155,21 +157,21 @@ export const createUser = (firstName: string, lastName: string, email: string,
     }
 }
 
-export const updateUser = (id: string, firstName: string, lastName: string,
+export const updateUser = (_id: string, firstName: string, lastName: string,
                            email: string, password: string, root: boolean): UsersThunkActionType =>{
 
     return async (dispatch) =>{
-        const data = await mongodbAPI.updateUser({id, firstName, lastName, email, password, root})
+        const data = await mongodbAPI.updateUser({_id, firstName, lastName, email, password, root})
         if (data) {
             dispatch(getUsers())
         }
     }
 }
 
-export const deleteUser = (id: string): UsersThunkActionType =>{
+export const deleteUser = (_id: string): UsersThunkActionType =>{
 
     return async (dispatch) =>{
-        const data = await mongodbAPI.deleteUser({id})
+        const data = await mongodbAPI.deleteUser(_id)
         if (data) {
             dispatch(getUsers())
         }

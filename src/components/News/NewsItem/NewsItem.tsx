@@ -49,7 +49,7 @@ const NewsItem: FC<NewsItemPropsType> = (props) => {
 
     const checkPrj = () => {
         props.checkProject(props.project)
-        props.setCurrentNewsId(props._id)
+        props.setCurrentNewsId(props._id!)
     }
 
     createAt.locale('ru')
@@ -155,6 +155,7 @@ const AdminPanelNews: FC<NewsItemPropsType> = (props) => {
     }
 
     const showResults = (values: NewsType) => {
+        debugger
         if (values.project) {
             const position = values.project.indexOf('|', 0)
             let id, title

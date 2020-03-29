@@ -58,10 +58,10 @@ export const setUrlToAlbums = (photo: PhotoSizesType, set: PhotoAlbumType): SetU
 
 export type SetUrlToPhotosActionType = {
     type: typeof SET_URL_TO_PHOTOS
-    payload: PhotoType
+    payload: PhotoSizesType
     card: PhotoType
 }
-export const setUrlToPhotos = (photo: PhotoType, card: PhotoType): SetUrlToPhotosActionType => {
+export const setUrlToPhotos = (photo: PhotoSizesType, card: PhotoType): SetUrlToPhotosActionType => {
     return {
         type: SET_URL_TO_PHOTOS,
         payload: photo,
@@ -96,16 +96,17 @@ type PhotosThunkType = ThunkAction<Promise<void> | void, AppStateType, unknown, 
 /*Thunk Creators*/
 export const getPhotosets = (): PhotosThunkType => {
     return async (dispatch) => {
-        const photosets = await flickrAPI.getAlbums()
-        //debugger
-        dispatch(setPhotosets(photosets))
+        const albums = await flickrAPI.getAlbums()
+        if(albums)
+        dispatch(setPhotosets(albums.photosets.photoset))
     }
 }
 
 export const getPhotos = (id: string): PhotosThunkType => {
     return async (dispatch) => {
         const photos = await flickrAPI.getPhotos(id)
-        dispatch(setPhotos(photos))
+        if(photos)
+        dispatch(setPhotos(photos.photoset.photo))
     }
 }
 
@@ -119,12 +120,14 @@ export const getPhotos = (id: string): PhotosThunkType => {
 export const getAlbumsWithUrl = (id: string, set: PhotoAlbumType): PhotosThunkType => {
     return async (dispatch) => {
         const photo = await flickrAPI.getPhoto(id)
+        if(photo)
         dispatch(setUrlToAlbums(photo, set))
     }
 }
 export const getPhotoWithUrl = (id: string, card:PhotoType): PhotosThunkType => {
     return async (dispatch) => {
         const photo = await flickrAPI.getPhoto(id)
+        if(photo)
         dispatch(setUrlToPhotos(photo, card))
     }
 }
