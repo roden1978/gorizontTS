@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {ComponentType} from 'react'
 import {
     getUsers,
     setUserItem,
@@ -109,7 +109,7 @@ let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
 /*Создаем контейнерную кмпоненту MyNewsContainer*/
 /*Двойные скобки обозначют что мы вызвали фукцию connect, а она
 * в свою очередь возвращает нам фукцию во вторых скобках*/
-export default compose<any>(connect<MapStateToPropsType, MapDispatchToPropsType,{}, AppStateType>(mapStateToProps,
+export default compose<ComponentType>(connect<MapStateToPropsType, MapDispatchToPropsType,{}, AppStateType>(mapStateToProps,
     {
         getUsers,
         setUserItem,
