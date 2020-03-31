@@ -1,10 +1,11 @@
 const proxy = require("http-proxy-middleware")
 
 module.exports = function(app) {
-    app.use(
-        proxy('/api', {
-            target: "https://warm-eyrie-80483.herokuapp.com",
-            changeOrigin: true })
+    app.use("/api",
+        proxy({
+            target: "https://gorizont86.herokuapp.com/",
+            changeOrigin: true
+        })
     )
 }
 
