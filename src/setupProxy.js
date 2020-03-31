@@ -1,11 +1,10 @@
 const proxy = require("http-proxy-middleware")
 
 module.exports = function(app) {
-    app.use("/api",
-        proxy({
-            target: "http://localhost:5000",
-            changeOrigin: true
-        })
+    app.use(
+        proxy('/api', {
+            target: "https://warm-eyrie-80483.herokuapp.com",
+            changeOrigin: true })
     )
 }
 
@@ -29,11 +28,13 @@ module.exports = function(app) {
         })
     )
     *
-    * app.use("/forecast",
-   proxy({
-      target: "https://api.darksky.net/",
-      changeOrigin: true
-   })
+    *local
+    * app.use("/api",
+        proxy({
+            target: "http://localhost:5000",
+            changeOrigin: true
+        })
+    )
 )
 *
 * http://194.58.119.89:5000
