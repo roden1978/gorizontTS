@@ -43,7 +43,7 @@ export const mongodbAPI = {
     },
     //Обновить новость
     updateNews(/*Объект_с_измененными_данными_новости*/newsData: NewsType) {
-        debugger
+        //debugger
         return instance.post('/api/news/upd', newsData)
             .then(response => {
                 return response.data

@@ -155,7 +155,7 @@ const AdminPanelNews: FC<NewsItemPropsType> = (props) => {
     }
 
     const showResults = (values: NewsType) => {
-        debugger
+        //debugger
         if (values.project) {
             const position = values.project.indexOf('|', 0)
             let id, title

@@ -144,7 +144,7 @@ export const createNews = (title: string, text: string, project: string,
 
 export const updateNews = (_id: string, title: string, text: string, project: string,
                            projectTitle: string, status: boolean, createAt: string): NewsThunkType => {
-    debugger
+    //debugger
     return async (dispatch) => {
         const data = await mongodbAPI.updateNews({_id, title, text, project, projectTitle, status, createAt})
         if (data.resultCode === 0) {
