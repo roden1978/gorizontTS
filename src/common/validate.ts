@@ -55,7 +55,7 @@ export const validate = (values: any) => {
 
     requiredDigits.forEach(digit => {
         if (values[digit] &&
-            !/^\d+$/i.test(values[digit])) {
+            !/^[\d\s]+$/i.test(values[digit])) {
             errors[digit] = 'Только цифры'
         }
 
