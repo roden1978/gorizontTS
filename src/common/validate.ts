@@ -1,6 +1,11 @@
-export const validate = (values) => {
 
-    const errors = {}
+type Errors = {
+    [key: string]: string
+}
+
+export const validate = (values: any) => {
+
+    const errors: Errors = {}
 
     const requiredFields = [
         'title', 'text', 'description', 'price','company',
@@ -58,8 +63,8 @@ export const validate = (values) => {
             errors[digit] = 'Сумма превышает допустимы размер'
     })
 
-    if(values[reqPassword] !== values[confPassword])
-        errors[confPassword] = "Пароли не совпадают"
+    if(values[reqPassword.toString()] !== values[confPassword.toString()])
+        errors[confPassword.toString()] = "Пароли не совпадают"
 
     minLengthPassword.forEach(length =>{
         if(values[length] && values[length].length < 8)
@@ -72,9 +77,19 @@ export const validate = (values) => {
     })
 
     maxLengthText.forEach(length =>{
-        if(values[length] && values[length].length > 5000)
-            errors[length] = 'Длина должная быть не более 5000 символов'
+        if(values[length] && values[length].length > 3000)
+            errors[length] = 'Длина должная быть не более 3000 символов'
     })
+
+   /* requiredFields.forEach(field => {
+       if (!values[field]) {
+            errors[field]  = 'Обязательное поле'
+        }
+        //console.log(values +' ' + field)
+        //console.log(errors[field] + ' ' + field)
+        console.log(JSON.stringify(values))
+        console.log(JSON.stringify(errors))
+    })*/
 
     return errors
 }

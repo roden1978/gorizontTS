@@ -27,12 +27,8 @@ import {PropsType} from '../NewsContainer'
 import {NewsType} from "../../../tstypes/newsTypes"
 import {UseStateExpandedProps} from "../../../tstypes/commonTypes"
 
-
-
 type NewsItemPropsType = PropsType & NewsType
-
-type InitialDataType = typeof initialData
-
+export type InitialDataType = typeof initialData
 type NewsItemWithExpandedPropsType = NewsItemPropsType & UseStateExpandedProps
 
 const NewsItem: FC<NewsItemPropsType> = (props) => {
@@ -331,11 +327,11 @@ const EditNewsForm: FC<InjectedFormProps<InitialDataType, NewsItemWithExpandedPr
                         />
                     </div>
                     < div>
-                        < Field
-                            name="text"
+                        <Field
+                            name="name"
                             component={renderTextField}
                             label="Текст новости"
-
+                            inputProps
                             multiline
                             rowsMax="4"
                             margin="normal"

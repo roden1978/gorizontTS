@@ -20,7 +20,7 @@ import News from "./News"
 import {connect} from "react-redux"
 import Spinner from "../../common/Spinner"
 import {AppStateType} from "../../redux/store"
-import {NewsCreateType, NewsType} from "../../tstypes/newsTypes"
+import {NewsType} from "../../tstypes/newsTypes"
 import {ProjectsType} from "../../tstypes/projectsTypes"
 
 export type MapStateToPropsType = {

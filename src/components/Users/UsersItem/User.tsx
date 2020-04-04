@@ -12,7 +12,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
 import RefreshIcon from '@material-ui/icons/Refresh'
 import IconButton from "@material-ui/core/IconButton"
 import Collapse from "@material-ui/core/Collapse"
-import {Field, InjectedFormProps, reduxForm} from "redux-form"
+import {Field, FormErrors, InjectedFormProps, reduxForm} from "redux-form"
 import Button from "@material-ui/core/Button"
 import Tooltip from "@material-ui/core/Tooltip"
 import {renderTextField, renderCheckbox} from '../../../common/renderFilds'
