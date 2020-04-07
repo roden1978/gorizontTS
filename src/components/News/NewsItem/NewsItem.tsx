@@ -1,6 +1,7 @@
 import React, {FC, useState} from 'react'
 import {useHistory} from 'react-router-dom'
 import {useStyles} from './NewsStyles'
+
 import Grid from "@material-ui/core/Grid"
 import CardHeader from "@material-ui/core/CardHeader"
 import Card from "@material-ui/core/Card"
@@ -26,10 +27,12 @@ import {ProjectsType} from "../../../tstypes/projectsTypes"
 import {PropsType} from '../NewsContainer'
 import {NewsType} from "../../../tstypes/newsTypes"
 import {UseStateExpandedProps} from "../../../tstypes/commonTypes"
+import {ThemeProvider} from '@material-ui/core'
+import {Theme} from "../../../common/themeStyles";
 
 type NewsItemPropsType = PropsType & NewsType
 export type InitialDataType = typeof initialData
-type NewsItemWithExpandedPropsType = NewsItemPropsType & UseStateExpandedProps
+export type NewsItemWithExpandedPropsType = NewsItemPropsType & UseStateExpandedProps
 
 const NewsItem: FC<NewsItemPropsType> = (props) => {
     const classes = useStyles()
@@ -52,46 +55,54 @@ const NewsItem: FC<NewsItemPropsType> = (props) => {
 
     return (
         <Grid item xs={10}>
-            <Card className={classes.card}>
-                <CardHeader title={!props.status && props.adminMode ? props.title + " (срытый)" : props.title}
-                            className={clsx(classes.title, {
-                                [classes.titleHidden]: !props.status && props.adminMode,
+            <ThemeProvider theme={Theme}>
+                <Card className={classes.card}>
+                    <CardHeader title={
+                           !props.status && props.adminMode ? props.title + " (срытый)" : props.title
+                    }
+                                className={clsx(classes.title, {
+                                    [classes.titleHidden]: !props.status && props.adminMode,
+                                })}
+                                avatar={
+                                    <Avatar className={classes.avatar}>
+                                        <img className={classes.katok} src={katokIcon} alt="Новости"/>
+                                    </Avatar>
+                                }
+                    >
+                    </CardHeader>
+
+                    <CardContent>
+                        <>
+                            {props.text.split('\n').map((i, key) => {
+                                return <Typography key={key} paragraph variant="body1" color="textPrimary"
+                                                   gutterBottom>{i}</Typography>
                             })}
-                            avatar={
-                                <Avatar className={classes.avatar}>
-                                    <img className={classes.katok} src={katokIcon} alt="Новости"/>
-                                </Avatar>
-                            }
-                />
-                <CardContent>
-                    <>
-                        {props.text.split('\n').map((i, key) => {
-                            return <Typography key={key} paragraph variant="body1" color="textPrimary"
-                                               gutterBottom>{i}</Typography>
-                        })}
-                    </>
-                </CardContent>
-                <CardActions>
-                    {props.project ? <>
-                            <Typography variant="body2" color="textPrimary">
-                                Обзор проекта
-                            </Typography>
-                            <Tooltip title="Открыть проект" placement={'top'} arrow>
-                                <IconButton aria-label="Проект" onClick={checkPrj}>
-                                    <FolderIcon color="primary"/>
-                                </IconButton>
-                            </Tooltip>
-                            <Typography className={classes.pos} variant="body2" color="textPrimary">
-                                {props.projectTitle}
-                            </Typography>
-                        </> :
-                        null}
-                </CardActions>
-                <Typography className={classes.pos} variant="body2" color="textSecondary" gutterBottom>
-                    {createAt.format('LL')}
-                </Typography>
-                {props.adminMode ? <AdminPanelNews {...props}/> : ''}
-            </Card>
+                        </>
+                    </CardContent>
+
+                    <CardActions>
+                        {props.project ? <>
+                                <Typography variant="body2" color="textPrimary">
+                                    Обзор проекта
+                                </Typography>
+                                <Tooltip title="Открыть проект" placement={'top'} arrow>
+                                    <IconButton aria-label="Проект" onClick={checkPrj}>
+                                        <FolderIcon color="primary"/>
+                                    </IconButton>
+                                </Tooltip>
+                                <Typography className={classes.pos} variant="body2" color="textPrimary">
+                                    {props.projectTitle}
+                                </Typography>
+                            </> :
+                            null}
+                    </CardActions>
+
+                    <Typography className={classes.pos} variant="body2" color="textSecondary" gutterBottom>
+                        {createAt.format('LL')}
+                    </Typography>
+                    {props.adminMode ? <AdminPanelNews {...props}/> : ''}
+                </Card>
+            </ThemeProvider>
         </Grid>
     )
 }

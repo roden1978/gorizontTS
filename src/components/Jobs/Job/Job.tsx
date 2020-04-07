@@ -28,6 +28,8 @@ import RefreshIcon from "@material-ui/icons/Refresh"
 import {PropsType} from "../JobsContainer"
 import {JobType} from "../../../tstypes/jobsTypes"
 import {UseStateExpandedProps} from "../../../tstypes/commonTypes"
+import {Theme} from "../../../common/themeStyles";
+import {ThemeProvider} from "@material-ui/core";
 
 type JobsPropsType = PropsType & JobType
 type JobsWithActivatePropsType = PropsType & JobType & ActivateType
@@ -98,6 +100,7 @@ const Job:FC<JobsPropsType> = (props) => {
 
     return (
         <Grid item xs={xs} sm={sm}>
+            <ThemeProvider theme={Theme}>
             <Card className={classes.card}>
                 <CardHeader title={!props.status && props.adminMode ? props.title + " (срытый)" :props.title}
                             className={clsx(classes.title, {
@@ -109,7 +112,7 @@ const Job:FC<JobsPropsType> = (props) => {
                                 </Typography>}
                             avatar={
                                 <Avatar className={classes.avatar}>
-                                    <img className={classes.katok} src={titleIcon} alt="Работа"/>
+                                    <img className={classes.man} src={titleIcon} alt="Работа"/>
                                 </Avatar>
                             }
 
@@ -139,6 +142,7 @@ const Job:FC<JobsPropsType> = (props) => {
                 </Typography>
                 {props.adminMode ? <AdminPanelJobs activate={false} {...props}/> : ''}
             </Card>
+            </ThemeProvider>
         </Grid>
     )
 }

@@ -30,7 +30,7 @@ export const useStyles = makeStyles(theme => ({
         width: 50,
         height: 50,
     },
-    katok: {
+    man: {
         height: 45,
     },
     card: {

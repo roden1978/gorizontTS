@@ -1,6 +1,6 @@
 import React, {FC} from 'react'
 import {useStyles} from './AboutUsStyles'
-import {Container} from "@material-ui/core"
+import {Container, ThemeProvider} from "@material-ui/core"
 import Grid from "@material-ui/core/Grid"
 import Card from "@material-ui/core/Card"
 import CardHeader from "@material-ui/core/CardHeader"
@@ -20,6 +20,7 @@ import RefreshIcon from "@material-ui/icons/Refresh"
 import {PropsType} from "./AboutUsContainer"
 import {UseStateExpandedProps} from "../../tstypes/commonTypes"
 import {AboutType} from "../../tstypes/aboutTypes"
+import {Theme} from "../../common/themeStyles";
 
 type AboutUsWithExpandedProps = PropsType & UseStateExpandedProps
 type InitialDataType = typeof initialData
@@ -28,48 +29,49 @@ const AboutUs: FC<PropsType> = (props) => {
     const classes = useStyles()
 
     return (
-        <div>
-            <div className={classes.root}>
-                <Container className={classes.cardGrid} maxWidth="xl">
-                    <Grid
-                        container
-                        direction="row"
-                        justify="space-evenly"
-                        alignItems="center"
-                        spacing={3}
-                        className={classes.pos}
-                    >
-                        <Grid item xs={10}>
-                            <Card>
-                                <CardHeader title={'О нас'}
-                                            className={classes.title}/>
-                                <CardContent>
-                                    <Typography variant="body1" color="textPrimary" gutterBottom>
-                                        {props.about.length === 0 ? '' :
-                                            <>
-                                                {props.about[0].text.split('\n').map((i, key) => {
-                                                    return <Typography key={key} paragraph variant="body1"
-                                                                       color="textPrimary"
-                                                                       gutterBottom>{i}</Typography>
-                                                })}
-                                            </>
-                                        }
-                                    </Typography>
-                                </CardContent>
-                                {props.adminMode ? <AdminPanelAboutUs  {...props}/> : ''}
-                            </Card>
+        <ThemeProvider theme={Theme}>
+            <div>
+                <div className={classes.root}>
+                    <Container className={classes.cardGrid} maxWidth="xl">
+                        <Grid
+                            container
+                            direction="row"
+                            justify="space-evenly"
+                            alignItems="center"
+                            spacing={3}
+                            className={classes.pos}
+                        >
+                            <Grid item xs={10}>
+                                <Card>
+                                    <CardHeader title={'О нас'}
+                                                className={classes.title}/>
+                                    <CardContent>
+                                        <Typography variant="body1" color="textPrimary" gutterBottom>
+                                            {props.about.length === 0 ? '' :
+                                                <>
+                                                    {props.about[0].text.split('\n').map((i, key) => {
+                                                        return <Typography key={key} paragraph variant="body1"
+                                                                           color="textPrimary"
+                                                                           gutterBottom>{i}</Typography>
+                                                    })}
+                                                </>
+                                            }
+                                        </Typography>
+                                    </CardContent>
+                                    {props.adminMode ? <AdminPanelAboutUs  {...props}/> : ''}
+                                </Card>
+                            </Grid>
                         </Grid>
-                    </Grid>
-                </Container>
+                    </Container>
+                </div>
             </div>
-        </div>
+        </ThemeProvider>
     )
 }
 
 export default AboutUs
 
 const AdminPanelAboutUs: FC<AboutUsWithExpandedProps> = (props) => {
-    //debugger
     const classes = useStyles()
     const [expandedEdit, setExpandedEdit] = React.useState(false)
     const [expandedCreate, setExpandedCreate] = React.useState(false)
@@ -85,22 +87,18 @@ const AdminPanelAboutUs: FC<AboutUsWithExpandedProps> = (props) => {
     }
 
     const handleEditExpandClick = () => {
-        //debugger
         setExpandedEdit(!expandedEdit)
         if (!expandedEdit) {
             setInitialData(props)
         } else {
             props.setIsChangedAbout(true)
         }
-
-        //props.getId(null)
     }
     const handleRefreshClick = () => {
         props.getAbout()
     }
 
     const showResults = (values: AboutType) => {
-        //      window.alert(`You submitted:\n\n${JSON.stringify(values, null, 2)}`)
 
         if (expandedEdit) {
             props.updateAbout(values._id, values.text)
@@ -147,15 +145,15 @@ const AdminPanelAboutUs: FC<AboutUsWithExpandedProps> = (props) => {
                     </IconButton>
                 </Tooltip>
                 <Tooltip title={"Обновить"} placement={'top'} arrow>
-                    <Button className={classes.buttonSubmit} variant="outlined" size="small"  type="button"
-                            disabled={expandedEdit|| props.about.length !== 0 ? props.about[0]._id === '0' : false}
+                    <Button className={classes.buttonSubmit} variant="outlined" size="small" type="button"
+                            disabled={expandedEdit || props.about.length !== 0 ? props.about[0]._id === '0' : false}
                             onClick={handleRefreshClick}
                             startIcon={<RefreshIcon/>}>
                         Обновить
                     </Button>
                 </Tooltip>
             </CardActions>
-            <Collapse in={expandedEdit|| expandedCreate} timeout="auto"
+            <Collapse in={expandedEdit || expandedCreate} timeout="auto"
                       unmountOnExit>
                 <CardContent className={classes.adminPanel}>
                     <Typography variant="h6" color="textPrimary" align="center">

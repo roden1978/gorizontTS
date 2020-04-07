@@ -1,7 +1,6 @@
 import React from 'react'
 import TextField, {
     BaseTextFieldProps,
-    StandardTextFieldProps,
     TextFieldProps
 } from "@material-ui/core/TextField"
 import FormControlLabel from "@material-ui/core/FormControlLabel"
@@ -15,15 +14,22 @@ import {FormControlLabelProps} from "@material-ui/core/FormControlLabel/FormCont
 import {CheckboxProps} from "@material-ui/core/Checkbox/Checkbox";
 import {SelectProps} from "@material-ui/core/Select/Select";
 
-type RenderTextField = (params: WrappedFieldProps & TextFieldProps) => React.ReactFragment
-
+type RenderTextField = (params: WrappedFieldProps & BaseTextFieldProps & InnerProps) => React.ReactFragment
+type InnerProps = {
+    innerProps: {
+        style: {
+            width: string
+            marginLeft: string
+        }
+    }
+}
 
 export const renderTextField: RenderTextField = ({
                                                      label,
                                                      value,
                                                      input,
                                                      variant,
-                                                     color,
+                                                     innerProps,
                                                      meta: {touched, invalid, error},
                                                      ...custom
                                                  }): React.ReactFragment => {
@@ -34,6 +40,7 @@ export const renderTextField: RenderTextField = ({
                       error={touched && invalid}
                       fullWidth
                       helperText={touched && error}
+                      {...innerProps}
                       {...input}
                       {...custom}
     />

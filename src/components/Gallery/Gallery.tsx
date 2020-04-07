@@ -2,9 +2,10 @@ import React, {FC} from 'react'
 import PhotoAlbums from "../PhotoAlbums/PhotoAlbums"
 import Container from "@material-ui/core/Container"
 import Typography from "@material-ui/core/Typography"
-import {makeStyles} from "@material-ui/core"
+import {makeStyles, ThemeProvider} from "@material-ui/core"
 import Grid from "@material-ui/core/Grid"
 import {PropsType} from "./GalleryContainer"
+import {Theme} from "../../common/themeStyles";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -38,9 +39,11 @@ const Gallery: FC<PropsType> = (props) => {
     )
 
     return (
+        <ThemeProvider theme={Theme}>
         <div className={classes.root}>
             <div className={classes.heroContent}>
                 <Container maxWidth="sm">
+
                     <Typography variant="h5" align="center" color="textPrimary" paragraph>
                         Фотоальбомы ООО Горизонт
                     </Typography>
@@ -56,6 +59,7 @@ const Gallery: FC<PropsType> = (props) => {
                 </Grid>
             </Container>
         </div>
+        </ThemeProvider>
     )
 
 }

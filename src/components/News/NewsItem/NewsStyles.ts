@@ -1,5 +1,6 @@
 import {makeStyles} from '@material-ui/core/styles'
 
+
 export const useStyles = makeStyles(theme => ({
     link: {
         color: 'coral', // blueGrey[400],
@@ -9,10 +10,8 @@ export const useStyles = makeStyles(theme => ({
         fontSize: 14,
     },
     title: {
-        fontSize: 24,
         background:
-            'linear-gradient(to bottom, #4e69a2, #3b5998 50%)',
-        color: '#FFFFFF',
+        'linear-gradient(to bottom, #e9ecf4, #ffffff 80%)',
     },
     titleHidden: {
         fontSize: 16,
@@ -27,7 +26,7 @@ export const useStyles = makeStyles(theme => ({
         margin: 10,
     },
     avatar: {
-        backgroundColor: '#f5f6f7',
+        backgroundColor: 'white',
         width: 35,
         height: 35,
     },
@@ -58,3 +57,4 @@ export const useStyles = makeStyles(theme => ({
         backgroundColor: '#e9ecf4'
     }
 }))
+//'linear-gradient(to bottom, #4e69a2, #3b5998 50%)' '#f5f6f7'

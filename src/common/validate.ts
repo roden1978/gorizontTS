@@ -3,7 +3,7 @@ type Errors = {
     [key: string]: string
 }
 
-export const validate = (values: any) => {
+export const validate = (values: any): Errors => {
 
     const errors: Errors = {}
 
@@ -80,16 +80,6 @@ export const validate = (values: any) => {
         if(values[length] && values[length].length > 3000)
             errors[length] = 'Длина должная быть не более 3000 символов'
     })
-
-   /* requiredFields.forEach(field => {
-       if (!values[field]) {
-            errors[field]  = 'Обязательное поле'
-        }
-        //console.log(values +' ' + field)
-        //console.log(errors[field] + ' ' + field)
-        console.log(JSON.stringify(values))
-        console.log(JSON.stringify(errors))
-    })*/
 
     return errors
 }

@@ -28,6 +28,8 @@ import {PropsType} from "../../Projects/ProjectsContainer"
 import {ProjectsType} from "../../../tstypes/projectsTypes"
 import {PhotoType} from "../../../tstypes/photosTypes"
 import {UseStateExpandedProps} from "../../../tstypes/commonTypes"
+import {Theme} from "../../../common/themeStyles";
+import {ThemeProvider} from "@material-ui/core";
 
 
 export const useStyles = makeStyles(theme => ({
@@ -182,6 +184,7 @@ const Project:FC<ProjectPropsType> = (props) => {
 
     return (
         <Grid item xs={10}>
+            <ThemeProvider theme={Theme}>
             <Card className={classes.card}>
                 <CardHeader title={!props.status && props.adminMode ? props.title + " (срытый)" :props.title}
                             className={clsx(classes.title, {
@@ -260,6 +263,7 @@ const Project:FC<ProjectPropsType> = (props) => {
                 </> : null}
                 {props.adminMode ? <AdminPanelProjects expandOver={expandOver} {...props}/> : ''}
             </Card>
+            </ThemeProvider>
         </Grid>
     )
 }
