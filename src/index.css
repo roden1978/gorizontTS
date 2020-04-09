@@ -7,8 +7,8 @@ body, html {
     sans-serif, 'Montserrat Alternates';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #e9ecf4 /*#f5f6f7 #e9ecf4 #b4b4b4*/
- /* background-image: url("./assets/backgrounds/bodyBackground.png")*/
+  background-color: #e9ecf4; /*#f5f6f7 #e9ecf4 #b4b4b4*/
+  /*background-image: radial-gradient(ellipse farthest-side at right bottom, #FFFFFF 0%, #e9ecf4 30%, #FFFFFF 100%);*/
 }
 
 code {

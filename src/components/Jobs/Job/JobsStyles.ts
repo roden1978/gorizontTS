@@ -6,16 +6,12 @@ export const useStyles = makeStyles(theme => ({
         fontWeight: 'bold',
     },
     title: {
-        fontSize: 16,
         background:
-            'linear-gradient(to bottom, #4e69a2, #3b5998 50%)', //#0d47a1 #1976d2
-        color: '#ffffff'
+            'linear-gradient(to bottom, #c6ccda, #ffffff 80%)',
     },
     titleHidden: {
-        fontSize: 16,
         background:
-            'linear-gradient(to bottom, #a24e4e, #983b3b 50%)',
-        color: '#FFFFFF',
+            'linear-gradient(to bottom, #ffbbbb, #ffffff 80%)',
     },
     pos: {
         marginLeft: 12,

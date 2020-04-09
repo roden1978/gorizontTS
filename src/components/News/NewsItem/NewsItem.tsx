@@ -1,7 +1,6 @@
 import React, {FC, useState} from 'react'
 import {useHistory} from 'react-router-dom'
 import {useStyles} from './NewsStyles'
-
 import Grid from "@material-ui/core/Grid"
 import CardHeader from "@material-ui/core/CardHeader"
 import Card from "@material-ui/core/Card"
@@ -58,7 +57,7 @@ const NewsItem: FC<NewsItemPropsType> = (props) => {
             <ThemeProvider theme={Theme}>
                 <Card className={classes.card}>
                     <CardHeader title={
-                           !props.status && props.adminMode ? props.title + " (срытый)" : props.title
+                           !props.status && props.adminMode ? props.title + " (скрытый)" : props.title
                     }
                                 className={clsx(classes.title, {
                                     [classes.titleHidden]: !props.status && props.adminMode,

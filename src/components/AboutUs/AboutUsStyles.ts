@@ -13,10 +13,8 @@ export const useStyles = makeStyles(theme => ({
         paddingBottom: theme.spacing(8),
     },
     title: {
-        fontSize: 16,
         background:
-            'linear-gradient(to bottom, #4e69a2, #3b5998 50%)',//#0d47a1
-        color: '#FFFFFF',
+            'linear-gradient(to bottom, #c6ccda, #ffffff 80%)',
     },
     wi: {
         backgroundColor: '#e9ecf4'

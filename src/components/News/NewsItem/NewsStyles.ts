@@ -11,13 +11,11 @@ export const useStyles = makeStyles(theme => ({
     },
     title: {
         background:
-        'linear-gradient(to bottom, #e9ecf4, #ffffff 80%)',
+        'linear-gradient(to bottom, #c6ccda, #ffffff 80%)',
     },
     titleHidden: {
-        fontSize: 16,
         background:
-            'linear-gradient(to bottom, #a24e4e, #983b3b 50%)',
-        color: '#FFFFFF',
+            'linear-gradient(to bottom, #ffbbbb, #ffffff 80%)',
     },
     pos: {
         marginLeft: 12,

@@ -133,7 +133,7 @@ const LoginForm: FC<InjectedFormProps<InitialDataType, PropsType> & PropsType > 
             <div>
                 <Button className={classesStyle.buttonSubmit} variant="contained" color="primary" type="submit"
                         disabled={pristine || submitting}>
-                    Отправить
+                    Вход
                 </Button>
                 <Button className={classesStyle.buttonSubmit} variant="contained" color="primary" type="button"
                         disabled={pristine || submitting} onClick={reset}>

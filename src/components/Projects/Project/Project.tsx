@@ -39,14 +39,11 @@ export const useStyles = makeStyles(theme => ({
     },
     title: {
         background:
-            'linear-gradient(to bottom, #4e69a2, #3b5998 50%)', //#0d47a1 #1976d2
-        color: '#ffffff',
+            'linear-gradient(to bottom, #c6ccda, #ffffff 80%)',
     },
     titleHidden: {
-        fontSize: 16,
         background:
-            'linear-gradient(to bottom, #a24e4e, #983b3b 50%)',
-        color: '#FFFFFF',
+            'linear-gradient(to bottom, #ffbbbb, #ffffff 80%)',
     },
     pos: {
         marginLeft: 12,
@@ -54,7 +51,7 @@ export const useStyles = makeStyles(theme => ({
         fontWeight: 'bold'
     },
     avatar: {
-        backgroundColor: '#f5f6f7',
+        backgroundColor: 'white',
         width: 35,
         height: 35
     },
@@ -186,7 +183,7 @@ const Project:FC<ProjectPropsType> = (props) => {
         <Grid item xs={10}>
             <ThemeProvider theme={Theme}>
             <Card className={classes.card}>
-                <CardHeader title={!props.status && props.adminMode ? props.title + " (срытый)" :props.title}
+                <CardHeader title={!props.status && props.adminMode ? props.title + " (скрытый)" :props.title}
                             className={clsx(classes.title, {
                                 [classes.titleHidden]: !props.status && props.adminMode,
                             })}
@@ -198,7 +195,7 @@ const Project:FC<ProjectPropsType> = (props) => {
 
                 />
                 <CardContent>
-                    <Typography variant="body1" color="textPrimary" >
+                    <Typography variant="body1" color="textPrimary" paragraph>
                         {props.description}
                     </Typography>
 
@@ -236,7 +233,7 @@ const Project:FC<ProjectPropsType> = (props) => {
                         <>
                             {props.text.split('\n').map((i, key) => {
                                 return <Typography key={key} paragraph variant="body1"
-                                                   color="textPrimary" gutterBottom>{i}</Typography>
+                                                   color="textPrimary" >{i}</Typography>
                             })}
                         </>
                     </CardContent>

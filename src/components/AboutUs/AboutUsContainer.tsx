@@ -45,7 +45,7 @@ class AboutUsContainer extends React.Component<PropsType> {
     render() {
         return (
             <>
-                {this.props.about && this.props.about.length === 0 ? <Spinner/> : null}
+                {!this.props.about && this.props.about!.length === 0 ? <Spinner/> : null}
                 <AboutUs {...this.props}/>
             </>)
     }

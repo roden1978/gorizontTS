@@ -46,7 +46,7 @@ const Job:FC<JobsPropsType> = (props) => {
     const currentDate: Date = new Date()
     const pubDate: Date = new Date(props.createAt)
 
-    const days = 30 - Math.floor((currentDate.getMilliseconds() - pubDate.getMilliseconds()) /
+    const days = 30 - Math.floor((currentDate.getTime() - pubDate.getTime()) /
         (24 * 60 * 60 * 1000)) - 1
 
     let createAt = moment(props.createAt)
@@ -102,14 +102,12 @@ const Job:FC<JobsPropsType> = (props) => {
         <Grid item xs={xs} sm={sm}>
             <ThemeProvider theme={Theme}>
             <Card className={classes.card}>
-                <CardHeader title={!props.status && props.adminMode ? props.title + " (срытый)" :props.title}
+                <CardHeader title={!props.status && props.adminMode ? props.title + " (скрытый)" :props.title}
                             className={clsx(classes.title, {
                                 [classes.titleHidden]: !props.status && props.adminMode,
                             })}
-                            subheader={
-                                <Typography variant="body1" color="textSecondary" gutterBottom>
-                                    {props.company}
-                                </Typography>}
+                            subheader={props.company}
+
                             avatar={
                                 <Avatar className={classes.avatar}>
                                     <img className={classes.man} src={titleIcon} alt="Работа"/>

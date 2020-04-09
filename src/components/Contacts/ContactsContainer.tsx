@@ -56,9 +56,10 @@ class ContactsContainer extends React.Component<PropsType> {
     render() {
         return (
             <>
-                {this.props.contacts && this.props.contacts.length === 0 ? <Spinner/> : null}
+                {!this.props.contacts && this.props.contacts!.length === 0 ? <Spinner/> : null}
                 <Contacts {...this.props} />
-            </>)
+            </>
+        )
     }
 }
 

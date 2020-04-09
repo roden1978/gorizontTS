@@ -51,7 +51,7 @@ const Contacts: FC<PropsType> = (props) => {
                             {props.contacts.length !== 0 ?
                                 <>
                                     <Card>
-                                        <CardHeader title="Контакты"
+                                        <CardHeader title="КОНТАКТЫ"
                                                     className={classes.title}/>
                                         <CardContent>
                                             <TableContainer component={Paper}>

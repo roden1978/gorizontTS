@@ -43,7 +43,7 @@ const AboutUs: FC<PropsType> = (props) => {
                         >
                             <Grid item xs={10}>
                                 <Card>
-                                    <CardHeader title={'О нас'}
+                                    <CardHeader title={'О КОМПАНИИ'}
                                                 className={classes.title}/>
                                     <CardContent>
                                         <Typography variant="body1" color="textPrimary" gutterBottom>
@@ -52,7 +52,7 @@ const AboutUs: FC<PropsType> = (props) => {
                                                     {props.about[0].text.split('\n').map((i, key) => {
                                                         return <Typography key={key} paragraph variant="body1"
                                                                            color="textPrimary"
-                                                                           gutterBottom>{i}</Typography>
+                                                                           >{i}</Typography>
                                                     })}
                                                 </>
                                             }
