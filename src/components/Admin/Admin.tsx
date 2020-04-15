@@ -82,7 +82,7 @@ export const Login:FC<PropsType> = (props) => {
                 >
                     <Grid item xs={6}>
                         <Card className={classes.card}>
-                            <CardHeader title='Логин' className={classes.title}/>
+                            <CardHeader title='ЛОГИН'/>
                             <CardContent>
                                 <LoginReduxForm onSubmit={showResults} {...props}/>
                             </CardContent>

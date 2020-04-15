@@ -7,6 +7,9 @@ import MobileContent from "./components/Content/MobileContent"
 import MobileHeader from "./components/Header/MobileHeader"
 import MobileFooter from './components/Footer/MobileFooter'
 import device from 'device'
+import {Theme} from "./common/themeStyles";
+import {mobileTheme} from "./common/themeStyles";
+import {ThemeProvider} from "@material-ui/core";
 
 function App() {
 
@@ -16,21 +19,25 @@ function App() {
         return (
             <div className="App">
                 <Header/>
-                <Content myDevice = {myDevice}/>
+                <ThemeProvider theme={Theme}>
+                    <Content myDevice={myDevice}/>
+                </ThemeProvider>
                 <Footer/>
             </div>
         )
     }
 
-    if(myDevice.is('tv') || myDevice.is('tablet') || myDevice.is('phone')){
+    if (myDevice.is('tv') || myDevice.is('tablet') || myDevice.is('phone')) {
         return (
             <div className="App">
                 <MobileHeader/>
-                <MobileContent/>
+                <ThemeProvider theme={mobileTheme}>
+                    <MobileContent/>
+                </ThemeProvider>
                 <MobileFooter/>
             </div>
         )
-    }else {
+    } else {
         return <h1>Не поддерживаемое устройство!</h1>
     }
 }

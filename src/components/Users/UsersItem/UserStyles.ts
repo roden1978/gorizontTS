@@ -1,19 +1,6 @@
 import {makeStyles} from "@material-ui/core/styles";
 
 export const useStyles = makeStyles(theme => ({
-    link: {
-        color: 'coral', // blueGrey[400],
-        textDecoration: 'none',
-        textTransform: 'uppercase',
-        fontWeight: 'lighter',
-        fontSize: 14,
-    },
-    title: {
-        fontSize: 16,
-        background:
-            'linear-gradient(to bottom, #4e69a2, #3b5998 50%)',
-        color: '#FFFFFF',
-    },
     pos: {
         marginLeft: 12,
     },
@@ -21,12 +8,12 @@ export const useStyles = makeStyles(theme => ({
         margin: 10,
     },
     avatar: {
-        backgroundColor: '#e9ecf4',
-        width: 50,
-        height: 50,
+        backgroundColor: 'white',
+        width: 35,
+        height: 35,
     },
     katok: {
-        width: 45,
+        width: 30,
     },
     expand: {
         transform: 'rotate(0deg)',
@@ -43,9 +30,6 @@ export const useStyles = makeStyles(theme => ({
         height: '100%',
         display: 'flex',
         flexDirection: 'column',
-    },
-    wi: {
-        backgroundColor: '#e9ecf4'
     },
     adminPanel: {
         border: '2px solid grey',

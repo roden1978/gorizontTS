@@ -44,8 +44,8 @@ const Gallery: FC<PropsType> = (props) => {
             <div className={classes.heroContent}>
                 <Container maxWidth="sm">
 
-                    <Typography variant="h5" align="center" color="textPrimary" paragraph>
-                        Фотоальбомы ООО Горизонт
+                    <Typography variant="h4" align="center">
+                        ГАЛЕРЕЯ
                     </Typography>
                 </Container>
             </div>

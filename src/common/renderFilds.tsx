@@ -9,10 +9,14 @@ import FormControl from "@material-ui/core/FormControl"
 import FormHelperText from "@material-ui/core/FormHelperText"
 import InputLabel from "@material-ui/core/InputLabel"
 import Select from "@material-ui/core/Select"
-import {WrappedFieldProps} from "redux-form";
-import {FormControlLabelProps} from "@material-ui/core/FormControlLabel/FormControlLabel";
-import {CheckboxProps} from "@material-ui/core/Checkbox/Checkbox";
-import {SelectProps} from "@material-ui/core/Select/Select";
+import {WrappedFieldProps} from "redux-form"
+import {FormControlLabelProps} from "@material-ui/core/FormControlLabel/FormControlLabel"
+import {CheckboxProps} from "@material-ui/core/Checkbox/Checkbox"
+import {SelectProps} from "@material-ui/core/Select/Select"
+import {DatePicker, MuiPickersUtilsProvider} from "@material-ui/pickers"
+import DateFnsUtils from '@date-io/date-fns'
+import {DatePickerProps} from "@material-ui/pickers/DatePicker/DatePicker"
+import ruLocale from "date-fns/locale/ru"
 
 type RenderTextField = (params: WrappedFieldProps & BaseTextFieldProps & InnerProps) => React.ReactFragment
 type InnerProps = {
@@ -105,4 +109,31 @@ export const renderSelectField: RenderSelectedField = ({
         </FormControl>
     </React.Fragment>
 )
+
+type RenderDatePicker = (params: WrappedFieldProps & DatePickerProps) => React.ReactFragment
+
+export const renderDatePicker: RenderDatePicker = ({
+                                                       input, label,
+                                                       helperText,
+                                                       minDate, maxDate
+                                                   }): React.ReactFragment =>
+    (
+        <React.Fragment>
+            <MuiPickersUtilsProvider utils={DateFnsUtils} locale={ruLocale}>
+                <DatePicker
+                    label={label}
+                    helperText={helperText}
+                    minDate={minDate}
+                    maxDate={maxDate}
+                    value={input.value}
+                    onChange={input.onChange}
+                    format= 'd MMM yyyy'
+                    cancelLabel='отмена'
+                    orientation="landscape"
+                    todayLabel = 'сегодня'
+                    showTodayButton = {true}
+                />
+            </MuiPickersUtilsProvider>
+        </React.Fragment>
+    )
 

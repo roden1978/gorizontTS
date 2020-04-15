@@ -87,9 +87,7 @@ class NewsContainer extends React.Component<PropsType> {
 
     render() {
         return (<>
-            {!this.props.news && this.props.news!.length === 0 ? <Spinner/> : null}
-            <News {...this.props}
-            />
+            {!this.props.news && this.props.news!.length === 0 ? <Spinner/> : <News {...this.props}/>}
         </>)
     }
 }

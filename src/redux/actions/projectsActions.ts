@@ -213,9 +213,9 @@ export const getAllProjects = (): ProjectsThunkType => {
 }
 
 export const createProject = (title: string, description: string, text: string,
-                              albumId: string, albumName: string, status: boolean): ProjectsThunkType =>{
+                              albumId: string, albumName: string, status: boolean, createAt: string): ProjectsThunkType =>{
     return async (dispatch) =>{
-        const data = await mongodbAPI.createProject({title, description, text, albumId, albumName, status})
+        const data = await mongodbAPI.createProject({title, description, text, albumId, albumName, status, createAt})
         if (data.resultCode === 0) {
             dispatch(getAllProjects())
         }

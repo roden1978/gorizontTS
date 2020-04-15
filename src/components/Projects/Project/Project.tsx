@@ -19,7 +19,7 @@ import moment from "moment"
 import 'moment/locale/ru'
 import Tooltip from "@material-ui/core/Tooltip"
 import {Field, InjectedFormProps, reduxForm} from "redux-form"
-import {renderCheckbox, renderSelectField, renderTextField} from "../../../common/renderFilds"
+import {renderCheckbox, renderDatePicker, renderSelectField, renderTextField} from "../../../common/renderFilds"
 import {validate} from '../../../common/validate'
 import Button from "@material-ui/core/Button"
 import GridList from "@material-ui/core/GridList"
@@ -28,19 +28,11 @@ import {PropsType} from "../../Projects/ProjectsContainer"
 import {ProjectsType} from "../../../tstypes/projectsTypes"
 import {PhotoType} from "../../../tstypes/photosTypes"
 import {UseStateExpandedProps} from "../../../tstypes/commonTypes"
-import {Theme} from "../../../common/themeStyles";
-import {ThemeProvider} from "@material-ui/core";
+import Divider from "@material-ui/core/Divider";
+import {Grow} from "@material-ui/core";
 
 
 export const useStyles = makeStyles(theme => ({
-    price: {
-        fontSize: 14,
-        fontWeight: 'bold',
-    },
-    title: {
-        background:
-            'linear-gradient(to bottom, #c6ccda, #ffffff 80%)',
-    },
     titleHidden: {
         background:
             'linear-gradient(to bottom, #ffbbbb, #ffffff 80%)',
@@ -79,9 +71,6 @@ export const useStyles = makeStyles(theme => ({
     expandOpen: {
         transform: 'rotate(180deg)',
     },
-    wi: {
-        backgroundColor: '#e9ecf4'
-    },
     adminPanel: {
         border: '2px solid grey',
         backgroundColor: '#e9ecf4'
@@ -108,7 +97,7 @@ export const useStyles = makeStyles(theme => ({
 
 
 type ExpandOverType = {
-    expandOver: ()=> void
+    expandOver: () => void
 }
 
 type ProjectPropsType = PropsType & ProjectsType
@@ -117,7 +106,7 @@ type InitialDataType = typeof initialData
 
 type ProjectPropsWithExpandedPropsType = ProjectPropsType & UseStateExpandedProps
 
-const Project:FC<ProjectPropsType> = (props) => {
+const Project: FC<ProjectPropsType> = (props) => {
     //debugger
     const classes = useStyles()
     const history = useHistory()
@@ -129,7 +118,7 @@ const Project:FC<ProjectPropsType> = (props) => {
         props.getId('')
     }
 
-    const photos = props.photosWithUrl.filter((photo:PhotoType) => photo.albumId === props.albumId)
+    const photos = props.photosWithUrl.filter((photo: PhotoType) => photo.albumId === props.albumId)
     photos.length = 4
 
     const expandOver = () => {
@@ -141,52 +130,37 @@ const Project:FC<ProjectPropsType> = (props) => {
         setExpanded(false)
         props.getId('')
         props.setIsAllProjects(true)
-         redirectToProjects()
+        redirectToProjects()
     }
 
     let createAt = moment(props.createAt)
     createAt.locale('ru')
 
-   /* const redirectToAlbum = (id: string)=>{
-        const path = '/album/' + id
-        history.push(path)
-    }*/
-
-    const redirectToProjects =()=>{
-       props.setIsAllProjects(false)
+    const redirectToProjects = () => {
+        props.setIsAllProjects(false)
         const path = '/projects'
         history.push(path)
     }
 
-    if(props.albumIdForRedirect === props.albumId && props.currentProjectId === props._id){
+    if (props.albumIdForRedirect === props.albumId && props.currentProjectId === props._id) {
         props.setAlbumIdForRedirect('')
         //redirectToAlbum(props.albumIdForRedirect)
         const path = '/album/' + props.albumIdForRedirect
         history.push(path)
     }
 
-    const checkAlbum = () =>{
+    const checkAlbum = () => {
         props.checkAlbum(props.albumId)
         props.setCurrentProjectId(props._id)
     }
 
-   /* if(props.albumIdForRedirect){
-        redirectToAlbum(props.albumIdForRedirect)
-        props.setAlbumIdForRedirect('')
-    }
-
-    const checkAlbum = () =>{
-        props.checkAlbum(props.albumId)
-    }*/
-
     return (
         <Grid item xs={10}>
-            <ThemeProvider theme={Theme}>
+            <Grow in={true} style={{ transformOrigin: '0 0 0' }}
+                  {...(true ? { timeout: 1000 } : {})}>
             <Card className={classes.card}>
-                <CardHeader title={!props.status && props.adminMode ? props.title + " (скрытый)" :props.title}
-                            className={clsx(classes.title, {
-                                [classes.titleHidden]: !props.status && props.adminMode,
-                            })}
+                <CardHeader title={!props.status && props.adminMode ? props.title + " (скрытый)" : props.title}
+                            className={!props.status && props.adminMode ? classes.titleHidden : ''}
                             avatar={
                                 <Avatar className={classes.avatar}>
                                     <img className={classes.katok} src={samosvalIcon} alt="Работа"/>
@@ -203,7 +177,7 @@ const Project:FC<ProjectPropsType> = (props) => {
                 <CardActions>
                     {props.albumId ? <>
                             <Typography variant="body2" color="textPrimary">
-                                Полный фотоотчет
+                                Фотоальбом
                             </Typography>
                             <Tooltip title="Открыть фотоальбом" placement={'top'} arrow>
                                 <IconButton aria-label="Фотоальбом" onClick={checkAlbum}>
@@ -228,26 +202,28 @@ const Project:FC<ProjectPropsType> = (props) => {
                         </IconButton>
                     </Tooltip>
                 </CardActions>
-                <Collapse in = {expanded || props.id ? true : false} timeout="auto" unmountOnExit>
+                <Collapse in={expanded || props.id ? true : false} timeout="auto" unmountOnExit>
                     <CardContent>
                         <>
                             {props.text.split('\n').map((i, key) => {
                                 return <Typography key={key} paragraph variant="body1"
-                                                   color="textPrimary" >{i}</Typography>
+                                                   color="textPrimary">{i}</Typography>
                             })}
                         </>
                     </CardContent>
-                        <div className={classes.root}>
-                            <GridList className={classes.gridList} cols={4}>
-                                {photos.map(photo => (
-                                    <GridListTile key={photo.title}>
-                                        <img src={photo.url} alt={photo.title}/>
-                                    </GridListTile>
-                                ))}
-                            </GridList>
-                        </div>
+                    <div className={classes.root}>
+                        <GridList className={classes.gridList} cols={4}>
+                            {photos.map(photo => (
+                                <GridListTile key={photo.title}>
+                                    <img src={photo.url} alt={photo.title}/>
+                                </GridListTile>
+                            ))}
+                        </GridList>
+                    </div>
                 </Collapse>
-                <Typography className={classes.date} variant="body2" color="textSecondary">
+
+                <Typography className={classes.date} variant="body2" color="textSecondary" gutterBottom>
+                    <Divider/>
                     Старт проекта: {createAt.format('LL')}
                 </Typography>
                 {props.projects.length === 1 ? <>
@@ -260,15 +236,14 @@ const Project:FC<ProjectPropsType> = (props) => {
                 </> : null}
                 {props.adminMode ? <AdminPanelProjects expandOver={expandOver} {...props}/> : ''}
             </Card>
-            </ThemeProvider>
+            </Grow>
         </Grid>
     )
 }
 // && !props.adminMode
 export default Project
 
-const AdminPanelProjects:FC<ProjectPropsType & ExpandOverType> = (props) => {
-    //debugger
+const AdminPanelProjects: FC<ProjectPropsType & ExpandOverType> = (props) => {
     const classes = useStyles()
     const [expandedCreate, setExpandedCreate] = React.useState(false)
     const [expandedEdit, setExpandedEdit] = React.useState(false)
@@ -303,7 +278,6 @@ const AdminPanelProjects:FC<ProjectPropsType & ExpandOverType> = (props) => {
     }
 
     const handleDeleteExpandClick = () => {
-        //debugger
         props.setProjectsCount(props.projects.length)
         setExpandedDelete(!expandedDelete)
         if (!expandedDelete) {
@@ -338,7 +312,7 @@ const AdminPanelProjects:FC<ProjectPropsType & ExpandOverType> = (props) => {
 
 
         if (expandedCreate) {
-            props.createProject(values.title, values.description, values.text, values.albumId, values.albumName, values.status)
+            props.createProject(values.title, values.description, values.text, values.albumId, values.albumName, values.status, values.createAt)
             handleCreateExpandClick()
         }
 
@@ -346,6 +320,7 @@ const AdminPanelProjects:FC<ProjectPropsType & ExpandOverType> = (props) => {
             props.deleteProject(values._id)
             handleDeleteExpandClick()
         }
+        //window.alert(`You submitted:\n\n${JSON.stringify(values, null, 2)}`)
     }
 
     return (
@@ -472,7 +447,7 @@ const EditProjectsForm: FC<InjectedFormProps<InitialDataType, ProjectPropsWithEx
     //debugger
 
     let albumsItem = albums.map(
-        album => <option key={album.id} value={`${album.id}| ${album.description._content}`}
+        album => <option key={album.id} value={`${album.id} | ${album.description._content}`}
                          label={album.description._content}></option>)
 
     if (props.expandedEdit) {
@@ -531,6 +506,17 @@ const EditProjectsForm: FC<InjectedFormProps<InitialDataType, ProjectPropsWithEx
                             {albumsItem}
                         </Field>
                     </div>
+                <div>
+                    <Field
+                        name = 'createAt'
+                        component = {renderDatePicker}
+                        label = 'Дата'
+                        helperText="Дата старта проекта"
+                        minDate={new Date("2019-01-01")}
+                        maxDate={new Date("2050-01-01")}
+                        >
+                    </Field>
+                </div>
                 </>
                 : null
             }

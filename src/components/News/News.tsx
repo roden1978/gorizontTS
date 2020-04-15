@@ -3,7 +3,9 @@ import NewsItem from './NewsItem/NewsItem'
 import {makeStyles} from '@material-ui/core/styles'
 import Grid from "@material-ui/core/Grid"
 import {Container} from "@material-ui/core"
-import { PropsType } from './NewsContainer'
+import Pagination from '@material-ui/lab/Pagination'
+import {PropsType} from './NewsContainer'
+import Typography from "@material-ui/core/Typography"
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -15,23 +17,37 @@ const useStyles = makeStyles(theme => ({
     },
     cardGrid: {
         paddingTop: theme.spacing(1),
-        paddingBottom: theme.spacing(8),
+        paddingBottom: theme.spacing(8)
     },
+    containerCenter: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        alignItems: 'center',
+        flexDirection: 'column'
+    }
 }))
 
-const News:FC<PropsType> = (props) => {
-    //debugger
+const News: FC<PropsType> = (props) => {
     const classes = useStyles()
     let newsItems
     if (props.news)
         newsItems = props.news.map(
             (newsItem) => <NewsItem key={newsItem._id}
-                                  {...newsItem}
-                                  {...props}/>)
+                                    {...newsItem}
+                                    {...props}/>)
 
     return (
         <div className={classes.root}>
-            <Container className={classes.cardGrid} maxWidth="xl">
+            <Container className={classes.cardGrid} maxWidth={'xl'}>
+                <Typography variant="h4" align="center">
+                    НОВОСТИ
+                </Typography>
+                <div className={classes.containerCenter}>
+                    {props.adminMode && props.news && props.news!.length !== 0 ?
+                        <Pagination count={Math.ceil(props.news.length / 10)}
+                                    showFirstButton
+                                    showLastButton/> : null}
+                </div>
                 <Grid
                     container
                     direction="row"
@@ -40,23 +56,19 @@ const News:FC<PropsType> = (props) => {
                     spacing={3}
                     className={classes.pos}
                 >
+
                     {newsItems}
+
                 </Grid>
+                <div className={classes.containerCenter}>
+                    {props.adminMode && props.news && props.news!.length !== 0 ?
+                        <Pagination count={Math.ceil(props.news.length / 10)}
+                                    showFirstButton
+                                    showLastButton/> : null}
+                </div>
             </Container>
         </div>
     )
 }
 
 export default News
-
-/*
-                                  projects={props.projects}
-                                  setLoadProjects={props.setLoadProjects}
-                                  setNewsItem={props.setNewsItem}
-                                  setIsAllNews={props.setIsAllNews}
-                                  setCurrentNewsId={props.setCurrentNewsId}
-                                  createNews={props.createNews}
-                                  updateNews={props.updateNews}
-                                  deleteNews={props.deleteNews}
-                                  setNewsCount={props.setNewsCount}
-                                  newsCount={props.newsCount}*/

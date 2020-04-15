@@ -1,6 +1,6 @@
 import React, {FC} from 'react'
 import {useStyles} from './AboutUsStyles'
-import {Container, ThemeProvider} from "@material-ui/core"
+import {Container, Grow} from "@material-ui/core"
 import Grid from "@material-ui/core/Grid"
 import Card from "@material-ui/core/Card"
 import CardHeader from "@material-ui/core/CardHeader"
@@ -20,7 +20,6 @@ import RefreshIcon from "@material-ui/icons/Refresh"
 import {PropsType} from "./AboutUsContainer"
 import {UseStateExpandedProps} from "../../tstypes/commonTypes"
 import {AboutType} from "../../tstypes/aboutTypes"
-import {Theme} from "../../common/themeStyles";
 
 type AboutUsWithExpandedProps = PropsType & UseStateExpandedProps
 type InitialDataType = typeof initialData
@@ -29,10 +28,12 @@ const AboutUs: FC<PropsType> = (props) => {
     const classes = useStyles()
 
     return (
-        <ThemeProvider theme={Theme}>
             <div>
                 <div className={classes.root}>
                     <Container className={classes.cardGrid} maxWidth="xl">
+                        <Typography variant="h4" align="center">
+                            О КОМПАНИИ
+                        </Typography>
                         <Grid
                             container
                             direction="row"
@@ -42,9 +43,10 @@ const AboutUs: FC<PropsType> = (props) => {
                             className={classes.pos}
                         >
                             <Grid item xs={10}>
+                                <Grow in={true} style={{ transformOrigin: '0 0 0' }}
+                                      {...(true ? { timeout: 1000 } : {})}>
                                 <Card>
-                                    <CardHeader title={'О КОМПАНИИ'}
-                                                className={classes.title}/>
+                                    <CardHeader/>
                                     <CardContent>
                                         <Typography variant="body1" color="textPrimary" gutterBottom>
                                             {props.about.length === 0 ? '' :
@@ -60,12 +62,12 @@ const AboutUs: FC<PropsType> = (props) => {
                                     </CardContent>
                                     {props.adminMode ? <AdminPanelAboutUs  {...props}/> : ''}
                                 </Card>
+                                </Grow>
                             </Grid>
                         </Grid>
                     </Container>
                 </div>
             </div>
-        </ThemeProvider>
     )
 }
 

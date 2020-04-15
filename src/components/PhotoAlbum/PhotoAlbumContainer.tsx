@@ -11,6 +11,7 @@ type MapStateToPropsType = {
     cards: Array<PhotoType>
     isClicked: boolean
     url: string
+    albumName: string
 }
 
 type MapDispatchToPropsType = {
@@ -55,8 +56,8 @@ class PhotoAlbumContainer extends React.Component<PropsType & OwnProps> {
         //debugger
         return (
             <>
-                {this.props.cards.length === 0 ? <Spinner/> : null}
-                <PhotoAlbum {...this.props}/>
+                {!this.props.cards && this.props.cards!.length === 0 ? <Spinner/> : <PhotoAlbum {...this.props}/>}
+
             </>)
     }
 }
@@ -68,7 +69,8 @@ let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
         photos: state.photos.photos,
         cards: state.photos.photosWithUrl,
         isClicked: state.photos.isClicked,
-        url: state.photos.url
+        url: state.photos.url,
+        albumName: state.photos.albumName
     }
 }
 

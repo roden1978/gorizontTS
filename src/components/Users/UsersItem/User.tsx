@@ -12,7 +12,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
 import RefreshIcon from '@material-ui/icons/Refresh'
 import IconButton from "@material-ui/core/IconButton"
 import Collapse from "@material-ui/core/Collapse"
-import {Field, FormErrors, InjectedFormProps, reduxForm} from "redux-form"
+import {Field, InjectedFormProps, reduxForm} from "redux-form"
 import Button from "@material-ui/core/Button"
 import Tooltip from "@material-ui/core/Tooltip"
 import {renderTextField, renderCheckbox} from '../../../common/renderFilds'
@@ -33,7 +33,6 @@ const User:FC<UsersPropsType> = (props) => {
         <Grid item xs={10}>
             <Card className={classes.card}>
                 <CardHeader title={`${props.firstName} ${props.lastName}`}
-                            className={classes.title}
                             avatar={
                                 <Avatar className={classes.avatar}>
                                     <img className={classes.katok} src={katokIcon} alt="Пользователь"/>
@@ -76,8 +75,6 @@ const AdminPanelUsers:FC<UsersPropsType> = (props) => {
         } else {
             props.setIsAllUsers(true)
         }
-
-        //props.getId(null)
     }
 
     const handleEditExpandClick = () => {
@@ -95,7 +92,6 @@ const AdminPanelUsers:FC<UsersPropsType> = (props) => {
     }
 
     const handleDeleteExpandClick = () => {
-        //debugger
         props.setUsersCount(props.users.length)
         props.setIsAdminRootCount(true)
         setExpandedDelete(!expandedDelete)

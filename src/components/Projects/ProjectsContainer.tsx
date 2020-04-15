@@ -39,7 +39,7 @@ export type MapDispatchToPropsType = {
     setLoadAlbums: (setLoadAlbums: boolean) => void
     getAllProjects: () => void
     createProject: (title: string, description: string, text: string,
-                    albumId: string, albumName: string, status: boolean) => void
+                    albumId: string, albumName: string, status: boolean, createAt: string) => void
     deleteProject: (id: string) => void
     setChangeProjectsItem: () => void
     setIsAllProjects: (setIsAllProjects: boolean) => void
@@ -129,8 +129,7 @@ class ProjectsContainer extends React.Component<PropsType> {
     render() {
         //debugger
         return (<>
-            {this.props.projects.length === 0 ? <Spinner/> : null}
-            <Projects {...this.props}/>
+            {this.props.projects.length === 0 ? <Spinner/> : <Projects {...this.props}/>}
         </>)
     }
 }

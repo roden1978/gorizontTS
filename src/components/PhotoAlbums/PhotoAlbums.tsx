@@ -11,6 +11,7 @@ import Tooltip from "@material-ui/core/Tooltip"
 import IconButton from "@material-ui/core/IconButton"
 import PhotoLibraryOutlinedIcon from "@material-ui/icons/PhotoLibraryOutlined"
 import {PropsType} from "../Gallery/GalleryContainer"
+import {Grow} from "@material-ui/core";
 
 
 
@@ -49,6 +50,8 @@ const PhotoAlbums: FC<PropsType & PhotoAlbumsExtrasPropsType> = (props) => {
 
     return (
         <Grid item xs={12} sm={6}>
+            <Grow in={true} style={{ transformOrigin: '0 0 0' }}
+                  {...(true ? { timeout: 1000 } : {})}>
             <Card className={classes.card}>
                 <CardMedia
                     className={classes.cardMedia}
@@ -65,8 +68,8 @@ const PhotoAlbums: FC<PropsType & PhotoAlbumsExtrasPropsType> = (props) => {
                         </IconButton>
                     </Tooltip>
                 </CardActions>
-
             </Card>
+            </Grow>
         </Grid>
 
     )

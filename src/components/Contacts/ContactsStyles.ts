@@ -13,10 +13,6 @@ export const useStyles = makeStyles(theme => ({
         paddingTop: theme.spacing(1),
         paddingBottom: theme.spacing(8),
     },
-    title: {
-        background:
-            'linear-gradient(to bottom, #c6ccda, #ffffff 80%)',
-    },
     buttonSubmit: {
         margin: 10,
     },
@@ -37,9 +33,6 @@ export const useStyles = makeStyles(theme => ({
     },
     table: {
         minWidth: 200
-    },
-    fnt:{
-        fontSize: 8
     },
     adminPanel: {
         border: '2px solid grey',

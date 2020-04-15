@@ -2,23 +2,12 @@ import {makeStyles} from '@material-ui/core/styles'
 
 
 export const useStyles = makeStyles(theme => ({
-    link: {
-        color: 'coral', // blueGrey[400],
-        textDecoration: 'none',
-        textTransform: 'uppercase',
-        fontWeight: 'lighter',
-        fontSize: 14,
-    },
-    title: {
-        background:
-        'linear-gradient(to bottom, #c6ccda, #ffffff 80%)',
-    },
     titleHidden: {
         background:
             'linear-gradient(to bottom, #ffbbbb, #ffffff 80%)',
     },
     pos: {
-        marginLeft: 12,
+        paddingLeft: 12,
     },
     buttonSubmit: {
         margin: 10,
@@ -46,9 +35,6 @@ export const useStyles = makeStyles(theme => ({
         height: '100%',
         display: 'flex',
         flexDirection: 'column',
-    },
-    wi: {
-        backgroundColor: '#e9ecf4'
     },
     adminPanel: {
         border: '2px solid grey',

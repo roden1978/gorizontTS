@@ -69,8 +69,7 @@ class JobsContainer extends React.Component<PropsType> {
     render() {
         return (
             <>
-                {this.props.jobs && this.props.jobs.length === 0 ? <Spinner/> : null}
-                <Jobs {...this.props}/>
+                {this.props.jobs && this.props.jobs.length === 0 ? <Spinner/> : <Jobs {...this.props}/>}
             </>)
     }
 }

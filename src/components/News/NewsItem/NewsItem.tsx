@@ -22,12 +22,12 @@ import Tooltip from "@material-ui/core/Tooltip"
 import {renderTextField, renderCheckbox, renderSelectField} from '../../../common/renderFilds'
 import {validate} from '../../../common/validate'
 import FolderIcon from '@material-ui/icons/Folder'
+import Divider from '@material-ui/core/Divider'
 import {ProjectsType} from "../../../tstypes/projectsTypes"
 import {PropsType} from '../NewsContainer'
 import {NewsType} from "../../../tstypes/newsTypes"
 import {UseStateExpandedProps} from "../../../tstypes/commonTypes"
-import {ThemeProvider} from '@material-ui/core'
-import {Theme} from "../../../common/themeStyles";
+import {Grow, Slide, Zoom} from "@material-ui/core";
 
 type NewsItemPropsType = PropsType & NewsType
 export type InitialDataType = typeof initialData
@@ -54,14 +54,13 @@ const NewsItem: FC<NewsItemPropsType> = (props) => {
 
     return (
         <Grid item xs={10}>
-            <ThemeProvider theme={Theme}>
+            <Grow in={true} style={{ transformOrigin: '0 0 0' }}
+                  {...(true ? { timeout: 1000 } : {})}>
                 <Card className={classes.card}>
                     <CardHeader title={
                            !props.status && props.adminMode ? props.title + " (скрытый)" : props.title
                     }
-                                className={clsx(classes.title, {
-                                    [classes.titleHidden]: !props.status && props.adminMode,
-                                })}
+                                className={!props.status && props.adminMode ? classes.titleHidden : ''}
                                 avatar={
                                     <Avatar className={classes.avatar}>
                                         <img className={classes.katok} src={katokIcon} alt="Новости"/>
@@ -97,11 +96,12 @@ const NewsItem: FC<NewsItemPropsType> = (props) => {
                     </CardActions>
 
                     <Typography className={classes.pos} variant="body2" color="textSecondary" gutterBottom>
+                        <Divider/>
                         {createAt.format('LL')}
                     </Typography>
                     {props.adminMode ? <AdminPanelNews {...props}/> : ''}
                 </Card>
-            </ThemeProvider>
+            </Grow>
         </Grid>
     )
 }
@@ -143,7 +143,6 @@ const AdminPanelNews: FC<NewsItemPropsType> = (props) => {
     }
 
     const handleDeleteExpandClick = () => {
-        //debugger
         props.setNewsCount(props.news.length)
         setExpandedDelete(!expandedDelete)
         if (!expandedDelete) {
@@ -161,7 +160,6 @@ const AdminPanelNews: FC<NewsItemPropsType> = (props) => {
     }
 
     const showResults = (values: NewsType) => {
-        //debugger
         if (values.project) {
             const position = values.project.indexOf('|', 0)
             let id, title
@@ -267,7 +265,6 @@ const AdminPanelNews: FC<NewsItemPropsType> = (props) => {
 }
 
 const setInitialData = (props: NewsItemPropsType, reset: boolean, expandedDelete: boolean) => {
-    //debugger
     if (reset) {
         initialData._id = ''
         initialData.title = ''
@@ -338,7 +335,7 @@ const EditNewsForm: FC<InjectedFormProps<InitialDataType, NewsItemWithExpandedPr
                     </div>
                     < div>
                         <Field
-                            name="name"
+                            name="text"
                             component={renderTextField}
                             label="Текст новости"
                             inputProps
@@ -383,7 +380,6 @@ const EditNewsForm: FC<InjectedFormProps<InitialDataType, NewsItemWithExpandedPr
         </form>
     )
 }
-//classes={cls}
 const EditNewsReduxForm = reduxForm<InitialDataType, NewsItemWithExpandedPropsType>({
     form: 'EditNewsForm', // a unique identifier for this form
     validate,

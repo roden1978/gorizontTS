@@ -9,15 +9,20 @@ import ModalPhoto from "../../common/ModalPhoto"
 import Container from "@material-ui/core/Container"
 import {useStyles} from "./PhotoAlbumStyle";
 import {PropsType} from "./PhotoAlbumContainer";
+import Typography from "@material-ui/core/Typography";
+import {Grow} from "@material-ui/core";
 
 const PhotoAlbum:FC<PropsType> = (props) => {
 
     const classes = useStyles()
-
+debugger
     return (
         <div className={classes.root}>
 
             <Container maxWidth="md">
+                <Typography variant="h4" align="center" gutterBottom>
+                    Фотоальбом: {props.albumName}
+                </Typography>
             <GridList cellHeight={400} className={classes.gridList} >
                 {props.cards.map(card => (
                     <GridListTile key={card.url ? card.url : greyder} >
@@ -25,7 +30,10 @@ const PhotoAlbum:FC<PropsType> = (props) => {
                             props.changeClicked(true)
                             props.getUrl(card.url!)
                         }}>
+                            <Grow in={true} style={{ transformOrigin: '0 0 0' }}
+                                  {...(true ? { timeout: 1000 } : {})}>
                             <img className={classes.im} src={card.url ? card.url : greyder} alt={card.title}/>
+                            </Grow>
                         </ButtonBase>
                         <GridListTileBar
                             title={card.title}
@@ -47,5 +55,3 @@ const PhotoAlbum:FC<PropsType> = (props) => {
 }
 
 export default PhotoAlbum
-/*changeClicked = {props.changeClicked} url = {props.url}
-*  sx = {5}*/

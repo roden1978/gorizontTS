@@ -4,6 +4,7 @@ import {makeStyles} from '@material-ui/core/styles'
 import Grid from "@material-ui/core/Grid"
 import {Container} from "@material-ui/core"
 import {PropsType} from "./JobsContainer"
+import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -29,6 +30,9 @@ const Jobs:FC<PropsType> = (props) => {
     return (
         <div className={classes.root}>
             <Container className={classes.cardGrid} maxWidth="md">
+                <Typography variant="h4" align="center">
+                    РАБОТА
+                </Typography>
             <Grid
                 container
                 direction="row"

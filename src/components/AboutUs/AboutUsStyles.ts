@@ -12,13 +12,6 @@ export const useStyles = makeStyles(theme => ({
         paddingTop: theme.spacing(1),
         paddingBottom: theme.spacing(8),
     },
-    title: {
-        background:
-            'linear-gradient(to bottom, #c6ccda, #ffffff 80%)',
-    },
-    wi: {
-        backgroundColor: '#e9ecf4'
-    },
     adminPanel: {
         border: '2px solid grey',
         backgroundColor: '#e9ecf4'

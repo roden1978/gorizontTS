@@ -4,7 +4,7 @@ import {
     SET_URL_TO_ALBUMS,
     SET_URL_TO_PHOTOS,
     IS_CLICKED,
-    SET_URL
+    SET_URL, SET_ALBUM_NAME
 } from "../actions/types"
 import { PhotoType, PhotoSizesType, SizeType, PhotoAlbumType} from "../../tstypes/photosTypes"
 
@@ -15,7 +15,8 @@ let initialState = {
     photosWithUrl: [] as Array<PhotoType>,
     photo: [] as Array<PhotoSizesType>,
     isClicked: false,
-    url: ''
+    url: '',
+    albumName: ''
 }
 
 export type InitialStateType = typeof initialState
@@ -60,6 +61,11 @@ const photos_reducer = (state = initialState, action: any): InitialStateType => 
         }
         case SET_URL:{
             return {...state, url: action.payload}
+        }
+        case SET_ALBUM_NAME: {
+            return {
+                ...state, albumName: action.payload
+            }
         }
         default:
             return state

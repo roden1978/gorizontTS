@@ -28,8 +28,8 @@ import RefreshIcon from "@material-ui/icons/Refresh"
 import {PropsType} from "../JobsContainer"
 import {JobType} from "../../../tstypes/jobsTypes"
 import {UseStateExpandedProps} from "../../../tstypes/commonTypes"
-import {Theme} from "../../../common/themeStyles";
-import {ThemeProvider} from "@material-ui/core";
+import Divider from "@material-ui/core/Divider";
+import {Grow} from "@material-ui/core";
 
 type JobsPropsType = PropsType & JobType
 type JobsWithActivatePropsType = PropsType & JobType & ActivateType
@@ -100,14 +100,12 @@ const Job:FC<JobsPropsType> = (props) => {
 
     return (
         <Grid item xs={xs} sm={sm}>
-            <ThemeProvider theme={Theme}>
+            <Grow in={true} style={{ transformOrigin: '0 0 0' }}
+                  {...(true ? { timeout: 1000 } : {})}>
             <Card className={classes.card}>
                 <CardHeader title={!props.status && props.adminMode ? props.title + " (скрытый)" :props.title}
-                            className={clsx(classes.title, {
-                                [classes.titleHidden]: !props.status && props.adminMode,
-                            })}
+                            className={!props.status && props.adminMode ? classes.titleHidden : ''}
                             subheader={props.company}
-
                             avatar={
                                 <Avatar className={classes.avatar}>
                                     <img className={classes.man} src={titleIcon} alt="Работа"/>
@@ -132,15 +130,17 @@ const Job:FC<JobsPropsType> = (props) => {
                         Телефон: {props.phone}
                     </Typography>
                 </CardContent>
-                <Typography className={classes.date} variant="body2" color="textSecondary">
+
+                <Typography className={classes.date} variant="body2" color="textSecondary" gutterBottom>
+                    <Divider/>
                     {createAt.format('LL')}
                 </Typography>
-                <Typography className={classes.date} variant="body2" color="textSecondary">
+                <Typography className={classes.date} variant="body2" color="textSecondary" gutterBottom>
                     Дней осталось: {days}
                 </Typography>
                 {props.adminMode ? <AdminPanelJobs activate={false} {...props}/> : ''}
             </Card>
-            </ThemeProvider>
+            </Grow>
         </Grid>
     )
 }
@@ -148,7 +148,6 @@ const Job:FC<JobsPropsType> = (props) => {
 export default Job
 
 const AdminPanelJobs: FC<JobsWithActivatePropsType> = (props) => {
-    //debugger
     const classes = useStyles()
     const [expandedCreate, setExpandedCreate] = React.useState(false)
     const [expandedEdit, setExpandedEdit] = React.useState(false)

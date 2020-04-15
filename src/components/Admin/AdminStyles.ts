@@ -1,12 +1,6 @@
 import {makeStyles} from "@material-ui/core/styles"
 
 export const useStyles = makeStyles(theme => ({
-    title: {
-        fontSize: 16,
-        background:
-            'linear-gradient(to bottom, #4e69a2, #3b5998 50%)',
-        color: '#FFFFFF',
-    },
     buttonSubmit: {
         margin: 10,
     },

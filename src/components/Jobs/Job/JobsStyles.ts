@@ -1,22 +1,12 @@
 import {makeStyles} from '@material-ui/core/styles'
 
 export const useStyles = makeStyles(theme => ({
-    price: {
-        fontSize: 14,
-        fontWeight: 'bold',
-    },
-    title: {
-        background:
-            'linear-gradient(to bottom, #c6ccda, #ffffff 80%)',
-    },
     titleHidden: {
         background:
             'linear-gradient(to bottom, #ffbbbb, #ffffff 80%)',
     },
     pos: {
         marginLeft: 12,
-        fontSize: 14,
-        fontWeight: 'bold',
     },
     date: {
         marginLeft: 12

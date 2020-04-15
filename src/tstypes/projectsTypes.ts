@@ -16,4 +16,5 @@ export type ProjectCreateType = {
     albumId: string
     albumName: string
     status: boolean
+    createAt: string
 }

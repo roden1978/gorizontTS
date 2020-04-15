@@ -3,6 +3,7 @@ import Project from "./Project/Project"
 import {Container, makeStyles} from "@material-ui/core"
 import Grid from "@material-ui/core/Grid"
 import {PropsType} from "../Projects/ProjectsContainer"
+import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -28,6 +29,9 @@ const Projects:FC<PropsType> = (props) => {
     return (
         <div>
             <Container className={classes.cardGrid} maxWidth="xl">
+                <Typography variant="h4" align="center">
+                    ПРОЕКТЫ
+                </Typography>
                 <Grid
                     container
                     direction="row"

@@ -1,5 +1,5 @@
 import React, {FC} from 'react'
-import {Container, ThemeProvider} from "@material-ui/core"
+import {Container, Grow} from "@material-ui/core"
 import {useStyles} from './ContactsStyles'
 import Grid from "@material-ui/core/Grid"
 import Card from "@material-ui/core/Card"
@@ -27,7 +27,6 @@ import Paper from '@material-ui/core/Paper'
 import {PropsType} from "./ContactsContainer"
 import {ContactsType} from "../../tstypes/contactsTypes"
 import {UseStateExpandedProps} from "../../tstypes/commonTypes"
-import {Theme} from "../../common/themeStyles";
 
 
 type InitialDataType = typeof initialData
@@ -36,9 +35,11 @@ type ContactsWithExpandedPropsType = PropsType & UseStateExpandedProps
 const Contacts: FC<PropsType> = (props) => {
     const classes = useStyles()
     return (
-        <ThemeProvider theme={Theme}>
             <div className={classes.root}>
-                <Container className={classes.cardGrid} maxWidth={props.mobile ? 'xl' : 'lg'}>
+                <Container className={classes.cardGrid}>
+                    <Typography variant="h4" align="center">
+                        КОНТАКТЫ
+                    </Typography>
                     <Grid
                         container
                         direction="row"
@@ -50,126 +51,73 @@ const Contacts: FC<PropsType> = (props) => {
                         <Grid item xs={!props.adminMode && !props.mobile ? 5 : 10}>
                             {props.contacts.length !== 0 ?
                                 <>
+                                <Grow in={true} style={{ transformOrigin: '0 0 0' }}
+                                      {...(true ? { timeout: 1000 } : {})}>
                                     <Card>
-                                        <CardHeader title="КОНТАКТЫ"
-                                                    className={classes.title}/>
+                                        <CardHeader/>
                                         <CardContent>
                                             <TableContainer component={Paper}>
                                                 <Table className={classes.table} aria-label="simple table">
                                                     <TableBody>
                                                         <TableRow>
-                                                            <TableCell className={clsx('', {
-                                                                [classes.fnt]: props.mobile,
-                                                            })}
-                                                                       align="right"
+                                                            <TableCell align="right"
                                                                        component="th"
                                                                        scope="row">Наименование</TableCell>
-                                                            <TableCell className={clsx('', {
-                                                                [classes.fnt]: props.mobile,
-                                                            })}
-                                                                       align="left">{props.contacts.length === 0 ? '' :
+                                                            <TableCell align="left">{props.contacts.length === 0 ? '' :
                                                                 props.contacts[0].companyName}</TableCell>
                                                         </TableRow>
                                                         <TableRow>
-                                                            <TableCell className={clsx('', {
-                                                                [classes.fnt]: props.mobile,
-                                                            })}
-                                                                       align="right" component="th"
+                                                            <TableCell align="right" component="th"
                                                                        scope="row">Адрес</TableCell>
-                                                            <TableCell className={clsx('', {
-                                                                [classes.fnt]: props.mobile,
-                                                            })}
-                                                                       align="left">{props.contacts.length === 0 ? '' : props.contacts[0].companyAddress}</TableCell>
+                                                            <TableCell align="left">{props.contacts.length === 0 ? '' : props.contacts[0].companyAddress}</TableCell>
                                                         </TableRow>
                                                         <TableRow>
-                                                            <TableCell className={clsx('', {
-                                                                [classes.fnt]: props.mobile,
-                                                            })}
-                                                                       align="right" component="th" scope="row">Электронная
+                                                            <TableCell align="right" component="th" scope="row">Электронная
                                                                 почта</TableCell>
-                                                            <TableCell className={clsx('', {
-                                                                [classes.fnt]: props.mobile,
-                                                            })}
-                                                                       align="left">{props.contacts.length === 0 ? '' : props.contacts[0].companyEmail}</TableCell>
+                                                            <TableCell align="left">{props.contacts.length === 0 ? '' : props.contacts[0].companyEmail}</TableCell>
                                                         </TableRow>
                                                         <TableRow>
-                                                            <TableCell className={clsx('', {
-                                                                [classes.fnt]: props.mobile,
-                                                            })}
-                                                                       align="right" component="th"
+                                                            <TableCell align="right" component="th"
                                                                        scope="row">Телефон</TableCell>
-                                                            <TableCell className={clsx('', {
-                                                                [classes.fnt]: props.mobile,
-                                                            })}
-                                                                       align="left">{props.contacts.length === 0 ? '' : props.contacts[0].companyPhone}</TableCell>
+                                                            <TableCell align="left">{props.contacts.length === 0 ? '' : props.contacts[0].companyPhone}</TableCell>
                                                         </TableRow>
                                                         <TableRow>
                                                             {props.contacts.length !== 0 && props.contacts[0].phoneOwner01 !== '' && props.contacts[0].phone01 !== '' ? <>
-                                                                    <TableCell className={clsx('', {
-                                                                        [classes.fnt]: props.mobile,
-                                                                    })}
-                                                                               align="right" component="th"
+                                                                    <TableCell align="right" component="th"
                                                                                scope="row">{props.contacts[0].phoneOwner01}</TableCell>
-                                                                    <TableCell className={clsx('', {
-                                                                        [classes.fnt]: props.mobile,
-                                                                    })}
-                                                                               align="left">{props.contacts[0].phone01}</TableCell>
+                                                                    <TableCell align="left">{props.contacts[0].phone01}</TableCell>
                                                                 </>
                                                                 : null}
                                                         </TableRow>
                                                         <TableRow>
                                                             {props.contacts.length !== 0 && props.contacts[0].phoneOwner02 !== '' && props.contacts[0].phone02 !== '' ? <>
-                                                                    <TableCell className={clsx('', {
-                                                                        [classes.fnt]: props.mobile,
-                                                                    })}
-                                                                               align="right" component="th"
+                                                                    <TableCell align="right" component="th"
                                                                                scope="row">{props.contacts[0].phoneOwner02}</TableCell>
-                                                                    <TableCell className={clsx('', {
-                                                                        [classes.fnt]: props.mobile,
-                                                                    })}
-                                                                               align="left">{props.contacts[0].phone02}</TableCell>
+                                                                    <TableCell align="left">{props.contacts[0].phone02}</TableCell>
                                                                 </>
                                                                 : null}
                                                         </TableRow>
                                                         <TableRow>
                                                             {props.contacts.length !== 0 && props.contacts[0].phoneOwner03 !== '' && props.contacts[0].phone03 !== '' ? <>
-                                                                    <TableCell className={clsx('', {
-                                                                        [classes.fnt]: props.mobile,
-                                                                    })}
-                                                                               align="right" component="th"
+                                                                    <TableCell align="right" component="th"
                                                                                scope="row">{props.contacts[0].phoneOwner03}</TableCell>
-                                                                    <TableCell className={clsx('', {
-                                                                        [classes.fnt]: props.mobile,
-                                                                    })}
-                                                                               align="left">{props.contacts[0].phone03}</TableCell>
+                                                                    <TableCell align="left">{props.contacts[0].phone03}</TableCell>
                                                                 </>
                                                                 : null}
                                                         </TableRow>
                                                         <TableRow>
                                                             {props.contacts.length !== 0 && props.contacts[0].phoneOwner04 !== '' && props.contacts[0].phone04 !== '' ? <>
-                                                                    <TableCell className={clsx('', {
-                                                                        [classes.fnt]: props.mobile,
-                                                                    })}
-                                                                               align="right" component="th"
+                                                                    <TableCell align="right" component="th"
                                                                                scope="row">{props.contacts[0].phoneOwner04}</TableCell>
-                                                                    <TableCell className={clsx('', {
-                                                                        [classes.fnt]: props.mobile,
-                                                                    })}
-                                                                               align="left">{props.contacts[0].phone04}</TableCell>
+                                                                    <TableCell align="left">{props.contacts[0].phone04}</TableCell>
                                                                 </>
                                                                 : null}
                                                         </TableRow>
                                                         <TableRow>
                                                             {props.contacts.length !== 0 && props.contacts[0].phoneOwner05 !== '' && props.contacts[0].phone05 !== '' ? <>
-                                                                    <TableCell className={clsx('', {
-                                                                        [classes.fnt]: props.mobile,
-                                                                    })}
-                                                                               align="right" component="th"
+                                                                    <TableCell align="right" component="th"
                                                                                scope="row">{props.contacts[0].phoneOwner05}</TableCell>
-                                                                    <TableCell className={clsx('', {
-                                                                        [classes.fnt]: props.mobile,
-                                                                    })}
-                                                                               align="left">{props.contacts[0].phone05}</TableCell>
+                                                                    <TableCell align="left">{props.contacts[0].phone05}</TableCell>
                                                                 </>
                                                                 : null}
                                                         </TableRow>
@@ -179,19 +127,22 @@ const Contacts: FC<PropsType> = (props) => {
                                         </CardContent>
                                         {props.adminMode ? <AdminPanelContacts  {...props}/> : ''}
                                     </Card>
+                                </Grow>
                                 </> : null}
                         </Grid>
-                        {!props.adminMode && !props.mobile ? <>
+                        {!props.adminMode && !props.mobile && props.contacts.length !== 0 ? <>
                             <Grid item xs={5}>
+                                <Grow in={true} style={{ transformOrigin: '0 0 0' }}
+                                      {...(true ? { timeout: 1000 } : {})}>
                                 <div>
                                     <img src={maps} alt="maps"/>
                                 </div>
+                                </Grow>
                             </Grid>
                         </> : null}
                     </Grid>
                 </Container>
             </div>
-        </ThemeProvider>
     )
 }
 

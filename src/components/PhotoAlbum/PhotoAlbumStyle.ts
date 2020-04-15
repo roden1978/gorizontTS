@@ -10,7 +10,7 @@ export  const useStyles = makeStyles(theme => ({
         backgroundColor: '#e9ecf4',
     },
     gridList: {
-        backgroundColor: '#e9ecf4', //f5f6f7
+        backgroundColor: '#ffffff', //f5f6f7 e9ecf4
         flexDirection: 'row',
     },
     icon: {
@@ -30,6 +30,6 @@ export  const useStyles = makeStyles(theme => ({
     },
     titleBar: {
         background:
-            'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
+            'linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
     },
 }))

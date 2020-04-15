@@ -10,7 +10,7 @@ import {
     SET_DEFAULT_NEWS,
     SET_PROJECT_ID_FOR_REDIRECT
 } from "./types"
-import {NewsCreateType, NewsType} from "../../tstypes/newsTypes"
+import {NewsType} from "../../tstypes/newsTypes"
 import {ThunkAction} from "redux-thunk"
 import {AppStateType} from "../store"
 

@@ -3,7 +3,7 @@ const proxy = require("http-proxy-middleware")
 module.exports = function(app) {
     app.use("/api",
         proxy({
-            target: "https://gorizont86.herokuapp.com/",
+            target: "http://localhost:5000",
             changeOrigin: true
         })
     )
@@ -15,7 +15,7 @@ module.exports = function(app) {
 * for Heroku
 * app.use(
         proxy('/api', {
-            target: "https://warm-eyrie-80483.herokuapp.com",
+            target: "https://gorizont86.herokuapp.com/",
             changeOrigin: true })
     )
     *

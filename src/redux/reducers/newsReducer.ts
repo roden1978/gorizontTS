@@ -20,14 +20,8 @@ export type InitialStateType = typeof initialState
 
 const news_reducer = (state = initialState, action: NewsActionsTypes):InitialStateType => {
 
-    //let copyState// = {...state}
-
-    //debugger
     switch (action.type) {
         case SET_NEWS: {
-            /*копия МАССИВОВ в КВАДРАТНЫХ СКОБКАХ
-            * копия  ПРИМИТИВОВ в ФИГУРНЫХ СКОБКАХ
-            * копия ОБЪЕКТОВ И ПОДОБЪЕКТОВ в ФИГУРНЫХ СКОБКАХ*/
             return {
                 ...state, news: action.payload
             }
@@ -66,8 +60,7 @@ const news_reducer = (state = initialState, action: NewsActionsTypes):InitialSta
         case SET_DEFAULT_NEWS :{
             return{
                 ...state, news: [{_id: '0', title: 'Войдите в панель администирования и создайте новость',
-                    text: '!!!ВНИМАНИЕ!!! Перед созданием новостей должен быть создан хотя бы один проект, ' +
-                        'если созданная новость не отобразилась обновите страницу.',
+                    text: 'Если созданная новость не отобразилась обновите запись.',
                     project: '', projectTitle: '', status: true, createAt: ''}]
             }
         }
