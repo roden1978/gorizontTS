@@ -12,7 +12,8 @@ import {
     SET_PROJECTS_COUNT,
     SET_PROJECTS_ITEM,
     SET_PROJECTS_PHOTOS,
-    SET_URL_TO_PROJECTS_PHOTOS
+    SET_URL_TO_PROJECTS_PHOTOS,
+    SET_PROJECTS_CURRENT_PAGE
 } from "./types"
 import {ProjectsType} from "../../tstypes/projectsTypes"
 import {PhotosetType, PhotoSizesType, PhotoType} from "../../tstypes/photosTypes"
@@ -24,7 +25,7 @@ export type ProjectsActionsTypes = SetProjectsActionType | SetProjectActionType 
     SetLoadAlbumsActionType | SetIsAllProjectsActionType | SetChangeProjectsItemActionType |
     SetProjectsItemActionType | SetProjectsCountActionType | SetDefaultProjectActionType |
     SetProjectsPhotosActionType | SetUrlToPhotosActionType | SetAlbumIdForRedirectActionType |
-    SetCurrentProjectIdActionType
+    SetCurrentProjectIdActionType | SetProjectsCurrentPage
 
 export type SetProjectsActionType = {
     type: typeof SET_PROJECTS
@@ -175,6 +176,18 @@ export const setCurrentProjectId = (id: string): SetCurrentProjectIdActionType =
     }
 }
 
+export type SetProjectsCurrentPage = {
+    type: typeof SET_PROJECTS_CURRENT_PAGE
+    payload: number
+}
+
+export const setProjectsCurrentPage = (currentPage: number): SetProjectsCurrentPage =>{
+    return {
+        type: SET_PROJECTS_CURRENT_PAGE,
+        payload: currentPage
+    }
+}
+
 export type ProjectsThunkType = ThunkAction<Promise<void> | void, AppStateType, unknown, ProjectsActionsTypes>
 
 /*Thunk Creators*/
@@ -204,9 +217,9 @@ export const getId = (id: string): ProjectsThunkType => {
     }
 }
 
-export const getAllProjects = (): ProjectsThunkType => {
+export const getAllProjects = (currentPage: number, pageSize: number): ProjectsThunkType => {
     return async (dispatch) => {
-        const projects = await mongodbAPI.getAllProjects()
+        const projects = await mongodbAPI.getAllProjects(currentPage, pageSize)
         if(projects)
         dispatch(setProjects(projects))
     }
@@ -217,7 +230,7 @@ export const createProject = (title: string, description: string, text: string,
     return async (dispatch) =>{
         const data = await mongodbAPI.createProject({title, description, text, albumId, albumName, status, createAt})
         if (data.resultCode === 0) {
-            dispatch(getAllProjects())
+            dispatch(setIsAllProjects(true))
         }
     }
 }
@@ -227,7 +240,7 @@ export const updateProject = (_id: string, title: string, description: string, t
     return async (dispatch) =>{
         const data = await mongodbAPI.updateProject({_id, title, description, text, albumId, albumName, status, createAt})
         if (data.resultCode === 0) {
-            dispatch(getAllProjects())
+            dispatch(setIsAllProjects(true))
         }
     }
 }
@@ -237,7 +250,7 @@ export const deleteProject = (id: string):ProjectsThunkType =>{
     return async (dispatch) =>{
         const data = await mongodbAPI.deleteProject(id)
         if (data.resultCode === 0) {
-            dispatch(getAllProjects())
+            dispatch(setIsAllProjects(true))
         }
     }
 }
@@ -265,5 +278,13 @@ export const checkAlbum = (id: string): ProjectsThunkType =>{
         if (data) {
             dispatch(setAlbumIdForRedirect(data.photoset.id))
         }
+    }
+}
+
+export const getProjectsCount = (): ProjectsThunkType =>{
+    return async (dispatch) =>{
+        const count = await mongodbAPI.getProjectsCount()
+        if(count)
+            dispatch(setProjectsCount(count))
     }
 }

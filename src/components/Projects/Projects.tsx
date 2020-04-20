@@ -4,6 +4,7 @@ import {Container, makeStyles} from "@material-ui/core"
 import Grid from "@material-ui/core/Grid"
 import {PropsType} from "../Projects/ProjectsContainer"
 import Typography from "@material-ui/core/Typography";
+import Pagination from "@material-ui/lab/Pagination";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -16,6 +17,12 @@ const useStyles = makeStyles(theme => ({
     cardGrid: {
         paddingTop: theme.spacing(1),
         paddingBottom: theme.spacing(8),
+    },
+    containerCenter: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        alignItems: 'center',
+        flexDirection: 'column'
     }
 }))
 
@@ -26,12 +33,26 @@ const Projects:FC<PropsType> = (props) => {
     let projectItems = props.projects.map(
         project => <Project key={project._id} {...project} {...props}/>
     )
+
+    const currentPage = (event: any, page: number) => {
+        props.setProjectsCurrentPage(page)
+        props.setIsAllProjects(true)
+    }
+
     return (
         <div>
             <Container className={classes.cardGrid} maxWidth="xl">
                 <Typography variant="h4" align="center">
                     ПРОЕКТЫ
                 </Typography>
+                <div className={classes.containerCenter}>
+                    {props.adminMode && props.projects && props.projectsCount !== 0 ?
+                        <Pagination count={Math.ceil(props.projectsCount / 10)}
+                                    showFirstButton
+                                    showLastButton
+                                    page={props.currentPage}
+                                    onChange={currentPage}/> : null}
+                </div>
                 <Grid
                     container
                     direction="row"
@@ -43,10 +64,17 @@ const Projects:FC<PropsType> = (props) => {
                     {projectItems}
 
                 </Grid>
+                <div className={classes.containerCenter}>
+                    {props.adminMode && props.projects && props.projectsCount !== 0 ?
+                        <Pagination count={Math.ceil(props.projectsCount / 10)}
+                                    showFirstButton
+                                    showLastButton
+                                    page={props.currentPage}
+                                    onChange={currentPage}/> : null}
+                </div>
             </Container>
         </div>
     )
 }
 
 export default Projects
-//"xs","sm","md","lg","xl"

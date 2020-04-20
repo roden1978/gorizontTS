@@ -4,7 +4,7 @@ import {
     IS_ALL_NEWS,
     LOAD_PROJECTS,
     SET_CURRENT_NEWS_ID,
-    SET_CURRENT_PAGE,
+    SET_NEWS_CURRENT_PAGE,
     SET_DEFAULT_NEWS,
     SET_NEWS,
     SET_NEWS_COUNT,
@@ -117,12 +117,12 @@ export const setProjectIdForRedirect = (id: string): SetProjectIdForRedirectActi
 }
 
 export type SetCurrentPageType = {
-    type: typeof SET_CURRENT_PAGE
+    type: typeof SET_NEWS_CURRENT_PAGE
     payload: number
 }
 export const setCurrentPage = (currentPage: number): SetCurrentPageType =>{
     return {
-        type: SET_CURRENT_PAGE,
+        type: SET_NEWS_CURRENT_PAGE,
         payload: currentPage
     }
 }

@@ -5,7 +5,7 @@ import {
     deleteProject, setChangeProjectsItem, setIsAllProjects,
     updateProject, setProjectsCount, setProjectsItem, setDefaultProject,
     getPhotos, getPhotoWithUrl, checkAlbum, setAlbumIdForRedirect,
-    setCurrentProjectId
+    setCurrentProjectId, setProjectsCurrentPage, getProjectsCount
 } from '../../redux/actions/projectsActions'
 import {getPhotosets} from '../../redux/actions/photosActions'
 import Projects from "./Projects"
@@ -28,7 +28,9 @@ export type MapStateToPropsType = {
     photosWithUrl: Array<PhotoType>
     albumsCount: number
     albumIdForRedirect: string
-    currentProjectId: string
+    currentProjectId: string,
+    currentPage: number,
+    pageSize: number
 }
 type PrevStateProps = MapStateToPropsType
 
@@ -37,7 +39,7 @@ export type MapDispatchToPropsType = {
     getProject: (projectId: string) => void
     getId: (projectId: string) => void
     setLoadAlbums: (setLoadAlbums: boolean) => void
-    getAllProjects: () => void
+    getAllProjects: (currentPage: number, pageSize: number) => void
     createProject: (title: string, description: string, text: string,
                     albumId: string, albumName: string, status: boolean, createAt: string) => void
     deleteProject: (id: string) => void
@@ -54,6 +56,8 @@ export type MapDispatchToPropsType = {
     checkAlbum: (albumId: string) => void
     setAlbumIdForRedirect: (id: string) => void
     setCurrentProjectId: (id: string) => void
+    setProjectsCurrentPage: (currentPage: number) => void
+    getProjectsCount:() => void
 }
 
 type OwnProps = {
@@ -70,7 +74,8 @@ class ProjectsContainer extends React.Component<PropsType> {
             this.props.getPhotosets()
         } else {
             if (this.props.adminMode) {
-                this.props.getAllProjects()
+                this.props.getProjectsCount()
+                this.props.getAllProjects(this.props.currentPage, this.props.pageSize)
                 this.props.getPhotosets()
             } else {
                 this.props.getProjects()
@@ -98,20 +103,15 @@ class ProjectsContainer extends React.Component<PropsType> {
         }
 
         if (this.props.isAllProjects && this.props.adminMode) {
-            this.props.getAllProjects()
+            this.props.getProjectsCount()
+            this.props.getAllProjects(this.props.currentPage, this.props.pageSize)
             this.props.setIsAllProjects(false)
-            //setTimeout(null, 2000)
         }
 
-        /* if (this.props.isAllProjects && !this.props.adminMode) {
-             this.props.getProjects()
-             this.props.setIsAllProjects(false)
-         }*/
-        if (this.props.projects.length === 0) {
+        if (this.props.projects && this.props.projects.length === 0 && this.props.adminMode) {
             this.props.setDefaultProject()
         }
-        //////////////////////////////////
-        //debugger
+
         if (prevProps.albums.length === 0 && this.props.albums.length > 0) {
             this.props.albums.every((album) => this.props.getPhotos(album.id))
         }
@@ -150,7 +150,9 @@ let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
         photos: state.projects.photos,
         photosWithUrl: state.projects.photosWithUrl,
         albumsCount: state.projects.albumsCount,
-        albumIdForRedirect: state.projects.albumIdForRedirect
+        albumIdForRedirect: state.projects.albumIdForRedirect,
+        currentPage: state.projects.currentPage,
+        pageSize: state.projects.pageSize
     }
 }
 
@@ -163,5 +165,6 @@ export default connect<MapStateToPropsType, MapDispatchToPropsType, OwnProps, Ap
     setChangeProjectsItem, setIsAllProjects,
     updateProject, setProjectsCount, setProjectsItem,
     getPhotosets, setDefaultProject, getPhotos, getPhotoWithUrl,
-    checkAlbum, setAlbumIdForRedirect, setCurrentProjectId
+    checkAlbum, setAlbumIdForRedirect, setCurrentProjectId,
+    setProjectsCurrentPage, getProjectsCount
 })(ProjectsContainer)

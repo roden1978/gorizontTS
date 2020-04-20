@@ -278,7 +278,7 @@ const AdminPanelProjects: FC<ProjectPropsType & ExpandOverType> = (props) => {
     }
 
     const handleDeleteExpandClick = () => {
-        props.setProjectsCount(props.projects.length)
+        //props.setProjectsCount(props.projects.length)
         setExpandedDelete(!expandedDelete)
         if (!expandedDelete) {
             props.getId(props._id)

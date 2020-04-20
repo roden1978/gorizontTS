@@ -9,6 +9,7 @@ import {
     SET_PROJECT,
     SET_PROJECTS,
     SET_PROJECTS_COUNT,
+    SET_PROJECTS_CURRENT_PAGE,
     SET_PROJECTS_ITEM,
     SET_PROJECTS_PHOTOS,
     SET_URL_TO_PROJECTS_PHOTOS
@@ -28,7 +29,9 @@ let initialState = {
     isAllProjects: false,
     projectsCount: 0,
     albumIdForRedirect: '',
-    currentProjectId:''
+    currentProjectId:'',
+    currentPage: 1,
+    pageSize: 10
 }
 export type InitialStateType = typeof initialState
 
@@ -101,7 +104,6 @@ const projects_reducer = (state = initialState, action: ProjectsActionsTypes): I
             }
         }
         case SET_URL_TO_PROJECTS_PHOTOS:{
-            //debugger
             const size = action.payload.sizes.size.find(ph => ph.label === "Small")
             return {
                 ...state,
@@ -117,6 +119,11 @@ const projects_reducer = (state = initialState, action: ProjectsActionsTypes): I
         case SET_CURRENT_PROJECT_ID :{
             return{
                 ...state, currentProjectId: action.payload
+            }
+        }
+        case SET_PROJECTS_CURRENT_PAGE :{
+            return{
+                ...state, currentPage: action.payload
             }
         }
         default:

@@ -105,9 +105,9 @@ export const mongodbAPI = {
             )
     },
     //Получить все проекты
-    getAllProjects() {
+    getAllProjects(currentPage: number, pageSize:number) {
         //debugger
-        return instance.get<Array<ProjectsType>>('/api/projects/all')
+        return instance.get<Array<ProjectsType>>('/api/projects/all?page=' + currentPage + '&size=' + pageSize)
             .then(response => {
                 return response.data
             })
@@ -139,6 +139,16 @@ export const mongodbAPI = {
     //Удалить проект из БД
     deleteProject(/*Объект_с_ИД_новости_для_удаления*/_id: string) {
         return instance.delete('/api/projects/' + _id)
+            .then(response => {
+                return response.data
+            })
+            .catch(err =>
+                console.log(err)
+            )
+    },
+    //Получить количество проектов
+    getProjectsCount(){
+        return instance.get<number>('/api/projects/get/count')
             .then(response => {
                 return response.data
             })
@@ -199,6 +209,16 @@ export const mongodbAPI = {
     //Удалить объявление из БД
     deleteJob(/*Объект_с_ИД_для_удаления_объявления*/_id: string) {
         return instance.delete('/api/job/' + _id)
+            .then(response => {
+                return response.data
+            })
+            .catch(err =>
+                console.log(err)
+            )
+    },
+    //Получить количество объявление
+    getJobsCount(){
+        return instance.get<number>('/api/job/get/count')
             .then(response => {
                 return response.data
             })

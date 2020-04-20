@@ -27,12 +27,14 @@ div.menuItem a{
     line-height: 50px;
     color:#fff;
     font-weight: lighter;
-    transition: all 0.5s ease 0s;
+    transition: all 0.3s ease 0s;
 }
 
 div.menuItem a:hover{
    /* color: lightcoral*/
-    width: 180px;
+    /*width: 180px;*/
+    background-color: #e9ecf4;
+    color: black
 }
 
 div.menuItem a.activeLink{
