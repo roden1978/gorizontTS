@@ -22,8 +22,8 @@ export const mongodbAPI = {
             )
     },
     //Получить все новости
-    getAllNews() {
-        return instance.get<Array<NewsType>>('/api/news/all')
+    getAllNews(currentPage: number, pageSize:number) {
+        return instance.get<Array<NewsType>>('/api/news/all?page=' + currentPage + '&size=' + pageSize)
             .then(response => {
                 return response.data
             })
@@ -66,6 +66,16 @@ export const mongodbAPI = {
 
     deleteNews(/*Объект_с_ИД_новости_для_удаления*/_id: string) {
         return instance.delete('/api/news/' + _id)
+            .then(response => {
+                return response.data
+            })
+            .catch(err =>
+                console.log(err)
+            )
+    },
+    //Получить количество новостей
+    getNewsCount(){
+        return instance.get<number>('/api/news/get/count')
             .then(response => {
                 return response.data
             })

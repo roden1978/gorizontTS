@@ -13,7 +13,9 @@ import {
     setNewsCount,
     setDefaultNews,
     checkProject,
-    setProjectIdForRedirect
+    setProjectIdForRedirect,
+    setCurrentPage,
+    getNewsCount
 } from '../../redux/actions/newsActions'
 import {getProjects} from "../../redux/actions/projectsActions"
 import News from "./News"
@@ -33,10 +35,12 @@ export type MapStateToPropsType = {
     newsCount: number
     adminMode: boolean
     projectIdForRedirect: string
+    currentPage: number
+    pageSize: number
 }
 
 export type MapDispatchToPropsType = {
-    getAllNews: () => void
+    getAllNews: (currentPage: number, pageSize: number) => void
     getNews: () => void
     getProjects: () => void
     setLoadProjects: (setLoadProjects: boolean) => void
@@ -52,6 +56,8 @@ export type MapDispatchToPropsType = {
     setNewsCount: (count: number) => void
     checkProject: (id: string) => void
     setProjectIdForRedirect: (id: string) => void
+    setCurrentPage: (currentPage: number)=>void
+    getNewsCount: () => void
 }
 export type PropsType = MapStateToPropsType & MapDispatchToPropsType
 type PrevStateType = MapStateToPropsType
@@ -60,8 +66,10 @@ class NewsContainer extends React.Component<PropsType> {
 
     componentDidMount() {
 
-        if (this.props.adminMode)
-            this.props.getAllNews()
+        if (this.props.adminMode){
+            this.props.getNewsCount()
+            this.props.getAllNews(this.props.currentPage, this.props.pageSize)
+        }
         else
             this.props.getNews()
     }
@@ -77,7 +85,8 @@ class NewsContainer extends React.Component<PropsType> {
         }
 
         if (this.props.isAllNews && this.props.adminMode) {
-            this.props.getAllNews()
+            this.props.getNewsCount()
+            this.props.getAllNews(this.props.currentPage, this.props.pageSize)
             this.props.setIsAllNews(false)
         }
         if (this.props.news && this.props.news.length === 0) {
@@ -104,7 +113,9 @@ let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
         currentNewsId: state.news.currentNewsId,
         newsCount: state.news.newsCount,
         adminMode: state.auth.adminMode,
-        projectIdForRedirect: state.news.projectIdForRedirect
+        projectIdForRedirect: state.news.projectIdForRedirect,
+        currentPage: state.news.currentPage,
+        pageSize: state.news.pageSize
     }
 }
 
@@ -117,5 +128,5 @@ export default connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppState
         setNewsItem, setChangeNewsItem, setIsAllNews,
         setCurrentNewsId, createNews, updateNews, getAllNews,
         deleteNews, setNewsCount, setDefaultNews, checkProject,
-        setProjectIdForRedirect
+        setProjectIdForRedirect, setCurrentPage,getNewsCount
     })(NewsContainer)

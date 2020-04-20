@@ -27,7 +27,7 @@ import {ProjectsType} from "../../../tstypes/projectsTypes"
 import {PropsType} from '../NewsContainer'
 import {NewsType} from "../../../tstypes/newsTypes"
 import {UseStateExpandedProps} from "../../../tstypes/commonTypes"
-import {Grow, Slide, Zoom} from "@material-ui/core";
+import {Grow} from "@material-ui/core";
 
 type NewsItemPropsType = PropsType & NewsType
 export type InitialDataType = typeof initialData
@@ -143,7 +143,7 @@ const AdminPanelNews: FC<NewsItemPropsType> = (props) => {
     }
 
     const handleDeleteExpandClick = () => {
-        props.setNewsCount(props.news.length)
+        //props.setNewsCount(props.news.length)
         setExpandedDelete(!expandedDelete)
         if (!expandedDelete) {
             props.setCurrentNewsId(props._id)

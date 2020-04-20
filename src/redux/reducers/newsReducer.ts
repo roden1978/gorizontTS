@@ -1,7 +1,8 @@
 import {
     SET_NEWS, LOAD_PROJECTS, CHANGE_NEWS_ITEM,
     IS_ALL_NEWS, SET_NEWS_ITEM, SET_CURRENT_NEWS_ID,
-    SET_NEWS_COUNT, SET_DEFAULT_NEWS, SET_PROJECT_ID_FOR_REDIRECT
+    SET_NEWS_COUNT, SET_DEFAULT_NEWS, SET_PROJECT_ID_FOR_REDIRECT,
+    SET_CURRENT_PAGE
 } from "../actions/types"
 import {NewsType} from "../../tstypes/newsTypes"
 import {NewsActionsTypes} from "../actions/newsActions"
@@ -13,7 +14,9 @@ let initialState = {
     isAllNews: false,
     currentNewsId: '',
     newsCount: 0,
-    projectIdForRedirect: ''
+    projectIdForRedirect: '',
+    currentPage: 1,
+    pageSize: 10
 }
 
 export type InitialStateType = typeof initialState
@@ -67,6 +70,11 @@ const news_reducer = (state = initialState, action: NewsActionsTypes):InitialSta
         case SET_PROJECT_ID_FOR_REDIRECT :{
             return{
                 ...state, projectIdForRedirect: action.payload
+            }
+        }
+        case SET_CURRENT_PAGE :{
+            return{
+                ...state, currentPage: action.payload
             }
         }
         default:

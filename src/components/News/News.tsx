@@ -35,7 +35,10 @@ const News: FC<PropsType> = (props) => {
             (newsItem) => <NewsItem key={newsItem._id}
                                     {...newsItem}
                                     {...props}/>)
-
+    const currentPage = (event: any, page: number) => {
+        props.setCurrentPage(page)
+        props.setIsAllNews(true)
+    }
     return (
         <div className={classes.root}>
             <Container className={classes.cardGrid} maxWidth={'xl'}>
@@ -43,10 +46,12 @@ const News: FC<PropsType> = (props) => {
                     НОВОСТИ
                 </Typography>
                 <div className={classes.containerCenter}>
-                    {props.adminMode && props.news && props.news!.length !== 0 ?
-                        <Pagination count={Math.ceil(props.news.length / 10)}
+                    {props.adminMode && props.news && props.newsCount !== 0 ?
+                        <Pagination count={Math.ceil(props.newsCount / 10)}
                                     showFirstButton
-                                    showLastButton/> : null}
+                                    showLastButton
+                                    page={props.currentPage}
+                                    onChange={currentPage}/> : null}
                 </div>
                 <Grid
                     container
@@ -61,10 +66,12 @@ const News: FC<PropsType> = (props) => {
 
                 </Grid>
                 <div className={classes.containerCenter}>
-                    {props.adminMode && props.news && props.news!.length !== 0 ?
-                        <Pagination count={Math.ceil(props.news.length / 10)}
+                    {props.adminMode && props.news && props.newsCount !== 0 ?
+                        <Pagination count={Math.ceil(props.newsCount / 10)}
                                     showFirstButton
-                                    showLastButton/> : null}
+                                    showLastButton
+                                    page={props.currentPage}
+                                    onChange={currentPage}/> : null}
                 </div>
             </Container>
         </div>
