@@ -89,7 +89,7 @@ class NewsContainer extends React.Component<PropsType> {
             this.props.getAllNews(this.props.currentPage, this.props.pageSize)
             this.props.setIsAllNews(false)
         }
-        if (this.props.news && this.props.news.length === 0) {
+        if (this.props.news && this.props.news.length === 0 && this.props.adminMode) {
             this.props.setDefaultNews()
         }
     }
