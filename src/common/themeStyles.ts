@@ -96,6 +96,9 @@ export const mobileTheme = createMuiTheme({
         },
         body2: {
             fontSize: 'x-small'
+        },
+        h4: {
+            fontSize: 'medium'
         }
     },
 });

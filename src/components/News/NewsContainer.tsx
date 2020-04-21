@@ -15,7 +15,8 @@ import {
     checkProject,
     setProjectIdForRedirect,
     setCurrentPage,
-    getNewsCount
+    getNewsCount,
+    setIsShowSpinner
 } from '../../redux/actions/newsActions'
 import {getProjects} from "../../redux/actions/projectsActions"
 import News from "./News"
@@ -37,6 +38,7 @@ export type MapStateToPropsType = {
     projectIdForRedirect: string
     currentPage: number
     pageSize: number
+    isShowSpinner: boolean
 }
 
 export type MapDispatchToPropsType = {
@@ -56,8 +58,9 @@ export type MapDispatchToPropsType = {
     setNewsCount: (count: number) => void
     checkProject: (id: string) => void
     setProjectIdForRedirect: (id: string) => void
-    setCurrentPage: (currentPage: number)=>void
+    setCurrentPage: (currentPage: number) => void
     getNewsCount: () => void
+    setIsShowSpinner: (isShowSpinner: boolean) => void
 }
 export type PropsType = MapStateToPropsType & MapDispatchToPropsType
 type PrevStateType = MapStateToPropsType
@@ -66,12 +69,15 @@ class NewsContainer extends React.Component<PropsType> {
 
     componentDidMount() {
 
-        if (this.props.adminMode){
+        if (this.props.adminMode) {
             this.props.getNewsCount()
             this.props.getAllNews(this.props.currentPage, this.props.pageSize)
-        }
-        else
+        } else
             this.props.getNews()
+
+        setTimeout(() => {
+            this.props.setIsShowSpinner(false)
+        }, 3000);
     }
 
     componentDidUpdate(prevProps: PropsType, prevState: PrevStateType) {
@@ -96,7 +102,7 @@ class NewsContainer extends React.Component<PropsType> {
 
     render() {
         return (<>
-            {!this.props.news && this.props.news!.length === 0 ? <Spinner/> : <News {...this.props}/>}
+            {this.props.news && this.props.news.length === 0 && this.props.isShowSpinner ? <Spinner/> : <News {...this.props}/>}
         </>)
     }
 }
@@ -115,7 +121,8 @@ let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
         adminMode: state.auth.adminMode,
         projectIdForRedirect: state.news.projectIdForRedirect,
         currentPage: state.news.currentPage,
-        pageSize: state.news.pageSize
+        pageSize: state.news.pageSize,
+        isShowSpinner: state.news.isShowSpinner
     }
 }
 
@@ -128,5 +135,6 @@ export default connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppState
         setNewsItem, setChangeNewsItem, setIsAllNews,
         setCurrentNewsId, createNews, updateNews, getAllNews,
         deleteNews, setNewsCount, setDefaultNews, checkProject,
-        setProjectIdForRedirect, setCurrentPage,getNewsCount
+        setProjectIdForRedirect, setCurrentPage, getNewsCount,
+        setIsShowSpinner
     })(NewsContainer)

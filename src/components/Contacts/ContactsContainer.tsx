@@ -48,7 +48,7 @@ class ContactsContainer extends React.Component<PropsType> {
             this.props.getContacts()
             this.props.setIsChangedContacts(false)
         }
-        if (this.props.contacts.length === 0) {
+        if (this.props.contacts && this.props.contacts.length === 0 && this.props.adminMode) {
             this.props.setDefaultContacts()
         }
     }

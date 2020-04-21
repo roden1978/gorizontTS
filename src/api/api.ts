@@ -167,8 +167,8 @@ export const mongodbAPI = {
             )
     },
     //Получить все объявления
-    getAllJobs() {
-        return instance.get<Array<JobType>>('/api/job/all')
+    getAllJobs(currentPage: number, pageSize: number) {
+        return instance.get<Array<JobType>>('/api/job/all?page=' + currentPage + '&size=' + pageSize)
             .then(response => {
                 return response.data
             })

@@ -40,25 +40,27 @@ const NewsItem: FC<NewsItemPropsType> = (props) => {
     let createAt = moment(props.createAt)
 
     if (props.projectIdForRedirect === props.project && props.currentNewsId === props._id) {
-        props.setProjectIdForRedirect('')
+        props.setProjectIdForRedirect('0')
         const path = '/projects/' + props.projectIdForRedirect
         history.push(path)
     }
 
     const checkPrj = () => {
-        props.checkProject(props.project)
-        props.setCurrentNewsId(props._id!)
+        if (props.project !== '1') {
+            props.checkProject(props.project)
+            props.setCurrentNewsId(props._id)
+        }
     }
 
     createAt.locale('ru')
 
     return (
         <Grid item xs={10}>
-            <Grow in={true} style={{ transformOrigin: '0 0 0' }}
-                  {...(true ? { timeout: 1000 } : {})}>
+            <Grow in={true} style={{transformOrigin: '0 0 0'}}
+                  {...(true ? {timeout: 1000} : {})}>
                 <Card className={classes.card}>
                     <CardHeader title={
-                           !props.status && props.adminMode ? props.title + " (скрытый)" : props.title
+                        !props.status && props.adminMode ? props.title + " (скрытый)" : props.title
                     }
                                 className={!props.status && props.adminMode ? classes.titleHidden : ''}
                                 avatar={
@@ -79,7 +81,7 @@ const NewsItem: FC<NewsItemPropsType> = (props) => {
                     </CardContent>
 
                     <CardActions>
-                        {props.project ? <>
+                        {props.project && props.project !== '1' ? <>
                                 <Typography variant="body2" color="textPrimary">
                                     Обзор проекта
                                 </Typography>
@@ -166,8 +168,11 @@ const AdminPanelNews: FC<NewsItemPropsType> = (props) => {
             if (position > 0) {
                 id = values.project.slice(0, position)
                 title = values.project.slice(position + 1)
-                values.project = id
-                values.projectTitle = title.trim()
+                if(id){
+                    values.project = id.trim()
+                    values.projectTitle = title.trim()
+                }
+
             }
         } else {
             values.project = ''
@@ -365,7 +370,7 @@ const EditNewsForm: FC<InjectedFormProps<InitialDataType, NewsItemWithExpandedPr
                 <Field name="status"
                        component={renderCheckbox}
                        label={getLabel()}
-                       disabled={props.newsCount === 1 || props.expandedCreate}/>
+                       disabled={props.newsCount === 1  || props.expandedCreate}/>
             </div>
             <div>
                 <Button className={classes.buttonSubmit} variant="contained" color="primary" type="submit"

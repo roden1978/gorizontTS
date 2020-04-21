@@ -4,7 +4,9 @@ import {
     SET_CURRENT_JOBS_ID, SET_DEFAULT_JOB,
     SET_JOBS,
     SET_JOBS_COUNT,
-    SET_JOBS_ITEM
+    SET_JOBS_ITEM,
+    SET_JOBS_CURRENT_PAGE,
+    SET_JOB_IS_SHOW_SPINNER
 } from "../actions/types"
 import {JobType} from "../../tstypes/jobsTypes"
 
@@ -13,7 +15,10 @@ let initialState = {
     isGetJobsItem: false,
     isAllJobs: false,
     currentJobsId: '',
-    jobsCount: 0
+    jobsCount: 0,
+    currentPage: 1,
+    pageSize: 10,
+    isShowSpinner: true
 }
 
 export type InitialStateType = typeof initialState
@@ -21,9 +26,6 @@ export type InitialStateType = typeof initialState
 const jobs_reducer = (state = initialState, action: any): InitialStateType => {
     switch (action.type) {
         case SET_JOBS: {
-            /*копия МАССИВОВ в КВАДРАТНЫХ СКОБКАХ
-            * копия  ПРИМИТИВОВ в ФИГУРНЫХ СКОБКАХ
-            * копия ОБЪЕКТОВ И ПОДОБЪЕКТОВ в ФИГУРНЫХ СКОБКАХ*/
             return {
                 ...state, jobs: action.payload
             }
@@ -56,9 +58,19 @@ const jobs_reducer = (state = initialState, action: any): InitialStateType => {
         }
         case SET_DEFAULT_JOB :{
             return{
-                ...state, jobs: [{_id: '0', company:'', title: 'Войдите в панель администирования и создайте объявление',
-                    description: '!!!ВНИМАНИЕ!!! Если созданное объявление не отобразилась обновите страницу.',
+                ...state, jobs: [{_id: '0', company:'', title: 'Создайте первое объявление',
+                    description: '!!!ВНИМАНИЕ!!! Если созданное объявление не отобразилась обновите объявление.',
                     price: '', email: '', phone: '', status: true, createAt: ''}]
+            }
+        }
+        case SET_JOBS_CURRENT_PAGE:{
+            return {
+                ...state, currentPage: action.payload
+            }
+        }
+        case SET_JOB_IS_SHOW_SPINNER:{
+            return {
+                ...state, isShowSpinner: action.payload
             }
         }
         default:

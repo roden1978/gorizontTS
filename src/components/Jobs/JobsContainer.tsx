@@ -2,7 +2,8 @@ import React from 'react'
 import {
     getJobs, getAllJobs, updateJob, createJob, deleteJob,
     setChangeJobsItem, setCurrentJobsId, setIsAllJobs, setJobsCount,
-    setJobsItem, setDefaultJob
+    setJobsItem, setDefaultJob, setJobsCurrentPage, getJobsCount,
+    setIsShowSpinner
 } from '../../redux/actions/jobsActions'
 import Jobs from "./Jobs"
 import {connect} from "react-redux"
@@ -17,11 +18,14 @@ type MapStateToPropsType = {
     currentJobsId: string
     jobsCount: number
     adminMode: boolean
+    currentPage: number
+    pageSize: number
+    isShowSpinner: boolean
 }
 
 type MapDispatchToPropsType = {
     getJobs: () => void
-    getAllJobs: () => void
+    getAllJobs: (currentPage: number, pageSize: number) => void
     updateJob: (id: string, company: string, title: string, description: string, price: string,
                 email: string, phone: string, status:boolean, createAt: string) => void
     createJob: (company: string, title: string, description:string, price: string,
@@ -33,6 +37,9 @@ type MapDispatchToPropsType = {
     setJobsCount: (count: number) => void
     setJobsItem: (jobsItem: boolean) => void
     setDefaultJob: () => void
+    setJobsCurrentPage: (currentPage: number) => void
+    getJobsCount: () => void
+    setIsShowSpinner: (isShowSpinner: boolean) => void
 }
 
 export type PropsType = MapStateToPropsType & MapDispatchToPropsType
@@ -42,11 +49,16 @@ type PrevStateType = MapStateToPropsType
 class JobsContainer extends React.Component<PropsType> {
 
     componentDidMount() {
-        //debugger
-        if (this.props.adminMode)
-            this.props.getAllJobs()
+        if (this.props.adminMode){
+            this.props.getJobsCount()
+            this.props.getAllJobs(this.props.currentPage, this.props.pageSize)
+        }
         else
             this.props.getJobs()
+
+        setTimeout(() => {
+            this.props.setIsShowSpinner(false)
+        }, 3000);
     }
 
     componentDidUpdate(prevProps: PropsType, prevState: PrevStateType) {
@@ -57,11 +69,11 @@ class JobsContainer extends React.Component<PropsType> {
         }
 
         if (this.props.isAllJobs && this.props.adminMode) {
-            //setTimeout(null, 2000)
-            this.props.getAllJobs()
+            this.props.getJobsCount()
+            this.props.getAllJobs(this.props.currentPage, this.props.pageSize)
             this.props.setIsAllJobs(false)
         }
-        if (this.props.jobs.length === 0) {
+        if (this.props.jobs && this.props.jobs.length === 0 && this.props.adminMode) {
             this.props.setDefaultJob()
         }
     }
@@ -69,7 +81,7 @@ class JobsContainer extends React.Component<PropsType> {
     render() {
         return (
             <>
-                {this.props.jobs && this.props.jobs.length === 0 ? <Spinner/> : <Jobs {...this.props}/>}
+                {this.props.jobs && this.props.jobs.length === 0 && this.props.isShowSpinner ? <Spinner/> : <Jobs {...this.props}/>}
             </>)
     }
 }
@@ -83,18 +95,16 @@ let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
         getJobsItem: state.jobs.isGetJobsItem,
         currentJobsId: state.jobs.currentJobsId,
         jobsCount: state.jobs.jobsCount,
-        adminMode: state.auth.adminMode
+        adminMode: state.auth.adminMode,
+        currentPage: state.jobs.currentPage,
+        pageSize: state.jobs.pageSize,
+        isShowSpinner: state.jobs.isShowSpinner
     }
 }
 
-/*Создаем контейнерную кмпоненту MyNewsContainer*/
-/*Двойные скобки обозначют что мы вызвали фукцию connect, а она
-* в свою очередь возвращает нам фукцию во вторых скобках*/
 export default connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps, {
     getJobs, getAllJobs, updateJob, createJob, deleteJob,
     setChangeJobsItem, setCurrentJobsId, setIsAllJobs,
-    setJobsCount, setJobsItem, setDefaultJob
+    setJobsCount, setJobsItem, setDefaultJob, setJobsCurrentPage,
+    getJobsCount, setIsShowSpinner
 })(JobsContainer)
-/*
-jobs={this.props.jobs}
- */

@@ -29,7 +29,7 @@ const contacts_reducer = (state = initialState, action: any): InitialStateType =
         }
         case SET_DEFAULT_CONTACTS:{
             return {
-                ...state, contacts: [{_id: '0', companyName: 'Войдите в панель администирования и создайте контакты',
+                ...state, contacts: [{_id: '0', companyName: 'Создайте контакты',
                     companyAddress: '!!!ВНИМАНИЕ!!! Если страница контактов не отобразилась обновите страницу.',
                     companyEmail: '', companyPhone: '', phoneOwner01: '', phone01:'',
                     phoneOwner02:'', phone02:'', phoneOwner03:'', phone03:'',

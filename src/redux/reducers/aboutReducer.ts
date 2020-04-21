@@ -26,7 +26,7 @@ const about_reducer = (state = initialState, action: any): InitialStateType => {
         case SET_DEFAULT_ABOUT: {
             return {
                 ...state, about: [{
-                    _id: '0', text: 'Войдите в панель администирования и создайте страницу о компании ' +
+                    _id: '0', text: 'Страницу о компании ' +
                         '!!!ВНИМАНИЕ!!! Если страница о компании не отобразилась обновите страницу.'
                 }]
             }

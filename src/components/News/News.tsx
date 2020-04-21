@@ -28,13 +28,14 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const News: FC<PropsType> = (props) => {
+
     const classes = useStyles()
-    let newsItems
-    if (props.news)
-        newsItems = props.news.map(
+
+    let newsItems = props.news.map(
             (newsItem) => <NewsItem key={newsItem._id}
                                     {...newsItem}
                                     {...props}/>)
+
     const currentPage = (event: any, page: number) => {
         props.setCurrentPage(page)
         props.setIsAllNews(true)
@@ -62,7 +63,9 @@ const News: FC<PropsType> = (props) => {
                     className={classes.pos}
                 >
 
-                    {newsItems}
+                    {newsItems.length !== 0 ? newsItems : <Typography variant="h5" align="center">
+                        Новости находятся в разработке!
+                    </Typography>}
 
                 </Grid>
                 <div className={classes.containerCenter}>

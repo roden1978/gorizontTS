@@ -4,10 +4,11 @@ import {
     IS_ALL_NEWS,
     LOAD_PROJECTS,
     SET_CURRENT_NEWS_ID,
-    SET_NEWS_CURRENT_PAGE,
     SET_DEFAULT_NEWS,
     SET_NEWS,
     SET_NEWS_COUNT,
+    SET_NEWS_CURRENT_PAGE,
+    SET_NEWS_IS_SHOW_SPINNER,
     SET_NEWS_ITEM,
     SET_PROJECT_ID_FOR_REDIRECT
 } from "./types"
@@ -18,7 +19,7 @@ import {AppStateType} from "../store"
 export type NewsActionsTypes = SetNewsActionType | SetLoadProjectsActionType | SetIsAllNewsActionType |
     SetChangeNewsItemActionType | SetNewsItemActionType | SetCurrentNewsIdActionType |
     SetNewsCountActionType | SetDefaultNewsActionType | SetProjectIdForRedirectActionType |
-    SetCurrentPageType
+    SetCurrentPageType | SetIsShowSpinner
 
 export type SetNewsActionType = {
     type: typeof SET_NEWS
@@ -124,6 +125,17 @@ export const setCurrentPage = (currentPage: number): SetCurrentPageType =>{
     return {
         type: SET_NEWS_CURRENT_PAGE,
         payload: currentPage
+    }
+}
+export type SetIsShowSpinner = {
+    type: typeof SET_NEWS_IS_SHOW_SPINNER
+    payload: boolean
+}
+
+export const setIsShowSpinner = (isShowSpinner: boolean): SetIsShowSpinner =>{
+    return {
+        type: SET_NEWS_IS_SHOW_SPINNER,
+        payload: isShowSpinner
     }
 }
 

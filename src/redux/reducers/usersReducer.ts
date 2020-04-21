@@ -23,9 +23,6 @@ const users_reducer = (state = initialState, action: UsersActionsType):InitialSt
 
     switch (action.type) {
         case SET_USERS: {
-            /*копия МАССИВОВ в КВАДРАТНЫХ СКОБКАХ
-            * копия  ПРИМИТИВОВ в ФИГУРНЫХ СКОБКАХ
-            * копия ОБЪЕКТОВ И ПОДОБЪЕКТОВ в ФИГУРНЫХ СКОБКАХ*/
             return {
                 ...state, users: action.payload
             }
@@ -62,14 +59,13 @@ const users_reducer = (state = initialState, action: UsersActionsType):InitialSt
             }
         }
         case SET_ADMIN_ROOT_COUNT :{
-            //debugger
             return{
                 ...state, adminRootCount: action.payload
             }
         }
         case SET_DEFAULT_USER :{
             return{
-                ...state, users: [{_id: '0', firstName: 'Войдите в панель администирования и создайте пользователя',
+                ...state, users: [{_id: '0', firstName: 'Создайте первого пользователя',
                     lastName: '!!!ВНИМАНИЕ!!! Если созданный пользователь не отобразился обновите страницу.',
                     email: '', password: '', root: false}]
             }

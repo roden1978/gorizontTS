@@ -37,7 +37,7 @@ class AboutUsContainer extends React.Component<PropsType> {
             this.props.getAbout()
             this.props.setIsChangedAbout(false)
         }
-        if (this.props.about.length === 0) {
+        if (this.props.about && this.props.about.length === 0 && this.props.adminMode) {
             this.props.setDefaultAbout()
         }
     }

@@ -2,16 +2,15 @@ import {SET_ADMIN_MODE, SET_IS_USERS} from "../actions/types"
 
 let initialState = {
     isAuthorized: false,
-    adminMode: true,
-    adminRoot: true,
-    isUsers: true
+    adminMode: false,
+    adminRoot: false,
+    isUsers: false
 }
 
 export type InitialStateType = typeof initialState
 
 const auth_reducer = (state = initialState, action: any): InitialStateType => {
 
-    //debugger
     switch (action.type) {
         case SET_ADMIN_MODE: {
             return {

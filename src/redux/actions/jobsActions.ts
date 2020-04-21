@@ -3,10 +3,12 @@ import {
     CHANGE_JOBS_ITEM,
     IS_ALL_JOBS,
     SET_CURRENT_JOBS_ID,
+    SET_DEFAULT_JOB,
+    SET_JOB_IS_SHOW_SPINNER,
     SET_JOBS,
     SET_JOBS_COUNT,
-    SET_JOBS_ITEM,
-    SET_DEFAULT_JOB
+    SET_JOBS_CURRENT_PAGE,
+    SET_JOBS_ITEM
 } from "./types"
 import {JobType} from "../../tstypes/jobsTypes"
 import {ThunkAction} from "redux-thunk"
@@ -89,6 +91,29 @@ export const setJobsCount = (count: number): SetJobsCountActionType => {
         payload: count
     }
 }
+
+export type SetJobsCurrentPage = {
+    type: typeof SET_JOBS_CURRENT_PAGE
+    payload: number
+}
+export const setJobsCurrentPage = (currentPage: number): SetJobsCurrentPage =>{
+    return {
+        type: SET_JOBS_CURRENT_PAGE,
+        payload: currentPage
+    }
+}
+
+export type SetIsShowSpinner = {
+    type: typeof SET_JOB_IS_SHOW_SPINNER
+    payload: boolean
+}
+
+export const setIsShowSpinner = (isShowSpinner: boolean): SetIsShowSpinner =>{
+    return {
+        type: SET_JOB_IS_SHOW_SPINNER,
+        payload: isShowSpinner
+    }
+}
 export type JobsThunkType = ThunkAction<Promise<void>, AppStateType, unknown, JobsActionType>
 /*Thunk Creators*/
 export const getJobs = (): JobsThunkType => {
@@ -98,9 +123,9 @@ export const getJobs = (): JobsThunkType => {
         dispatch(setJobs(jobs))
     }
 }
-export const getAllJobs = (): JobsThunkType => {
+export const getAllJobs = (currentPage: number, pageSize: number): JobsThunkType => {
     return async (dispatch) => {
-        const jobs = await mongodbAPI.getAllJobs()
+        const jobs = await mongodbAPI.getAllJobs(currentPage, pageSize)
         if(jobs)
         dispatch(setJobs(jobs))
     }
@@ -114,7 +139,7 @@ export const createJob = (company: string, title: string, description:string, pr
             email, phone, status
         })
         if (data.resultCode === 0) {
-            dispatch(getAllJobs())
+            dispatch(setIsAllJobs(true))
         }
     }
 }
@@ -127,7 +152,7 @@ export const updateJob = (_id: string, company: string, title: string, descripti
             email, phone, status, createAt
         })
         if (data.resultCode === 0) {
-            dispatch(getAllJobs())
+            dispatch(setIsAllJobs(true))
         }
     }
 }
@@ -136,8 +161,16 @@ export const deleteJob = (_id: string): JobsThunkType => {
     return async (dispatch) => {
         const data = await mongodbAPI.deleteJob(_id)
         if (data.resultCode === 0) {
-            dispatch(getAllJobs())
+            dispatch(setIsAllJobs(true))
         }
+    }
+}
+
+export const getJobsCount = (): JobsThunkType =>{
+    return async (dispatch) =>{
+        const count = await mongodbAPI.getJobsCount()
+        if(count)
+            dispatch(setJobsCount(count))
     }
 }
 

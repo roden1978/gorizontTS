@@ -74,7 +74,7 @@ class UsersContainer extends React.Component<PropsType> {
             this.props.getUsers()
             this.props.setIsAllUsers(false)
         }
-        if( this.props.users.length === 0){
+        if( this.props.users && this.props.users.length === 0 && this.props.adminMode){
             this.props.setDefaultUser()
         }
 

@@ -89,8 +89,8 @@ const projects_reducer = (state = initialState, action: ProjectsActionsTypes): I
         }
         case SET_DEFAULT_PROJECT :{
             return{
-                ...state, projects: [{_id: '0', title: 'Войдите в панель администирования и создайте проект',
-                    description:'!!!ВНИМАНИЕ!!! Если созданный проект не отобразился обновите страницу.',text: '',albumId:'',
+                ...state, projects: [{_id: '0', title: 'Создайте первый проект',
+                    description:'!!!ВНИМАНИЕ!!! Если созданный проект не отобразился обновите проект.',text: '',albumId:'',
                     albumName: '', status: true, createAt:''}]
             }
         }
