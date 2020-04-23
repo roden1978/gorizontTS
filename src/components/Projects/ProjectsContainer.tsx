@@ -1,13 +1,12 @@
 import React from 'react'
 import {
     getProjects, getProject, getId,
-    setLoadAlbums, getAllProjects, createProject,
-    deleteProject, setChangeProjectsItem, setIsAllProjects,
-    updateProject, setProjectsCount, setProjectsItem, setDefaultProject,
-    getPhotos, getPhotoWithUrl, checkAlbum, setAlbumIdForRedirect,
-    setCurrentProjectId, setProjectsCurrentPage, getProjectsCount,
-    setIsShowSpinner
+    getAllProjects, createProject,
+    deleteProject, updateProject,
+    getPhotos, getPhotoWithUrl, checkAlbum,
+    getProjectsCount
 } from '../../redux/actions/projectsActions'
+import {projectsActions} from "../../redux/actions/projectsActions";
 import {getPhotosets} from '../../redux/actions/photosActions'
 import Projects from "./Projects"
 import {connect} from "react-redux"
@@ -168,11 +167,18 @@ let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
 /*Двойные скобки обозначют что мы вызвали фукцию connect, а она
 * в свою очередь возвращает нам фукцию во вторых скобках*/
 export default connect<MapStateToPropsType, MapDispatchToPropsType, OwnProps, AppStateType>(mapStateToProps, {
-    getProjects, getProject, getId, setLoadAlbums,
+    getProjects, getProject, getId,
     getAllProjects, createProject, deleteProject,
-    setChangeProjectsItem, setIsAllProjects,
-    updateProject, setProjectsCount, setProjectsItem,
-    getPhotosets, setDefaultProject, getPhotos, getPhotoWithUrl,
-    checkAlbum, setAlbumIdForRedirect, setCurrentProjectId,
-    setProjectsCurrentPage, getProjectsCount, setIsShowSpinner
+    updateProject,getPhotos, getPhotoWithUrl,
+    getPhotosets,checkAlbum,getProjectsCount,
+    setLoadAlbums: projectsActions.setLoadAlbums,
+    setChangeProjectsItem: projectsActions.setChangeProjectsItem,
+    setIsAllProjects: projectsActions.setIsAllProjects,
+    setProjectsCount: projectsActions.setProjectsCount,
+    setProjectsItem: projectsActions.setProjectsItem,
+    setDefaultProject: projectsActions.setDefaultProject,
+    setAlbumIdForRedirect: projectsActions.setAlbumIdForRedirect,
+    setCurrentProjectId: projectsActions.setCurrentProjectId,
+    setProjectsCurrentPage: projectsActions.setProjectsCurrentPage,
+    setIsShowSpinner: projectsActions.setIsShowSpinner
 })(ProjectsContainer)

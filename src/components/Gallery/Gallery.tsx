@@ -25,7 +25,6 @@ const useStyles = makeStyles(theme => ({
 
 const Gallery: FC<PropsType> = (props) => {
     const classes = useStyles()
-    //debugger
 
     let sets = props.setsWithUrl.map(
         photoset => <PhotoAlbums key={photoset.id}
@@ -63,10 +62,3 @@ const Gallery: FC<PropsType> = (props) => {
 }
 
 export default Gallery
-
-{/* <div className={classes.heroContent}>
-                <Container maxWidth="sm">
-
-                </Container>
-            </div>*/
-}
