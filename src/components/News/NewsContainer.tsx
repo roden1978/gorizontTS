@@ -1,23 +1,14 @@
 import React from 'react'
 import {
     getNews,
-    setLoadProjects,
-    setNewsItem,
-    setChangeNewsItem,
-    setCurrentNewsId,
     createNews,
     updateNews,
     deleteNews,
     getAllNews,
-    setIsAllNews,
-    setNewsCount,
-    setDefaultNews,
     checkProject,
-    setProjectIdForRedirect,
-    setCurrentPage,
     getNewsCount,
-    setIsShowSpinner
 } from '../../redux/actions/newsActions'
+import {newsActions} from '../../redux/actions/newsActions'
 import {getProjects} from "../../redux/actions/projectsActions"
 import News from "./News"
 import {connect} from "react-redux"
@@ -111,8 +102,6 @@ class NewsContainer extends React.Component<PropsType> {
     }
 }
 
-/*функция принимает state созданный в redux при помощи reducers
-* и возвращает требуемые нам данные из state*/
 let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
         news: state.news.news,
@@ -130,15 +119,18 @@ let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     }
 }
 
-/*Создаем контейнерную кмпоненту MyNewsContainer*/
-/*Двойные скобки обозначют что мы вызвали фукцию connect, а она
-* в свою очередь возвращает нам фукцию во вторых скобках*/
 export default connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps,
     {
-        getNews, getProjects, setLoadProjects,
-        setNewsItem, setChangeNewsItem, setIsAllNews,
-        setCurrentNewsId, createNews, updateNews, getAllNews,
-        deleteNews, setNewsCount, setDefaultNews, checkProject,
-        setProjectIdForRedirect, setCurrentPage, getNewsCount,
-        setIsShowSpinner
+        getNews, getProjects, createNews, updateNews, getAllNews,
+        deleteNews,checkProject,getNewsCount,
+        setLoadProjects: newsActions.setLoadProjects,
+        setNewsItem: newsActions.setNewsItem,
+        setChangeNewsItem: newsActions.setChangeNewsItem,
+        setIsAllNews: newsActions.setIsAllNews,
+        setCurrentNewsId: newsActions.setCurrentNewsId,
+        setNewsCount: newsActions.setNewsCount,
+        setDefaultNews: newsActions.setDefaultNews,
+        setProjectIdForRedirect: newsActions.setProjectIdForRedirect,
+        setCurrentPage: newsActions.setCurrentPage,
+        setIsShowSpinner: newsActions.setIsShowSpinner
     })(NewsContainer)
