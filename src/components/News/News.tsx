@@ -32,9 +32,11 @@ const News: FC<PropsType> = (props) => {
     const classes = useStyles()
 
     let newsItems = props.news.map(
-            (newsItem) => <NewsItem key={newsItem._id}
-                                    {...newsItem}
-                                    {...props}/>)
+        (newsItem) => <NewsItem key={newsItem._id}
+                                {...newsItem}
+                                {...props}/>)
+    if (newsItems.length !== 0)
+        props.setIsShowSpinner(true)
 
     const currentPage = (event: any, page: number) => {
         props.setCurrentPage(page)
@@ -63,9 +65,11 @@ const News: FC<PropsType> = (props) => {
                     className={classes.pos}
                 >
 
-                    {newsItems.length !== 0 ? newsItems : <Typography variant="h5" align="center">
-                        Новости находятся в разработке!
-                    </Typography>}
+                   {/* {newsItems.length !== 0 ? newsItems : <Typography variant="h5" align="center">
+                        Новости находятся в разработке или что-то пошло не так, попробуйте зайти позже. Приносим свои
+                        извининения.
+                    </Typography>}*/}
+                    {newsItems}
 
                 </Grid>
                 <div className={classes.containerCenter}>

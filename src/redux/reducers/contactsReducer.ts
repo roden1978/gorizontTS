@@ -1,9 +1,15 @@
-import {SET_CONTACTS, SET_IS_CHANGED_CONTACTS, SET_DEFAULT_CONTACTS} from "../actions/types"
+import {
+    SET_CONTACTS,
+    SET_IS_CHANGED_CONTACTS,
+    SET_DEFAULT_CONTACTS,
+    SET_CONTACTS_IS_SHOW_SPINNER
+} from "../actions/types"
 import {ContactsType} from "../../tstypes/contactsTypes"
 
 let initialState = {
     contacts: [] as Array<ContactsType>,
-    isChangedContacts: false
+    isChangedContacts: false,
+    isShowSpinner: true
 }
 
 export type InitialStateType = typeof initialState
@@ -34,6 +40,11 @@ const contacts_reducer = (state = initialState, action: any): InitialStateType =
                     companyEmail: '', companyPhone: '', phoneOwner01: '', phone01:'',
                     phoneOwner02:'', phone02:'', phoneOwner03:'', phone03:'',
                     phoneOwner04:'', phone04:'', phoneOwner05:'', phone05:''}]
+            }
+        }
+        case SET_CONTACTS_IS_SHOW_SPINNER:{
+            return {
+                ...state, isShowSpinner: action.payload
             }
         }
         default:

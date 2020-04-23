@@ -6,7 +6,8 @@ import {
     SET_PHOTOS,
     SET_URL,
     SET_URL_TO_ALBUMS,
-    SET_URL_TO_PHOTOS
+    SET_URL_TO_PHOTOS,
+    SET_ALBUMS_IS_SHOW_SPINNER
 } from "./types"
 import {PhotoAlbumType, PhotoSizesType, PhotoType} from "../../tstypes/photosTypes"
 import {ThunkAction} from "redux-thunk"
@@ -102,6 +103,17 @@ export const setAlbumName = (name: string): SetAlbumNameType => {
     return {
         type: SET_ALBUM_NAME,
         payload: name
+    }
+}
+
+export type SetAlbumIsShowSpinner = {
+    type: typeof SET_ALBUMS_IS_SHOW_SPINNER
+    payload: boolean
+}
+export const setIsShowSpinner = (isShowSpinner: boolean): SetAlbumIsShowSpinner =>{
+    return{
+        type: SET_ALBUMS_IS_SHOW_SPINNER,
+        payload: isShowSpinner
     }
 }
 

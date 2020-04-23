@@ -366,14 +366,14 @@ const AdminPanelProjects: FC<ProjectPropsType & ExpandOverType> = (props) => {
                                 })}
                                 aria-expanded={expandedDelete}
                                 aria-label="Показать больше"
-                                disabled={expandedCreate || expandedEdit || props._id === '0'}>
+                                disabled={expandedCreate || expandedEdit || props._id === '0'  || props.status}>
                         <ExpandMoreIcon/>
                     </IconButton>
                 </Tooltip>
 
                 <Tooltip title={"Обновить"} placement={'top'} arrow>
                     <Button className={classes.buttonSubmit} variant="outlined" size="small" type="button"
-                            disabled={expandedCreate || expandedEdit || expandedDelete || props._id === '0'}
+                            disabled={expandedCreate || expandedEdit || expandedDelete}
                             onClick={handleRefreshClick}
                             startIcon={<RefreshIcon/>}>
                         Обновить

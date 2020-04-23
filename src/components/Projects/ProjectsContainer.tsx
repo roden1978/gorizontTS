@@ -5,7 +5,8 @@ import {
     deleteProject, setChangeProjectsItem, setIsAllProjects,
     updateProject, setProjectsCount, setProjectsItem, setDefaultProject,
     getPhotos, getPhotoWithUrl, checkAlbum, setAlbumIdForRedirect,
-    setCurrentProjectId, setProjectsCurrentPage, getProjectsCount
+    setCurrentProjectId, setProjectsCurrentPage, getProjectsCount,
+    setIsShowSpinner
 } from '../../redux/actions/projectsActions'
 import {getPhotosets} from '../../redux/actions/photosActions'
 import Projects from "./Projects"
@@ -30,7 +31,8 @@ export type MapStateToPropsType = {
     albumIdForRedirect: string
     currentProjectId: string,
     currentPage: number,
-    pageSize: number
+    pageSize: number,
+    isShowSpinner: boolean
 }
 type PrevStateProps = MapStateToPropsType
 
@@ -58,6 +60,7 @@ export type MapDispatchToPropsType = {
     setCurrentProjectId: (id: string) => void
     setProjectsCurrentPage: (currentPage: number) => void
     getProjectsCount:() => void
+    setIsShowSpinner: (isShowSpinner: boolean) => void
 }
 
 type OwnProps = {
@@ -87,6 +90,10 @@ class ProjectsContainer extends React.Component<PropsType> {
 
     componentDidMount() {
         this.updateProjectsData()
+        
+        setTimeout(() => {
+            this.props.setIsShowSpinner(false)
+        }, 3000);
     }
 
     componentDidUpdate(prevProps: PropsType, prevState: PrevStateProps) {
@@ -121,7 +128,7 @@ class ProjectsContainer extends React.Component<PropsType> {
         }
     }
 
-    componentWillUnmount() {
+    componentWillUnmount(): void {
         this.props.getId('')
         this.props.projects.length = 0
     }
@@ -129,7 +136,7 @@ class ProjectsContainer extends React.Component<PropsType> {
     render() {
         //debugger
         return (<>
-            {this.props.projects.length === 0 ? <Spinner/> : <Projects {...this.props}/>}
+            {this.props.projects.length === 0 && this.props.isShowSpinner ? <Spinner/> : <Projects {...this.props}/>}
         </>)
     }
 }
@@ -152,7 +159,8 @@ let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
         albumsCount: state.projects.albumsCount,
         albumIdForRedirect: state.projects.albumIdForRedirect,
         currentPage: state.projects.currentPage,
-        pageSize: state.projects.pageSize
+        pageSize: state.projects.pageSize,
+        isShowSpinner: state.projects.isShowSpinner
     }
 }
 
@@ -166,5 +174,5 @@ export default connect<MapStateToPropsType, MapDispatchToPropsType, OwnProps, Ap
     updateProject, setProjectsCount, setProjectsItem,
     getPhotosets, setDefaultProject, getPhotos, getPhotoWithUrl,
     checkAlbum, setAlbumIdForRedirect, setCurrentProjectId,
-    setProjectsCurrentPage, getProjectsCount
+    setProjectsCurrentPage, getProjectsCount, setIsShowSpinner
 })(ProjectsContainer)

@@ -1,9 +1,11 @@
-import {SET_ABOUT, SET_IS_CHANGED_ABOUT, SET_DEFAULT_ABOUT} from "../actions/types"
+import {SET_ABOUT, SET_IS_CHANGED_ABOUT,
+    SET_DEFAULT_ABOUT, SET_ABOUT_IS_SHOW_SPINNER} from "../actions/types"
 import {AboutType} from "../../tstypes/aboutTypes"
 
 let initialState = {
     about: [] as Array<AboutType>,
-    isChangedAbout: false
+    isChangedAbout: false,
+    isShowSpinner: true
 }
 
 export type InitialStateType = typeof initialState
@@ -11,9 +13,6 @@ const about_reducer = (state = initialState, action: any): InitialStateType => {
 
     switch (action.type) {
         case SET_ABOUT: {
-            /*копия МАССИВОВ в КВАДРАТНЫХ СКОБКАХ
-            * копия  ПРИМИТИВОВ в ФИГУРНЫХ СКОБКАХ
-            * копия ОБЪЕКТОВ И ПОДОБЪЕКТОВ в ФИГУРНЫХ СКОБКАХ*/
             return {
                 ...state, about: action.payload
             }
@@ -26,9 +25,14 @@ const about_reducer = (state = initialState, action: any): InitialStateType => {
         case SET_DEFAULT_ABOUT: {
             return {
                 ...state, about: [{
-                    _id: '0', text: 'Страницу о компании ' +
+                    _id: '0', text: 'Страница о компании ' +
                         '!!!ВНИМАНИЕ!!! Если страница о компании не отобразилась обновите страницу.'
                 }]
+            }
+        }
+        case SET_ABOUT_IS_SHOW_SPINNER:{
+            return {
+                ...state, isShowSpinner: action.payload
             }
         }
         default:

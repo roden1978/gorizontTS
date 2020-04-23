@@ -14,7 +14,6 @@ import {PropsType} from "../Gallery/GalleryContainer"
 import {Grow} from "@material-ui/core";
 
 
-
 const useStyles = makeStyles(theme => ({
     cardMedia: {
         paddingTop: '56.25%', // 16:9
@@ -43,32 +42,32 @@ const PhotoAlbums: FC<PropsType & PhotoAlbumsExtrasPropsType> = (props) => {
     const classes = useStyles()
     const history = useHistory()
 
-    const redirect =()=>{
+    const redirect = () => {
         const path = '/album/' + props.id
         history.push(path)
     }
 
     return (
         <Grid item xs={12} sm={6}>
-            <Grow in={true} style={{ transformOrigin: '0 0 0' }}
-                  {...(true ? { timeout: 1000 } : {})}>
-            <Card className={classes.card}>
-                <CardMedia
-                    className={classes.cardMedia}
-                    image={
-                        props.url ? props.url : katok}
-                />
-                <CardActions>
-                    <Typography>
-                        {props.description}
-                    </Typography>
-                    <Tooltip title="Открыть фотоальбом" placement={'top'} arrow>
-                        <IconButton aria-label="Фотоальбом" onClick={redirect}>
-                            <PhotoLibraryOutlinedIcon color="primary"/>
-                        </IconButton>
-                    </Tooltip>
-                </CardActions>
-            </Card>
+            <Grow in={true} style={{transformOrigin: '0 0 0'}}
+                  {...(true ? {timeout: 1000} : {})}>
+                <Card className={classes.card}>
+                    <CardMedia
+                        className={classes.cardMedia}
+                        image={
+                            props.url ? props.url : katok}
+                    />
+                    <CardActions>
+                        <Typography>
+                            {props.description}
+                        </Typography>
+                        <Tooltip title="Открыть фотоальбом" placement={'top'} arrow>
+                            <IconButton aria-label="Фотоальбом" onClick={redirect}>
+                                <PhotoLibraryOutlinedIcon color="primary"/>
+                            </IconButton>
+                        </Tooltip>
+                    </CardActions>
+                </Card>
             </Grow>
         </Grid>
 

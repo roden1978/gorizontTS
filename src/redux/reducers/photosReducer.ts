@@ -4,7 +4,8 @@ import {
     SET_URL_TO_ALBUMS,
     SET_URL_TO_PHOTOS,
     IS_CLICKED,
-    SET_URL, SET_ALBUM_NAME
+    SET_URL, SET_ALBUM_NAME,
+    SET_ALBUMS_IS_SHOW_SPINNER
 } from "../actions/types"
 import { PhotoType, PhotoSizesType, SizeType, PhotoAlbumType} from "../../tstypes/photosTypes"
 
@@ -16,7 +17,8 @@ let initialState = {
     photo: [] as Array<PhotoSizesType>,
     isClicked: false,
     url: '',
-    albumName: ''
+    albumName: '',
+    isShowSpinner: true
 }
 
 export type InitialStateType = typeof initialState
@@ -25,17 +27,11 @@ const photos_reducer = (state = initialState, action: any): InitialStateType => 
 //debugger
     switch (action.type) {
         case SET_PHOTO_ALBUMS: {
-            /*копия МАССИВОВ в КВАДРАТНЫХ СКОБКАХ
-            * копия  ПРИМИТИВОВ в ФИГУРНЫХ СКОБКАХ
-            * копия ОБЪЕКТОВ И ПОДОБЪЕКТОВ в ФИГУРНЫХ СКОБКАХ*/
             return {
                 ...state, sets: action.payload
             }
         }
         case SET_PHOTOS: {
-            /*копия МАССИВОВ в КВАДРАТНЫХ СКОБКАХ
-            * копия  ПРИМИТИВОВ в ФИГУРНЫХ СКОБКАХ
-            * копия ОБЪЕКТОВ И ПОДОБЪЕКТОВ в ФИГУРНЫХ СКОБКАХ*/
             return {
                 ...state, photos: action.payload
             }
@@ -67,15 +63,14 @@ const photos_reducer = (state = initialState, action: any): InitialStateType => 
                 ...state, albumName: action.payload
             }
         }
+        case SET_ALBUMS_IS_SHOW_SPINNER: {
+            return {
+                ...state, isShowSpinner: action.payload
+            }
+        }
         default:
             return state
     }
 }
 
 export default photos_reducer
-
-/* case SET_PHOTO: {
-            return {
-                ...state, photo: action.payload.sizes.size
-            }
-        }*/

@@ -13,7 +13,8 @@ import {
     SET_PROJECTS_ITEM,
     SET_PROJECTS_PHOTOS,
     SET_URL_TO_PROJECTS_PHOTOS,
-    SET_PROJECTS_CURRENT_PAGE
+    SET_PROJECTS_CURRENT_PAGE,
+    SET_PROJECTS_IS_SHOW_SPINNER
 } from "./types"
 import {ProjectsType} from "../../tstypes/projectsTypes"
 import {PhotosetType, PhotoSizesType, PhotoType} from "../../tstypes/photosTypes"
@@ -25,7 +26,7 @@ export type ProjectsActionsTypes = SetProjectsActionType | SetProjectActionType 
     SetLoadAlbumsActionType | SetIsAllProjectsActionType | SetChangeProjectsItemActionType |
     SetProjectsItemActionType | SetProjectsCountActionType | SetDefaultProjectActionType |
     SetProjectsPhotosActionType | SetUrlToPhotosActionType | SetAlbumIdForRedirectActionType |
-    SetCurrentProjectIdActionType | SetProjectsCurrentPage
+    SetCurrentProjectIdActionType | SetProjectsCurrentPage | SetProjectsIsShowSpinner
 
 export type SetProjectsActionType = {
     type: typeof SET_PROJECTS
@@ -185,6 +186,18 @@ export const setProjectsCurrentPage = (currentPage: number): SetProjectsCurrentP
     return {
         type: SET_PROJECTS_CURRENT_PAGE,
         payload: currentPage
+    }
+}
+
+export type SetProjectsIsShowSpinner = {
+    type: typeof SET_PROJECTS_IS_SHOW_SPINNER
+    payload: boolean
+}
+
+export const setIsShowSpinner = (isShowSpinner: boolean): SetProjectsIsShowSpinner => {
+    return {
+        type: "GT/PRJ/SET_PROJECTS_IS_SHOW_SPINNER",
+        payload: isShowSpinner
     }
 }
 

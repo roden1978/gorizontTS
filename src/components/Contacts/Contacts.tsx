@@ -34,25 +34,27 @@ type ContactsWithExpandedPropsType = PropsType & UseStateExpandedProps
 
 const Contacts: FC<PropsType> = (props) => {
     const classes = useStyles()
+    if (props.contacts.length !== 0)
+        props.setIsShowSpinner(true)
     return (
-            <div className={classes.root}>
-                <Container className={classes.cardGrid}>
-                    <Typography variant="h4" align="center">
-                        КОНТАКТЫ
-                    </Typography>
-                    <Grid
-                        container
-                        direction="row"
-                        justify="space-evenly"
-                        alignItems="flex-start"
-                        spacing={3}
-                        className={classes.pos}
-                    >
-                        <Grid item xs={!props.adminMode && !props.mobile ? 5 : 10}>
-                            {props.contacts.length !== 0 ?
-                                <>
-                                <Grow in={true} style={{ transformOrigin: '0 0 0' }}
-                                      {...(true ? { timeout: 1000 } : {})}>
+        <div className={classes.root}>
+            <Container className={classes.cardGrid}>
+                <Typography variant="h4" align="center">
+                    КОНТАКТЫ
+                </Typography>
+                <Grid
+                    container
+                    direction="row"
+                    justify="space-evenly"
+                    alignItems="flex-start"
+                    spacing={3}
+                    className={classes.pos}
+                >
+                    <Grid item xs={!props.adminMode && !props.mobile ? 5 : 10}>
+                        {props.contacts.length !== 0 ?
+                            <>
+                                <Grow in={true} style={{transformOrigin: '0 0 0'}}
+                                      {...(true ? {timeout: 1000} : {})}>
                                     <Card>
                                         <CardHeader/>
                                         <CardContent>
@@ -69,23 +71,27 @@ const Contacts: FC<PropsType> = (props) => {
                                                         <TableRow>
                                                             <TableCell align="right" component="th"
                                                                        scope="row">Адрес</TableCell>
-                                                            <TableCell align="left">{props.contacts.length === 0 ? '' : props.contacts[0].companyAddress}</TableCell>
+                                                            <TableCell
+                                                                align="left">{props.contacts.length === 0 ? '' : props.contacts[0].companyAddress}</TableCell>
                                                         </TableRow>
                                                         <TableRow>
                                                             <TableCell align="right" component="th" scope="row">Электронная
                                                                 почта</TableCell>
-                                                            <TableCell align="left">{props.contacts.length === 0 ? '' : props.contacts[0].companyEmail}</TableCell>
+                                                            <TableCell
+                                                                align="left">{props.contacts.length === 0 ? '' : props.contacts[0].companyEmail}</TableCell>
                                                         </TableRow>
                                                         <TableRow>
                                                             <TableCell align="right" component="th"
                                                                        scope="row">Телефон</TableCell>
-                                                            <TableCell align="left">{props.contacts.length === 0 ? '' : props.contacts[0].companyPhone}</TableCell>
+                                                            <TableCell
+                                                                align="left">{props.contacts.length === 0 ? '' : props.contacts[0].companyPhone}</TableCell>
                                                         </TableRow>
                                                         <TableRow>
                                                             {props.contacts.length !== 0 && props.contacts[0].phoneOwner01 !== '' && props.contacts[0].phone01 !== '' ? <>
                                                                     <TableCell align="right" component="th"
                                                                                scope="row">{props.contacts[0].phoneOwner01}</TableCell>
-                                                                    <TableCell align="left">{props.contacts[0].phone01}</TableCell>
+                                                                    <TableCell
+                                                                        align="left">{props.contacts[0].phone01}</TableCell>
                                                                 </>
                                                                 : null}
                                                         </TableRow>
@@ -93,7 +99,8 @@ const Contacts: FC<PropsType> = (props) => {
                                                             {props.contacts.length !== 0 && props.contacts[0].phoneOwner02 !== '' && props.contacts[0].phone02 !== '' ? <>
                                                                     <TableCell align="right" component="th"
                                                                                scope="row">{props.contacts[0].phoneOwner02}</TableCell>
-                                                                    <TableCell align="left">{props.contacts[0].phone02}</TableCell>
+                                                                    <TableCell
+                                                                        align="left">{props.contacts[0].phone02}</TableCell>
                                                                 </>
                                                                 : null}
                                                         </TableRow>
@@ -101,7 +108,8 @@ const Contacts: FC<PropsType> = (props) => {
                                                             {props.contacts.length !== 0 && props.contacts[0].phoneOwner03 !== '' && props.contacts[0].phone03 !== '' ? <>
                                                                     <TableCell align="right" component="th"
                                                                                scope="row">{props.contacts[0].phoneOwner03}</TableCell>
-                                                                    <TableCell align="left">{props.contacts[0].phone03}</TableCell>
+                                                                    <TableCell
+                                                                        align="left">{props.contacts[0].phone03}</TableCell>
                                                                 </>
                                                                 : null}
                                                         </TableRow>
@@ -109,7 +117,8 @@ const Contacts: FC<PropsType> = (props) => {
                                                             {props.contacts.length !== 0 && props.contacts[0].phoneOwner04 !== '' && props.contacts[0].phone04 !== '' ? <>
                                                                     <TableCell align="right" component="th"
                                                                                scope="row">{props.contacts[0].phoneOwner04}</TableCell>
-                                                                    <TableCell align="left">{props.contacts[0].phone04}</TableCell>
+                                                                    <TableCell
+                                                                        align="left">{props.contacts[0].phone04}</TableCell>
                                                                 </>
                                                                 : null}
                                                         </TableRow>
@@ -117,7 +126,8 @@ const Contacts: FC<PropsType> = (props) => {
                                                             {props.contacts.length !== 0 && props.contacts[0].phoneOwner05 !== '' && props.contacts[0].phone05 !== '' ? <>
                                                                     <TableCell align="right" component="th"
                                                                                scope="row">{props.contacts[0].phoneOwner05}</TableCell>
-                                                                    <TableCell align="left">{props.contacts[0].phone05}</TableCell>
+                                                                    <TableCell
+                                                                        align="left">{props.contacts[0].phone05}</TableCell>
                                                                 </>
                                                                 : null}
                                                         </TableRow>
@@ -128,21 +138,21 @@ const Contacts: FC<PropsType> = (props) => {
                                         {props.adminMode ? <AdminPanelContacts  {...props}/> : ''}
                                     </Card>
                                 </Grow>
-                                </> : null}
-                        </Grid>
-                        {!props.adminMode && !props.mobile && props.contacts.length !== 0 ? <>
-                            <Grid item xs={5}>
-                                <Grow in={true} style={{ transformOrigin: '0 0 0' }}
-                                      {...(true ? { timeout: 1000 } : {})}>
+                            </> : null}
+                    </Grid>
+                    {!props.adminMode && !props.mobile && props.contacts.length !== 0 ? <>
+                        <Grid item xs={5}>
+                            <Grow in={true} style={{transformOrigin: '0 0 0'}}
+                                  {...(true ? {timeout: 1000} : {})}>
                                 <div>
                                     <img src={maps} alt="maps"/>
                                 </div>
-                                </Grow>
-                            </Grid>
-                        </> : null}
-                    </Grid>
-                </Container>
-            </div>
+                            </Grow>
+                        </Grid>
+                    </> : null}
+                </Grid>
+            </Container>
+        </div>
     )
 }
 
@@ -200,61 +210,62 @@ const AdminPanelContacts: FC<ContactsWithExpandedPropsType> = (props) => {
 
 
     return (
-            <>
-                <CardActions>
-                    <Typography variant="body2" color="textPrimary">
-                        Создать
-                    </Typography>
-                    <Tooltip title={!expandedCreate ? "Создать контакты" : "Отмена"} placement={'top'} arrow>
-                        <IconButton onClick={handleCreateExpandClick}
-                                    className={clsx(classes.expand, {
-                                        [classes.expandOpen]: expandedCreate,
-                                    })}
-                                    aria-expanded={expandedCreate}
-                                    aria-label="Показать больше"
-                                    disabled={props.contacts.length !== 0 ? props.contacts[0]._id !== '0' : false}>
-                            <ExpandMoreIcon/>
-                        </IconButton>
-                    </Tooltip>
+        <>
+            <CardActions>
+                <Typography variant="body2" color="textPrimary">
+                    Создать
+                </Typography>
+                <Tooltip title={!expandedCreate ? "Создать контакты" : "Отмена"} placement={'top'} arrow>
+                    <IconButton onClick={handleCreateExpandClick}
+                                className={clsx(classes.expand, {
+                                    [classes.expandOpen]: expandedCreate,
+                                })}
+                                aria-expanded={expandedCreate}
+                                aria-label="Показать больше"
+                                disabled={props.contacts.length !== 0 ? props.contacts[0]._id !== '0' : false}>
+                        <ExpandMoreIcon/>
+                    </IconButton>
+                </Tooltip>
 
-                    <Typography variant="body2" color="textPrimary">
-                        Редактировать
+                <Typography variant="body2" color="textPrimary">
+                    Редактировать
+                </Typography>
+                <Tooltip title={!expandedEdit ? "Редактировать контакты" : "Отмена"} placement={'top'}
+                         arrow>
+                    <IconButton onClick={handleEditExpandClick}
+                                className={clsx(classes.expand, {
+                                    [classes.expandOpen]: expandedEdit,
+                                })}
+                                aria-expanded={expandedEdit}
+                                aria-label="Показать больше"
+                                disabled={expandedCreate || props.contacts.length !== 0 ? props.contacts[0]._id === '0' : false}>
+                        <ExpandMoreIcon/>
+                    </IconButton>
+                </Tooltip>
+                <Tooltip title={"Обновить"} placement={'top'} arrow>
+                    <Button className={classes.buttonSubmit} variant="outlined" size="small" type="button"
+                            disabled={expandedEdit}
+                            onClick={handleRefreshClick}
+                            startIcon={<RefreshIcon/>}>
+                        Обновить
+                    </Button>
+                </Tooltip>
+            </CardActions>
+            <Collapse in={expandedEdit || expandedCreate} timeout="auto"
+                      unmountOnExit>
+                <CardContent className={classes.adminPanel}>
+                    <Typography variant="h6" color="textPrimary" align="center">
+                        ПАНЕЛЬ АДМИНИСТРИРОВАНИЯ
                     </Typography>
-                    <Tooltip title={!expandedEdit ? "Редактировать контакты" : "Отмена"} placement={'top'}
-                             arrow>
-                        <IconButton onClick={handleEditExpandClick}
-                                    className={clsx(classes.expand, {
-                                        [classes.expandOpen]: expandedEdit,
-                                    })}
-                                    aria-expanded={expandedEdit}
-                                    aria-label="Показать больше"
-                                    disabled={expandedCreate || props.contacts.length !== 0 ? props.contacts[0]._id === '0' : false}>
-                            <ExpandMoreIcon/>
-                        </IconButton>
-                    </Tooltip>
-                    <Tooltip title={"Обновить"} placement={'top'} arrow>
-                        <Button className={classes.buttonSubmit} variant="outlined" size="small" type="button"
-                                disabled={expandedEdit || props.contacts.length !== 0 ? props.contacts[0]._id === '0' : false}
-                                onClick={handleRefreshClick}
-                                startIcon={<RefreshIcon/>}>
-                            Обновить
-                        </Button>
-                    </Tooltip>
-                </CardActions>
-                <Collapse in={expandedEdit || expandedCreate} timeout="auto"
-                          unmountOnExit>
-                    <CardContent className={classes.adminPanel}>
-                        <Typography variant="h6" color="textPrimary" align="center">
-                            ПАНЕЛЬ АДМИНИСТРИРОВАНИЯ
-                        </Typography>
-                        <EditContactsReduxForm onSubmit={showResults}
-                                               expandedEdit={expandedEdit}
-                                               {...props}/>
-                    </CardContent>
-                </Collapse>
-            </>
+                    <EditContactsReduxForm onSubmit={showResults}
+                                           expandedEdit={expandedEdit}
+                                           {...props}/>
+                </CardContent>
+            </Collapse>
+        </>
     )
 }
+// || props.contacts.length !== 0 ? props.contacts[0]._id === '0' : false
 ////////////////////////////////////////////////////////
 const setInitialData = (props: PropsType) => {
 

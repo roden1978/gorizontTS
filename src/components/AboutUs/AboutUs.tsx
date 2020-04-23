@@ -26,48 +26,51 @@ type InitialDataType = typeof initialData
 
 const AboutUs: FC<PropsType> = (props) => {
     const classes = useStyles()
-
+    if (props.about.length !== 0)
+        props.setIsShowSpinner(true)
     return (
-            <div>
-                <div className={classes.root}>
-                    <Container className={classes.cardGrid} maxWidth="xl">
-                        <Typography variant="h4" align="center">
-                            О КОМПАНИИ
-                        </Typography>
-                        <Grid
-                            container
-                            direction="row"
-                            justify="space-evenly"
-                            alignItems="center"
-                            spacing={3}
-                            className={classes.pos}
-                        >
-                            <Grid item xs={10}>
-                                <Grow in={true} style={{ transformOrigin: '0 0 0' }}
-                                      {...(true ? { timeout: 1000 } : {})}>
-                                <Card>
-                                    <CardHeader/>
-                                    <CardContent>
-                                        <Typography variant="body1" color="textPrimary" gutterBottom>
-                                            {props.about.length === 0 ? '' :
-                                                <>
+        <div>
+            <div className={classes.root}>
+                <Container className={classes.cardGrid} maxWidth="xl">
+                    <Typography variant="h4" align="center">
+                        О КОМПАНИИ
+                    </Typography>
+                    <Grid
+                        container
+                        direction="row"
+                        justify="space-evenly"
+                        alignItems="center"
+                        spacing={3}
+                        className={classes.pos}
+                    >
+                        <Grid item xs={10}>
+                            {props.about.length !== 0 ?
+                                <>
+                                    <Grow in={true} style={{transformOrigin: '0 0 0'}}
+                                          {...(true ? {timeout: 1000} : {})}>
+                                        <Card>
+                                            <CardHeader/>
+                                            <CardContent>
+                                                <Typography variant="body1" color="textPrimary" gutterBottom>
+
                                                     {props.about[0].text.split('\n').map((i, key) => {
                                                         return <Typography key={key} paragraph variant="body1"
                                                                            color="textPrimary"
-                                                                           >{i}</Typography>
+                                                        >{i}</Typography>
                                                     })}
-                                                </>
-                                            }
-                                        </Typography>
-                                    </CardContent>
-                                    {props.adminMode ? <AdminPanelAboutUs  {...props}/> : ''}
-                                </Card>
-                                </Grow>
-                            </Grid>
+
+                                                </Typography>
+                                            </CardContent>
+                                            {props.adminMode ? <AdminPanelAboutUs  {...props}/> : ''}
+                                        </Card>
+                                    </Grow>
+                                </> : null
+                            }
                         </Grid>
-                    </Container>
-                </div>
+                    </Grid>
+                </Container>
             </div>
+        </div>
     )
 }
 
@@ -148,7 +151,7 @@ const AdminPanelAboutUs: FC<AboutUsWithExpandedProps> = (props) => {
                 </Tooltip>
                 <Tooltip title={"Обновить"} placement={'top'} arrow>
                     <Button className={classes.buttonSubmit} variant="outlined" size="small" type="button"
-                            disabled={expandedEdit || props.about.length !== 0 ? props.about[0]._id === '0' : false}
+                            disabled={expandedEdit}
                             onClick={handleRefreshClick}
                             startIcon={<RefreshIcon/>}>
                         Обновить
@@ -169,6 +172,7 @@ const AdminPanelAboutUs: FC<AboutUsWithExpandedProps> = (props) => {
         </>
     )
 }
+//|| props.about.length !== 0 ? props.about[0]._id === '0' : false
 ////////////////////////////////////////////////////////
 const setInitialData = (props: PropsType) => {
     //debugger

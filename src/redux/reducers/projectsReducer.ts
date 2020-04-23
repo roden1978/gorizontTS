@@ -12,7 +12,8 @@ import {
     SET_PROJECTS_CURRENT_PAGE,
     SET_PROJECTS_ITEM,
     SET_PROJECTS_PHOTOS,
-    SET_URL_TO_PROJECTS_PHOTOS
+    SET_URL_TO_PROJECTS_PHOTOS,
+    SET_PROJECTS_IS_SHOW_SPINNER
 } from "../actions/types"
 import {ProjectsType} from "../../tstypes/projectsTypes"
 import {PhotoType} from "../../tstypes/photosTypes"
@@ -31,7 +32,8 @@ let initialState = {
     albumIdForRedirect: '',
     currentProjectId:'',
     currentPage: 1,
-    pageSize: 10
+    pageSize: 10,
+    isShowSpinner: true
 }
 export type InitialStateType = typeof initialState
 
@@ -124,6 +126,11 @@ const projects_reducer = (state = initialState, action: ProjectsActionsTypes): I
         case SET_PROJECTS_CURRENT_PAGE :{
             return{
                 ...state, currentPage: action.payload
+            }
+        }
+        case SET_PROJECTS_IS_SHOW_SPINNER:{
+            return {
+                ...state, isShowSpinner: action.payload
             }
         }
         default:

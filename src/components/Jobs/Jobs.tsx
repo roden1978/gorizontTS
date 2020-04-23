@@ -34,6 +34,9 @@ const Jobs: FC<PropsType> = (props) => {
     let jobs = props.jobs.map(
         job => <Job key={job._id} {...job} {...props}/>)
 
+    if (jobs.length !== 0)
+        props.setIsShowSpinner(true)
+
     const currentPage = (event: any, page: number) => {
         props.setJobsCurrentPage(page)
         props.setIsAllJobs(true)
@@ -61,9 +64,11 @@ const Jobs: FC<PropsType> = (props) => {
                     spacing={3}
                     className={classes.pos}
                 >
-                    {jobs.length !== 0 ? jobs : <Typography variant="h5" align="center">
-                        Объявления скоро появятся!
-                    </Typography>}
+                    {/*{jobs.length !== 0 ? jobs : <Typography variant="h5" align="center">
+                        Объявления находятся в разработке или что-то пошло не так, попробуйте зайти позже. Приносим свои
+                        извининения.
+                    </Typography>}*/}
+                    {jobs}
 
                 </Grid>
                 <div className={classes.containerCenter}>

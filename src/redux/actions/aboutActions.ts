@@ -1,5 +1,6 @@
 import {mongodbAPI} from '../../api/api'
-import {SET_ABOUT, SET_IS_CHANGED_ABOUT, SET_DEFAULT_ABOUT} from "./types"
+import {SET_ABOUT, SET_IS_CHANGED_ABOUT,
+    SET_DEFAULT_ABOUT, SET_ABOUT_IS_SHOW_SPINNER} from "./types"
 import {AboutType} from "../../tstypes/aboutTypes"
 import {ThunkAction} from "redux-thunk"
 import {AppStateType} from "../store"
@@ -38,6 +39,19 @@ export const setDefaultAbout = (): SetDefaultAboutActionType =>{
         type: SET_DEFAULT_ABOUT
     }
 }
+
+export type SetAboutIsShowSpinner = {
+    type: typeof SET_ABOUT_IS_SHOW_SPINNER
+    payload: boolean
+}
+
+export const setIsShowSpinner = (isShowSpinner: boolean): SetAboutIsShowSpinner =>{
+    return {
+        type: SET_ABOUT_IS_SHOW_SPINNER,
+        payload: isShowSpinner
+    }
+}
+
 type AboutThunkType = ThunkAction<Promise<void>, AppStateType, unknown, AboutActionsType>
 /*Thunk Creators*/
 export const getAbout = (): AboutThunkType => {

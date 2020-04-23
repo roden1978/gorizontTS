@@ -26,13 +26,15 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-const Projects:FC<PropsType> = (props) => {
+const Projects: FC<PropsType> = (props) => {
 
     const classes = useStyles()
 
     let projectItems = props.projects.map(
         project => <Project key={project._id} {...project} {...props}/>
     )
+    if (projectItems.length !== 0)
+        props.setIsShowSpinner(true)
 
     const currentPage = (event: any, page: number) => {
         props.setProjectsCurrentPage(page)
@@ -61,6 +63,10 @@ const Projects:FC<PropsType> = (props) => {
                     spacing={3}
                     className={classes.pos}
                 >
+                    {/*{projectItems.length !== 0 ? projectItems : <Typography variant="h5" align="center">
+                        Проекты находятся в разработке или что-то пошло не так, попробуйте зайти позже. Приносим свои
+                        извининения.
+                    </Typography>}*/}
                     {projectItems}
 
                 </Grid>

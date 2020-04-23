@@ -100,9 +100,13 @@ class NewsContainer extends React.Component<PropsType> {
         }
     }
 
+    componentWillUnmount(): void {
+        this.props.news.length = 0
+    }
+
     render() {
         return (<>
-            {this.props.news && this.props.news.length === 0 && this.props.isShowSpinner ? <Spinner/> : <News {...this.props}/>}
+            {this.props.news.length === 0 && this.props.isShowSpinner ? <Spinner/> : <News {...this.props}/>}
         </>)
     }
 }

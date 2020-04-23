@@ -1,10 +1,12 @@
 import {mongodbAPI} from '../../api/api'
-import {SET_CONTACTS, SET_IS_CHANGED_CONTACTS, SET_DEFAULT_CONTACTS} from "./types"
+import {SET_CONTACTS, SET_IS_CHANGED_CONTACTS,
+    SET_DEFAULT_CONTACTS, SET_CONTACTS_IS_SHOW_SPINNER} from "./types"
 import {ContactsType} from "../../tstypes/contactsTypes"
 import {ThunkAction} from "redux-thunk"
 import {AppStateType} from "../store"
 
-export type ContactsActionsType = SetContactsActionType | SetIsChangedContactsActionType | SetDefaultContactsActionType
+export type ContactsActionsType = SetContactsActionType | SetIsChangedContactsActionType |
+    SetDefaultContactsActionType | SetContactsIsShowSpinner
 
 export type SetContactsActionType = {
     type: typeof SET_CONTACTS
@@ -36,6 +38,19 @@ export const setDefaultContacts = (): SetDefaultContactsActionType => {
         type: SET_DEFAULT_CONTACTS
     }
 }
+
+export type SetContactsIsShowSpinner = {
+    type: typeof SET_CONTACTS_IS_SHOW_SPINNER
+    payload: boolean
+}
+
+export const setIsShowSpinner = (isShowSpinner: boolean): SetContactsIsShowSpinner =>{
+    return {
+        type: SET_CONTACTS_IS_SHOW_SPINNER,
+        payload: isShowSpinner
+    }
+}
+
 export type ContactsThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ContactsActionsType>
 /*Thunk Creators*/
 export const getContacts = (): ContactsThunkType => {

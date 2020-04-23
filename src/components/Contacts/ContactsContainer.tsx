@@ -1,7 +1,7 @@
 import React from 'react'
 import {
     getContacts, createContacts, updateContacts, setIsChangedContacts,
-    setDefaultContacts
+    setDefaultContacts, setIsShowSpinner
 } from '../../redux/actions/contactsActions'
 import Contacts from "./Contacts"
 import {connect} from "react-redux"
@@ -12,7 +12,8 @@ import {ContactsType} from "../../tstypes/contactsTypes"
 type MapStateToPropsType = {
     contacts: Array<ContactsType>
     isChangedContacts: boolean
-    adminMode: boolean
+    adminMode: boolean,
+    isShowSpinner: boolean
 }
 
 type MapDispatchToPropsType = {
@@ -28,6 +29,7 @@ type MapDispatchToPropsType = {
                      phoneOwner05: string, phone05: string) => void
     setIsChangedContacts: (isChangedContacts: boolean) => void
     setDefaultContacts: () => void
+    setIsShowSpinner: (isShowSpinner: boolean) => void
 }
 
 type OwnPropsType = {
@@ -41,6 +43,9 @@ class ContactsContainer extends React.Component<PropsType> {
 
     componentDidMount() {
         this.props.getContacts()
+        setTimeout(() => {
+            this.props.setIsShowSpinner(false)
+        }, 3000)
     }
 
     componentDidUpdate(prevProps: PropsType, prevState: PrevStateType) {
@@ -53,11 +58,15 @@ class ContactsContainer extends React.Component<PropsType> {
         }
     }
 
+    componentWillUnmount(): void {
+        this.props.contacts.length = 0
+    }
+
     render() {
         return (
             <>
-                {!this.props.contacts && this.props.contacts!.length === 0 ? <Spinner/> : <Contacts {...this.props} />}
-
+                {this.props.contacts.length === 0 && this.props.isShowSpinner ? <Spinner/> :
+                    <Contacts {...this.props} />}
             </>
         )
     }
@@ -69,7 +78,8 @@ let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
         contacts: state.contacts.contacts,
         isChangedContacts: state.contacts.isChangedContacts,
-        adminMode: state.auth.adminMode
+        adminMode: state.auth.adminMode,
+        isShowSpinner: state.contacts.isShowSpinner
     }
 }
 
@@ -78,5 +88,5 @@ let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
 * в свою очередь возвращает нам фукцию во вторых скобках*/
 export default connect<MapStateToPropsType, MapDispatchToPropsType, OwnPropsType, AppStateType>(mapStateToProps, {
     getContacts, createContacts, updateContacts,
-    setIsChangedContacts, setDefaultContacts
+    setIsChangedContacts, setDefaultContacts, setIsShowSpinner
 })(ContactsContainer)

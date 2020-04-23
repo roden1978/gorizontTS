@@ -78,6 +78,10 @@ class JobsContainer extends React.Component<PropsType> {
         }
     }
 
+    componentWillUnmount(): void {
+        this.props.jobs.length = 0
+    }
+
     render() {
         return (
             <>
