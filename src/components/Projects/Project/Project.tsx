@@ -107,7 +107,6 @@ type InitialDataType = typeof initialData
 type ProjectPropsWithExpandedPropsType = ProjectPropsType & UseStateExpandedProps
 
 const Project: FC<ProjectPropsType> = (props) => {
-    //debugger
     const classes = useStyles()
     const history = useHistory()
     const [expanded, setExpanded] = React.useState(false)
@@ -118,7 +117,7 @@ const Project: FC<ProjectPropsType> = (props) => {
         props.getId('')
     }
 
-    const photos = props.photosWithUrl.filter((photo: PhotoType) => photo.albumId === props.albumId)
+    let photos = props.photosWithUrl.filter((photo: PhotoType) => photo.albumId === props.albumId)
     photos.length = 4
 
     const expandOver = () => {
@@ -240,7 +239,6 @@ const Project: FC<ProjectPropsType> = (props) => {
         </Grid>
     )
 }
-// && !props.adminMode
 export default Project
 
 const AdminPanelProjects: FC<ProjectPropsType & ExpandOverType> = (props) => {
@@ -264,7 +262,6 @@ const AdminPanelProjects: FC<ProjectPropsType & ExpandOverType> = (props) => {
     }
 
     const handleEditExpandClick = () => {
-        //props.setProjectsCount(props.count)
         setExpandedEdit(!expandedEdit)
         if (!expandedEdit) {
             props.setLoadAlbums(true)
@@ -278,7 +275,6 @@ const AdminPanelProjects: FC<ProjectPropsType & ExpandOverType> = (props) => {
     }
 
     const handleDeleteExpandClick = () => {
-        //props.setProjectsCount(props.projects.length)
         setExpandedDelete(!expandedDelete)
         if (!expandedDelete) {
             props.getId(props._id)
@@ -301,7 +297,7 @@ const AdminPanelProjects: FC<ProjectPropsType & ExpandOverType> = (props) => {
         if (position > 0) {
             id = values.albumId.slice(0, position)
             title = values.albumId.slice(position + 1)
-            values.albumId = id
+            values.albumId = id.trim()
             values.albumName = title.trim()
         }
 

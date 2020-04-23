@@ -32,7 +32,7 @@ export const useStyles = makeStyles(theme => ({
         paddingTop: '52.6%', // 16:9
     },
     table: {
-        minWidth: 200
+        minWidth: 300,
     },
     adminPanel: {
         border: '2px solid grey',

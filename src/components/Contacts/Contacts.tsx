@@ -58,8 +58,8 @@ const Contacts: FC<PropsType> = (props) => {
                                     <Card>
                                         <CardHeader/>
                                         <CardContent>
-                                            <TableContainer component={Paper}>
-                                                <Table className={classes.table} aria-label="simple table">
+                                            <TableContainer className={classes.table} component={Paper}>
+                                                <Table  aria-label="simple table">
                                                     <TableBody>
                                                         <TableRow>
                                                             <TableCell align="right"
@@ -155,7 +155,7 @@ const Contacts: FC<PropsType> = (props) => {
         </div>
     )
 }
-
+//className={classes.table}
 export default Contacts
 
 const AdminPanelContacts: FC<ContactsWithExpandedPropsType> = (props) => {
@@ -188,7 +188,6 @@ const AdminPanelContacts: FC<ContactsWithExpandedPropsType> = (props) => {
 
     const showResults = (values: ContactsType) => {
         //     window.alert(`You submitted:\n\n${JSON.stringify(values, null, 2)}`)
-        //props.saveNews(JSON.stringify(values, null, 2))
 
 
         if (expandedEdit) {

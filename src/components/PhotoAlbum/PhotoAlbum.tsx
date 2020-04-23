@@ -15,7 +15,6 @@ import {Grow} from "@material-ui/core";
 const PhotoAlbum:FC<PropsType> = (props) => {
 
     const classes = useStyles()
-debugger
     return (
         <div className={classes.root}>
 
