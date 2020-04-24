@@ -1,10 +1,8 @@
 import React from 'react'
 import {
-    getJobs, getAllJobs, updateJob, createJob, deleteJob,
-    setChangeJobsItem, setCurrentJobsId, setIsAllJobs, setJobsCount,
-    setJobsItem, setDefaultJob, setJobsCurrentPage, getJobsCount,
-    setIsShowSpinner
+    getJobs, getAllJobs, updateJob, createJob, deleteJob,getJobsCount
 } from '../../redux/actions/jobsActions'
+import {jobsActions} from "../../redux/actions/jobsActions";
 import Jobs from "./Jobs"
 import {connect} from "react-redux"
 import Spinner from "../../common/Spinner"
@@ -107,8 +105,13 @@ let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
 }
 
 export default connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps, {
-    getJobs, getAllJobs, updateJob, createJob, deleteJob,
-    setChangeJobsItem, setCurrentJobsId, setIsAllJobs,
-    setJobsCount, setJobsItem, setDefaultJob, setJobsCurrentPage,
-    getJobsCount, setIsShowSpinner
+    getJobs, getAllJobs, updateJob, createJob, deleteJob,getJobsCount,
+    setChangeJobsItem: jobsActions.setChangeJobsItem,
+    setCurrentJobsId: jobsActions.setCurrentJobsId,
+    setIsAllJobs: jobsActions.setIsAllJobs,
+    setJobsCount: jobsActions.setJobsCount,
+    setJobsItem: jobsActions.setJobsItem,
+    setDefaultJob: jobsActions.setDefaultJob,
+    setJobsCurrentPage: jobsActions.setJobsCurrentPage,
+    setIsShowSpinner: jobsActions.setIsShowSpinner
 })(JobsContainer)

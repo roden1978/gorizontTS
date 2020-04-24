@@ -1,133 +1,79 @@
 import {mongodbAPI} from '../../api/api'
-import {
-    CHANGE_JOBS_ITEM,
-    IS_ALL_JOBS,
-    SET_CURRENT_JOBS_ID,
-    SET_DEFAULT_JOB,
-    SET_JOB_IS_SHOW_SPINNER,
-    SET_JOBS,
-    SET_JOBS_COUNT,
-    SET_JOBS_CURRENT_PAGE,
-    SET_JOBS_ITEM
-} from "./types"
 import {JobType} from "../../tstypes/jobsTypes"
 import {ThunkAction} from "redux-thunk"
-import {AppStateType} from "../store"
+import {ActionsTypes, AppStateType} from "../store"
 
-type JobsActionType = SetJobsActionType | SetIsAllJobsActionType | SetChangeJobsItemActionType |
-    SetDefaultJobActionType | SetJobsItemActionType | SetCurrentJobsIdActionType |
-    SetJobsCountActionType
-
-export type SetJobsActionType = {
-    type: typeof SET_JOBS
-    payload: Array<JobType>
-}
-/*Создаем объекты action с обязательным свойством type*/
-export const setJobs = (jobs: Array<JobType>): SetJobsActionType => {
-    return {
-        type: SET_JOBS,
-        payload: jobs
-    }
-}
-
-export type SetIsAllJobsActionType = {
-    type: typeof IS_ALL_JOBS
-    payload: boolean
-}
-export const setIsAllJobs = (isAllJobs: boolean): SetIsAllJobsActionType => {
-    return {
-        type: IS_ALL_JOBS,
-        payload: isAllJobs
-    }
-}
-
-export type SetChangeJobsItemActionType ={
-    type: typeof CHANGE_JOBS_ITEM
-}
-export const setChangeJobsItem = (): SetChangeJobsItemActionType => {
-    return {
-        type: CHANGE_JOBS_ITEM
-    }
-}
-
-export type SetDefaultJobActionType = {
-    type: typeof SET_DEFAULT_JOB
-}
-export const setDefaultJob = (): SetDefaultJobActionType => {
-    return {
-        type: SET_DEFAULT_JOB
-    }
-}
-
-export type SetJobsItemActionType = {
-    type: typeof SET_JOBS_ITEM
-    payload: boolean
-}
-export const setJobsItem = (isSetJobsItem: boolean): SetJobsItemActionType => {
-    return {
-        type: SET_JOBS_ITEM,
-        payload: isSetJobsItem
-    }
-}
-
-export type SetCurrentJobsIdActionType = {
-    type: typeof SET_CURRENT_JOBS_ID
-    payload: string
-}
-export const setCurrentJobsId = (id: string): SetCurrentJobsIdActionType => {
-    return {
-        type: SET_CURRENT_JOBS_ID,
-        payload: id
-    }
+export type JobsActionType = ActionsTypes<typeof jobsActions>
+export const jobsActions = {
+    setJobs: (jobs: Array<JobType>) => (
+        {
+            type: 'GT/JOB/SET_JOBS',
+            payload: jobs
+        } as const
+    ),
+    setIsAllJobs: (isAllJobs: boolean) => (
+        {
+            type: 'GT/JOB/IS_ALL_JOBS',
+            payload: isAllJobs
+        } as const
+    ),
+    setChangeJobsItem: () => (
+        {
+            type: 'GT/JOB/CHANGE_JOBS_ITEM'
+        } as const
+    ),
+    setDefaultJob: () => (
+        {
+            type: 'GT/JOB/SET_DEFAULT_JOB'
+        } as const
+    ),
+    setJobsItem: (isSetJobsItem: boolean) => (
+        {
+            type: 'GT/JOB/SET_JOBS_ITEM',
+            payload: isSetJobsItem
+        } as const
+    ),
+    setCurrentJobsId: (id: string) => (
+        {
+            type: 'GT/JOB/SET_CURRENT_JOBS_ID',
+            payload: id
+        } as const
+    ),
+    setJobsCount: (count: number) => (
+        {
+            type: 'GT/JOB/SET_JOBS_COUNT',
+            payload: count
+        } as const
+    ),
+    setJobsCurrentPage: (currentPage: number) => (
+        {
+            type: 'GT/JOB/SET_CURRENT_PAGE',
+            payload: currentPage
+        } as const
+    ),
+    setIsShowSpinner: (isShowSpinner: boolean) => (
+        {
+            type: 'GT/JOB/SET_JOB_IS_SHOW_SPINNER',
+            payload: isShowSpinner
+        } as const
+    )
 }
 
-export type SetJobsCountActionType = {
-    type: typeof SET_JOBS_COUNT
-    payload: number
-}
-export const setJobsCount = (count: number): SetJobsCountActionType => {
-    return {
-        type: SET_JOBS_COUNT,
-        payload: count
-    }
-}
 
-export type SetJobsCurrentPage = {
-    type: typeof SET_JOBS_CURRENT_PAGE
-    payload: number
-}
-export const setJobsCurrentPage = (currentPage: number): SetJobsCurrentPage =>{
-    return {
-        type: SET_JOBS_CURRENT_PAGE,
-        payload: currentPage
-    }
-}
-
-export type SetIsShowSpinner = {
-    type: typeof SET_JOB_IS_SHOW_SPINNER
-    payload: boolean
-}
-
-export const setIsShowSpinner = (isShowSpinner: boolean): SetIsShowSpinner =>{
-    return {
-        type: SET_JOB_IS_SHOW_SPINNER,
-        payload: isShowSpinner
-    }
-}
 export type JobsThunkType = ThunkAction<Promise<void>, AppStateType, unknown, JobsActionType>
 /*Thunk Creators*/
 export const getJobs = (): JobsThunkType => {
     return async (dispatch) => {
         const jobs = await mongodbAPI.getJobs()
         if(jobs)
-        dispatch(setJobs(jobs))
+        dispatch(jobsActions.setJobs(jobs))
     }
 }
 export const getAllJobs = (currentPage: number, pageSize: number): JobsThunkType => {
     return async (dispatch) => {
         const jobs = await mongodbAPI.getAllJobs(currentPage, pageSize)
         if(jobs)
-        dispatch(setJobs(jobs))
+        dispatch(jobsActions.setJobs(jobs))
     }
 }
 
@@ -139,7 +85,7 @@ export const createJob = (company: string, title: string, description:string, pr
             email, phone, status
         })
         if (data.resultCode === 0) {
-            dispatch(setIsAllJobs(true))
+            dispatch(jobsActions.setIsAllJobs(true))
         }
     }
 }
@@ -152,7 +98,7 @@ export const updateJob = (_id: string, company: string, title: string, descripti
             email, phone, status, createAt
         })
         if (data.resultCode === 0) {
-            dispatch(setIsAllJobs(true))
+            dispatch(jobsActions.setIsAllJobs(true))
         }
     }
 }
@@ -161,7 +107,7 @@ export const deleteJob = (_id: string): JobsThunkType => {
     return async (dispatch) => {
         const data = await mongodbAPI.deleteJob(_id)
         if (data.resultCode === 0) {
-            dispatch(setIsAllJobs(true))
+            dispatch(jobsActions.setIsAllJobs(true))
         }
     }
 }
@@ -170,7 +116,7 @@ export const getJobsCount = (): JobsThunkType =>{
     return async (dispatch) =>{
         const count = await mongodbAPI.getJobsCount()
         if(count)
-            dispatch(setJobsCount(count))
+            dispatch(jobsActions.setJobsCount(count))
     }
 }
 
