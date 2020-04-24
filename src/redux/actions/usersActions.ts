@@ -1,125 +1,71 @@
 import {mongodbAPI} from '../../api/api'
-import {
-    SET_USERS, CHANGE_USERS_ITEM, SET_USERS_ITEM,
-    SET_CURRENT_USERS_ID, SET_USERS_COUNT, IS_ALL_USERS,
-    SET_DEFAULT_USER, CREATE_USER_SUCCESS, SET_ADMIN_ROOT_COUNT,
-    IS_ADMIN_ROOT_COUNT
-} from "./types"
 import {UsersType} from "../../tstypes/usersTypes"
 import {ThunkAction} from "redux-thunk";
-import {AppStateType} from "../store";
+import {ActionsTypes, AppStateType} from "../store";
 
-export type UsersActionsType = SetUsersActionType | SetAdminRootCountActionType | SetIsAllUsersActionType |
-    SetIsAdminRootCountActionType | SetChangeUsersItemActionType | SetUserItemActionType |
-    SetCurrentUsersIdActionType | SetUsersCountActionType | SetDefaultUserActionType | SetCreateUserSuccessActionType
-
-export type SetUsersActionType = {
-    type: typeof SET_USERS
-    payload: Array<UsersType>
-}
-/*Создаем объект action с обязательным свойством type*/
-export const setUsers = (users: Array<UsersType>): SetUsersActionType => {
-    return {
-        type: SET_USERS,
-        payload: users
-    }
-}
-
-export type SetAdminRootCountActionType = {
-    type: typeof SET_ADMIN_ROOT_COUNT,
-    payload: number
-}
-export const setAdminRootCount = (count: number): SetAdminRootCountActionType => {
-    return {
-        type: SET_ADMIN_ROOT_COUNT,
-        payload: count
-    }
-}
-
-export type SetIsAllUsersActionType = {
-    type: typeof IS_ALL_USERS
-    payload: boolean
-}
-export const setIsAllUsers = (isAllUsers: boolean): SetIsAllUsersActionType =>{
-    return{
-        type: IS_ALL_USERS,
-        payload: isAllUsers
-    }
-}
-
-export type SetIsAdminRootCountActionType = {
-    type: typeof IS_ADMIN_ROOT_COUNT
-    payload: boolean
-}
-export const setIsAdminRootCount = (isAdminRootCount: boolean): SetIsAdminRootCountActionType =>{
-    return{
-        type: IS_ADMIN_ROOT_COUNT,
-        payload: isAdminRootCount
-    }
-}
-
-export type SetChangeUsersItemActionType = {
-    type: typeof CHANGE_USERS_ITEM
-}
-export const setChangeUsersItem = (): SetChangeUsersItemActionType =>{
-    return{
-        type: CHANGE_USERS_ITEM
-    }
-}
-
-export type SetUserItemActionType = {
-    type: typeof SET_USERS_ITEM
-    payload: boolean
-}
-
-export const setUserItem = (isSetUserItem: boolean): SetUserItemActionType =>{
-    return {
-        type: SET_USERS_ITEM,
-        payload: isSetUserItem
-    }
+export type UsersActionsType = ActionsTypes<typeof userActions>
+export const userActions = {
+    setUsers: (users: Array<UsersType>) => (
+        {
+            type: 'GT/US/SET_USERS',
+            payload: users
+        } as const
+    ),
+    setAdminRootCount: (count: number) => (
+        {
+            type: 'GT/US/SET_ADMIN_ROOT_COUNT',
+            payload: count
+        } as const
+    ),
+    setIsAllUsers: (isAllUsers: boolean) => (
+        {
+            type: 'GT/US/IS_ALL_USERS',
+            payload: isAllUsers
+        } as const
+    ),
+    setIsAdminRootCount: (isAdminRootCount: boolean) => (
+        {
+            type: 'GT/US/IS_ADMIN_ROOT_COUNT',
+            payload: isAdminRootCount
+        } as const
+    ),
+    setChangeUsersItem: () => (
+        {
+            type: 'GT/US/CHANGE_USERS_ITEM'
+        } as const
+    ),
+    setUserItem: (isSetUserItem: boolean) => (
+        {
+            type: 'GT/US/SET_USERS_ITEM',
+            payload: isSetUserItem
+        } as const
+    ),
+    setCurrentUsersId: (id: string) => (
+        {
+            type: 'GT/US/SET_CURRENT_USERS_ID',
+            payload: id
+        } as const
+    ),
+    setUsersCount: (count: number) => (
+        {
+            type: 'GT/US/SET_USERS_COUNT',
+            payload: count
+        } as const
+    ),
+    setDefaultUser: () => (
+        {
+            type: 'GT/US/SET_DEFAULT_USER'
+        } as const
+    ),
+    setCreateUserSuccess: (success: boolean) => (
+        {
+            type: 'GT/US/CREATE_USER_SUCCESS',
+            payload: success
+        } as const
+    )
 }
 
-export type SetCurrentUsersIdActionType = {
-    type: typeof SET_CURRENT_USERS_ID
-    payload: string
-}
-export const setCurrentUsersId = (id: string): SetCurrentUsersIdActionType =>{
-    return {
-        type: SET_CURRENT_USERS_ID,
-        payload: id
-    }
-}
 
-export type SetUsersCountActionType = {
-    type: typeof SET_USERS_COUNT
-    payload: number
-}
-export const setUsersCount = (count: number): SetUsersCountActionType =>{
-    return {
-        type: SET_USERS_COUNT,
-        payload: count
-    }
-}
-
-export type SetDefaultUserActionType = {
-    type: typeof SET_DEFAULT_USER
-}
-export const setDefaultUser = (): SetDefaultUserActionType =>{
-    return{
-        type: SET_DEFAULT_USER
-    }
-}
-
-export type SetCreateUserSuccessActionType = {
-    type: typeof CREATE_USER_SUCCESS
-    payload: boolean
-}
-export const setCreateUserSuccess = (success: boolean): SetCreateUserSuccessActionType =>{
-    return {
-        type: CREATE_USER_SUCCESS,
-        payload: success
-    }
-}
 
 export type UsersThunkActionType = ThunkAction<Promise<void>, AppStateType, unknown, UsersActionsType>
 
@@ -128,7 +74,7 @@ export const getUsers = (): UsersThunkActionType => {
     return async (dispatch) => {
         const users = await mongodbAPI.getUsers()
         if(users)
-        dispatch(setUsers(users))
+        dispatch(userActions.setUsers(users))
     }
 }
 
@@ -136,7 +82,7 @@ export const getAdminRootCount = (): UsersThunkActionType =>{
     return async (dispatch) => {
         const count = await mongodbAPI.getAdminRootCount()
         if(count)
-        dispatch(setAdminRootCount(count))
+        dispatch(userActions.setAdminRootCount(count))
     }
 }
 
@@ -150,7 +96,6 @@ export const createUser = (firstName: string, lastName: string, email: string,
             alert(`ОШИБКА!!!: Пользователь ${email} уже есть в БД!`)
         }
         else{
-            //dispatch(setCreateUserSuccess(true))
             alert(`Пользователь ${email} успешно добавлен в БД!`)
             dispatch(getUsers())
         }

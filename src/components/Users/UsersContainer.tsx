@@ -1,19 +1,7 @@
 import React, {ComponentType} from 'react'
 import {
-    getUsers,
-    setUserItem,
-    setChangeUsersItem,
-    setCurrentUsersId,
-    createUser,
-    updateUser,
-    deleteUser,
-    setIsAllUsers,
-    setUsersCount,
-    setDefaultUser,
-    setCreateUserSuccess,
-    getAdminRootCount,
-    setIsAdminRootCount,
-    setAdminRootCount
+    getUsers, createUser, updateUser,
+    deleteUser, getAdminRootCount, userActions
 } from '../../redux/actions/usersActions'
 import Users from "./Users"
 import {connect} from "react-redux"
@@ -90,8 +78,6 @@ class UsersContainer extends React.Component<PropsType> {
     }
 }
 
-/*функция принимает state созданный в redux при помощи reducers
-* и возвращает требуемые нам данные из state*/
 let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
         users: state.users.users,
@@ -106,23 +92,17 @@ let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
         isAdminRootCount: state.users.isAdminRootCount
     }
 }
-/*Создаем контейнерную кмпоненту MyNewsContainer*/
-/*Двойные скобки обозначют что мы вызвали фукцию connect, а она
-* в свою очередь возвращает нам фукцию во вторых скобках*/
 export default compose<ComponentType>(connect<MapStateToPropsType, MapDispatchToPropsType,{}, AppStateType>(mapStateToProps,
     {
-        getUsers,
-        setUserItem,
-        setChangeUsersItem,
-        setCurrentUsersId,
-        createUser,
-        updateUser,
-        deleteUser,
-        setIsAllUsers,
-        setUsersCount,
-        setDefaultUser,
-        setCreateUserSuccess,
-        getAdminRootCount,
-        setIsAdminRootCount,
-        setAdminRootCount
+        getUsers, createUser, updateUser,
+        deleteUser, getAdminRootCount,
+        setUserItem: userActions.setUserItem,
+        setChangeUsersItem: userActions.setChangeUsersItem,
+        setCurrentUsersId: userActions.setCurrentUsersId,
+        setIsAllUsers: userActions.setIsAllUsers,
+        setUsersCount: userActions.setUsersCount,
+        setDefaultUser: userActions.setDefaultUser,
+        setCreateUserSuccess: userActions.setCreateUserSuccess,
+        setIsAdminRootCount: userActions.setIsAdminRootCount,
+        setAdminRootCount: userActions.setAdminRootCount
     }), withAuthRedirect)(UsersContainer)

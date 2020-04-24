@@ -1,9 +1,3 @@
-import {
-    SET_USERS, CHANGE_USERS_ITEM, SET_USERS_ITEM,
-    SET_CURRENT_USERS_ID, SET_USERS_COUNT, IS_ALL_USERS,
-    CREATE_USER_SUCCESS, SET_DEFAULT_USER, SET_ADMIN_ROOT_COUNT,
-    IS_ADMIN_ROOT_COUNT
-} from "../actions/types"
 import {UsersType} from "../../tstypes/usersTypes"
 import {UsersActionsType} from "../actions/usersActions";
 
@@ -22,55 +16,55 @@ export type InitialStateType = typeof initialState
 const users_reducer = (state = initialState, action: UsersActionsType):InitialStateType => {
 
     switch (action.type) {
-        case SET_USERS: {
+        case "GT/US/SET_USERS": {
             return {
                 ...state, users: action.payload
             }
         }
-        case  SET_USERS_ITEM:{
+        case  "GT/US/SET_USERS_ITEM":{
             return {
                 ...state, isGetUserItem: action.payload
             }
         }
-        case  IS_ALL_USERS:{
+        case  "GT/US/IS_ALL_USERS":{
             return {
                 ...state, isAllUsers: action.payload
             }
         }
-        case  IS_ADMIN_ROOT_COUNT:{
+        case  "GT/US/IS_ADMIN_ROOT_COUNT":{
             return {
                 ...state, isAdminRootCount: action.payload
             }
         }
-        case CHANGE_USERS_ITEM:{
+        case "GT/US/CHANGE_USERS_ITEM":{
             const usersItem  = state.users.find((user: UsersType) =>user._id === state.currentUserId)
             return {
                 ...state, users: [usersItem as UsersType]
             }
         }
-        case SET_CURRENT_USERS_ID :{
+        case "GT/US/SET_CURRENT_USERS_ID" :{
             return{
                 ...state, currentUserId: action.payload
             }
         }
-        case SET_USERS_COUNT :{
+        case "GT/US/SET_USERS_COUNT" :{
             return{
                 ...state, usersCount: action.payload
             }
         }
-        case SET_ADMIN_ROOT_COUNT :{
+        case "GT/US/SET_ADMIN_ROOT_COUNT" :{
             return{
                 ...state, adminRootCount: action.payload
             }
         }
-        case SET_DEFAULT_USER :{
+        case "GT/US/SET_DEFAULT_USER" :{
             return{
                 ...state, users: [{_id: '0', firstName: 'Создайте первого пользователя',
                     lastName: '!!!ВНИМАНИЕ!!! Если созданный пользователь не отобразился обновите страницу.',
                     email: '', password: '', root: false}]
             }
         }
-        case CREATE_USER_SUCCESS:{
+        case "GT/US/CREATE_USER_SUCCESS":{
             return {
                 ...state, createUserSuccess: action.payload
             }
