@@ -1,6 +1,5 @@
-import {SET_ABOUT, SET_IS_CHANGED_ABOUT,
-    SET_DEFAULT_ABOUT, SET_ABOUT_IS_SHOW_SPINNER} from "../actions/types"
 import {AboutType} from "../../tstypes/aboutTypes"
+import {AboutActionsType} from "../actions/aboutActions";
 
 let initialState = {
     about: [] as Array<AboutType>,
@@ -9,20 +8,20 @@ let initialState = {
 }
 
 export type InitialStateType = typeof initialState
-const about_reducer = (state = initialState, action: any): InitialStateType => {
+const about_reducer = (state = initialState, action: AboutActionsType): InitialStateType => {
 
     switch (action.type) {
-        case SET_ABOUT: {
+        case "GT/ABOUT/SET_ABOUT": {
             return {
                 ...state, about: action.payload
             }
         }
-        case SET_IS_CHANGED_ABOUT: {
+        case "GT/ABOUT/SET_IS_CHANGED_ABOUT": {
             return {
                 ...state, isChangedAbout: action.payload
             }
         }
-        case SET_DEFAULT_ABOUT: {
+        case "GT/ABOUT/SET_DEFAULT_ABOUT": {
             return {
                 ...state, about: [{
                     _id: '0', text: 'Страница о компании ' +
@@ -30,7 +29,7 @@ const about_reducer = (state = initialState, action: any): InitialStateType => {
                 }]
             }
         }
-        case SET_ABOUT_IS_SHOW_SPINNER:{
+        case "GT/ABOUT/SET_ABOUT_IS_SHOW_SPINNER":{
             return {
                 ...state, isShowSpinner: action.payload
             }

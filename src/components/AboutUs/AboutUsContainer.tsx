@@ -1,8 +1,6 @@
 import React from 'react'
 import {
-    getAbout, setIsChangedAbout,
-    updateAbout, setDefaultAbout,
-    createAbout, setIsShowSpinner
+    getAbout, updateAbout, createAbout, aboutActions
 } from '../../redux/actions/aboutActions'
 import AboutUs from "./AboutUs"
 import {connect} from "react-redux"
@@ -25,6 +23,7 @@ type MapDispatchToPropsType = {
     setDefaultAbout: () => void
     setIsShowSpinner: (isShowSpinner: boolean) => void
 }
+
 export type PropsType = MapStateToPropsType & MapDispatchToPropsType
 type PrevPropsType = MapStateToPropsType
 
@@ -62,8 +61,6 @@ class AboutUsContainer extends React.Component<PropsType> {
     }
 }
 
-/*функция принимает state созданный в redux при помощи reducers
-* и возвращает требуемые нам данные из state*/
 let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
         about: state.about.about,
@@ -73,12 +70,10 @@ let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     }
 }
 
-/*Создаем контейнерную кмпоненту MyNewsContainer*/
-/*Двойные скобки обозначют что мы вызвали фукцию connect, а она
-* в свою очередь возвращает нам фукцию во вторых скобках*/
 export default connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps, {
-    getAbout, setIsChangedAbout,
-    createAbout, updateAbout,
-    setDefaultAbout, setIsShowSpinner
+    getAbout, createAbout, updateAbout,
+    setIsChangedAbout: aboutActions.setIsChangedAbout,
+    setDefaultAbout: aboutActions.setDefaultAbout,
+    setIsShowSpinner: aboutActions.setIsShowSpinner
 })(AboutUsContainer)
 
