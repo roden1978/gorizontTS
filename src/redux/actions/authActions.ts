@@ -1,36 +1,26 @@
 import {mongodbAPI} from '../../api/api'
-import {SET_ADMIN_MODE, SET_IS_USERS} from "./types"
 import {FormAction, stopSubmit} from "redux-form"
 import {ThunkAction} from "redux-thunk"
-import {AppStateType} from "../store"
+import {ActionsTypes, AppStateType} from "../store"
 
-type AuthActionsType = SetAdminModeActionType | SetIsUsersActionType | FormAction
-
-export type SetAdminModeActionType = {
-    type: typeof SET_ADMIN_MODE
-    payload: boolean
-    adminRoot: boolean
-}
-export const setAdminMode = (adminMode: boolean, adminRoot: boolean): SetAdminModeActionType => {
-    return {
-        type: SET_ADMIN_MODE,
-        payload: adminMode,
-        adminRoot: adminRoot
-    }
-}
-
-export type SetIsUsersActionType = {
-    type: typeof SET_IS_USERS
-    payload: boolean
-}
-export const setIsUsers = (isUsers: boolean): SetIsUsersActionType => {
-    return {
-        type: SET_IS_USERS,
-        payload: isUsers
-    }
+export type AuthActionsType = ActionsTypes<typeof authActions>
+export const authActions = {
+    setAdminMode:(adminMode: boolean, adminRoot: boolean) => (
+        {
+            type: 'GT/AUTH/SET_ADMIN_MODE',
+            payload: adminMode,
+            adminRoot: adminRoot
+        } as const
+    ),
+    setIsUsers:(isUsers: boolean) => (
+        {
+            type: 'GT/US/SET_IS_USERS',
+            payload: isUsers
+        } as const
+    )
 }
 
-type AuthThunkType = ThunkAction<Promise<void>, AppStateType, unknown, AuthActionsType>
+type AuthThunkType = ThunkAction<Promise<void>, AppStateType, unknown, AuthActionsType | FormAction>
 
 export const checkUser = (email: string, password: string, newUsers: boolean): AuthThunkType => {
     return async (dispatch) => {
@@ -39,7 +29,7 @@ export const checkUser = (email: string, password: string, newUsers: boolean): A
             if (!data.root && newUsers)
                 dispatch(stopSubmit('LoginForm', {email: "У вас нет прав на администрирование пользователей"}))
             else
-                dispatch(setAdminMode(true, data.root))
+                dispatch(authActions.setAdminMode(true, data.root))
         } else {
             dispatch(stopSubmit('LoginForm', {password: "Не верный логин или пароль"}))
         }

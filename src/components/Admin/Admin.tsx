@@ -1,6 +1,6 @@
 import React, {FC} from "react"
 import {useStyles} from "./AdminStyles"
-import {checkUser, setIsUsers} from "../../redux/actions/authActions"
+import {checkUser, authActions} from "../../redux/actions/authActions"
 import {connect} from "react-redux"
 import {Redirect} from "react-router-dom"
 import Button from "@material-ui/core/Button"
@@ -54,7 +54,7 @@ let mapStateToProps = (state: AppStateType) => {
 }
 //checkUser={this.props.checkUser} setIsUsers={this.props.setIsUsers}
 
-export default connect(mapStateToProps, {checkUser, setIsUsers})(Admin)
+export default connect(mapStateToProps, {checkUser, setIsUsers: authActions.setIsUsers})(Admin)
 
 export const Login:FC<PropsType> = (props) => {
     //debugger

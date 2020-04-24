@@ -1,4 +1,4 @@
-import {SET_ADMIN_MODE, SET_IS_USERS} from "../actions/types"
+import {AuthActionsType} from "../actions/authActions";
 
 let initialState = {
     isAuthorized: false,
@@ -9,15 +9,15 @@ let initialState = {
 
 export type InitialStateType = typeof initialState
 
-const auth_reducer = (state = initialState, action: any): InitialStateType => {
+const auth_reducer = (state = initialState, action: AuthActionsType): InitialStateType => {
 
     switch (action.type) {
-        case SET_ADMIN_MODE: {
+        case "GT/AUTH/SET_ADMIN_MODE": {
             return {
                 ...state, adminMode: action.payload, adminRoot: action.adminRoot
             }
         }
-        case SET_IS_USERS: {
+        case "GT/US/SET_IS_USERS": {
             return {
                 ...state, isUsers: action.payload
             }
