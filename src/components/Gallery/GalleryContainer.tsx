@@ -1,5 +1,5 @@
 import React from 'react'
-import {getPhotosets, getAlbumsWithUrl, setIsShowSpinner} from '../../redux/actions/photosActions'
+import {getPhotosets, getAlbumsWithUrl, photosActions} from '../../redux/actions/photosActions'
 import {connect} from "react-redux"
 import Gallery from "./Gallery"
 import Spinner from "../../common/Spinner"
@@ -59,8 +59,6 @@ class GalleryContainer extends React.Component<PropsType> {
     }
 }
 
-/*функция принимает state созданный в redux при помощи reducers
-* и возвращает требуемые нам данные из state*/
 let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
         sets: state.photos.sets,
@@ -69,8 +67,6 @@ let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     }
 }
 
-/*Создаем контейнерную кмпоненту MyNewsContainer*/
-/*Двойные скобки обозначют что мы вызвали фукцию connect, а она
-* в свою очередь возвращает нам фукцию во вторых скобках*/
 export default connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps,
-    {getPhotosets, getAlbumsWithUrl, setIsShowSpinner})(GalleryContainer)
+    {getPhotosets, getAlbumsWithUrl,
+        setIsShowSpinner: photosActions.setIsShowSpinner})(GalleryContainer)
