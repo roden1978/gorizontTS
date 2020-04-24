@@ -1,10 +1,5 @@
-import {
-    SET_CONTACTS,
-    SET_IS_CHANGED_CONTACTS,
-    SET_DEFAULT_CONTACTS,
-    SET_CONTACTS_IS_SHOW_SPINNER
-} from "../actions/types"
 import {ContactsType} from "../../tstypes/contactsTypes"
+import {ContactsActionsType} from "../actions/contactsActions";
 
 let initialState = {
     contacts: [] as Array<ContactsType>,
@@ -14,26 +9,20 @@ let initialState = {
 
 export type InitialStateType = typeof initialState
 
-const contacts_reducer = (state = initialState, action: any): InitialStateType => {
+const contacts_reducer = (state = initialState, action: ContactsActionsType): InitialStateType => {
 
     switch (action.type) {
-        case SET_CONTACTS: {
-            /*копия МАССИВОВ в КВАДРАТНЫХ СКОБКАХ
-            * копия  ПРИМИТИВОВ в ФИГУРНЫХ СКОБКАХ
-            * копия ОБЪЕКТОВ И ПОДОБЪЕКТОВ в ФИГУРНЫХ СКОБКАХ*/
+        case "GT/CS/SET_CONTACTS": {
             return {
                 ...state, contacts: action.payload
             }
         }
-        case SET_IS_CHANGED_CONTACTS: {
-            /*копия МАССИВОВ в КВАДРАТНЫХ СКОБКАХ
-            * копия  ПРИМИТИВОВ в ФИГУРНЫХ СКОБКАХ
-            * копия ОБЪЕКТОВ И ПОДОБЪЕКТОВ в ФИГУРНЫХ СКОБКАХ*/
+        case "GT/CS/SET_IS_CHANGED_CONTACTS": {
             return {
                 ...state, isChangedContacts: action.payload
             }
         }
-        case SET_DEFAULT_CONTACTS:{
+        case "GT/CS/SET_DEFAULT_CONTACTS":{
             return {
                 ...state, contacts: [{_id: '0', companyName: 'Создайте контакты',
                     companyAddress: '!!!ВНИМАНИЕ!!! Если страница контактов не отобразилась обновите страницу.',
@@ -42,7 +31,7 @@ const contacts_reducer = (state = initialState, action: any): InitialStateType =
                     phoneOwner04:'', phone04:'', phoneOwner05:'', phone05:''}]
             }
         }
-        case SET_CONTACTS_IS_SHOW_SPINNER:{
+        case "GT/CS/SET_CONTACTS_IS_SHOW_SPINNER":{
             return {
                 ...state, isShowSpinner: action.payload
             }

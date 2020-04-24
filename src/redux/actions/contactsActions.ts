@@ -1,55 +1,35 @@
 import {mongodbAPI} from '../../api/api'
-import {SET_CONTACTS, SET_IS_CHANGED_CONTACTS,
-    SET_DEFAULT_CONTACTS, SET_CONTACTS_IS_SHOW_SPINNER} from "./types"
 import {ContactsType} from "../../tstypes/contactsTypes"
 import {ThunkAction} from "redux-thunk"
-import {AppStateType} from "../store"
+import {ActionsTypes, AppStateType} from "../store"
 
-export type ContactsActionsType = SetContactsActionType | SetIsChangedContactsActionType |
-    SetDefaultContactsActionType | SetContactsIsShowSpinner
-
-export type SetContactsActionType = {
-    type: typeof SET_CONTACTS
-    payload: Array<ContactsType>
-}
-export const setContacts = (contacts: Array<ContactsType>): SetContactsActionType => {
-    return {
-        type: SET_CONTACTS,
-        payload: contacts
-    }
-}
-
-export type SetIsChangedContactsActionType = {
-    type: typeof SET_IS_CHANGED_CONTACTS
-    payload: boolean
-}
-export const setIsChangedContacts = (isChangedContacts: boolean): SetIsChangedContactsActionType => {
-    return {
-        type: SET_IS_CHANGED_CONTACTS,
-        payload: isChangedContacts
-    }
-}
-
-export type SetDefaultContactsActionType = {
-    type: typeof SET_DEFAULT_CONTACTS
-}
-export const setDefaultContacts = (): SetDefaultContactsActionType => {
-    return {
-        type: SET_DEFAULT_CONTACTS
-    }
+export type ContactsActionsType = ActionsTypes<typeof contactsActions>
+export const contactsActions = {
+    setContacts: (contacts: Array<ContactsType>) => (
+        {
+            type: 'GT/CS/SET_CONTACTS',
+            payload: contacts
+        } as const
+    ),
+    setIsChangedContacts: (isChangedContacts: boolean) => (
+        {
+            type: 'GT/CS/SET_IS_CHANGED_CONTACTS',
+            payload: isChangedContacts
+        } as const
+    ),
+    setDefaultContacts: () => (
+        {
+            type: 'GT/CS/SET_DEFAULT_CONTACTS'
+        } as const
+    ),
+    setIsShowSpinner: (isShowSpinner: boolean) => (
+        {
+            type: 'GT/CS/SET_CONTACTS_IS_SHOW_SPINNER',
+            payload: isShowSpinner
+        } as const
+    )
 }
 
-export type SetContactsIsShowSpinner = {
-    type: typeof SET_CONTACTS_IS_SHOW_SPINNER
-    payload: boolean
-}
-
-export const setIsShowSpinner = (isShowSpinner: boolean): SetContactsIsShowSpinner =>{
-    return {
-        type: SET_CONTACTS_IS_SHOW_SPINNER,
-        payload: isShowSpinner
-    }
-}
 
 export type ContactsThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ContactsActionsType>
 /*Thunk Creators*/
@@ -57,14 +37,13 @@ export const getContacts = (): ContactsThunkType => {
     return async (dispatch) => {
         const contacts = await mongodbAPI.getContacts()
         if (contacts)
-            dispatch(setContacts(contacts))
+            dispatch(contactsActions.setContacts(contacts))
     }
 }
 export const createContacts = (companyName: string, companyAddress: string, companyEmail: string, companyPhone: string,
                                phoneOwner01: string, phone01: string, phoneOwner02: string, phone02: string,
                                phoneOwner03: string, phone03: string, phoneOwner04: string, phone04: string,
                                phoneOwner05: string, phone05: string): ContactsThunkType => {
-    //debugger
     return async (dispatch) => {
         const data = await mongodbAPI.createContacts({
             companyName, companyAddress,
@@ -84,7 +63,6 @@ export const updateContacts = (_id: string, companyName: string, companyAddress:
                                phoneOwner01: string, phone01: string, phoneOwner02: string, phone02: string,
                                phoneOwner03: string, phone03: string, phoneOwner04: string, phone04: string,
                                phoneOwner05: string, phone05: string): ContactsThunkType => {
-    //debugger
     return async (dispatch) => {
         const data = await mongodbAPI.updateContacts({
             _id, companyName, companyAddress, companyEmail, companyPhone,

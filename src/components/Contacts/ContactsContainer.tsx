@@ -1,7 +1,6 @@
 import React from 'react'
 import {
-    getContacts, createContacts, updateContacts, setIsChangedContacts,
-    setDefaultContacts, setIsShowSpinner
+    getContacts, createContacts, updateContacts, contactsActions
 } from '../../redux/actions/contactsActions'
 import Contacts from "./Contacts"
 import {connect} from "react-redux"
@@ -72,8 +71,6 @@ class ContactsContainer extends React.Component<PropsType> {
     }
 }
 
-/*функция принимает state созданный в redux при помощи reducers
-* и возвращает требуемые нам данные из state*/
 let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
         contacts: state.contacts.contacts,
@@ -83,10 +80,9 @@ let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     }
 }
 
-/*Создаем контейнерную кмпоненту MyNewsContainer*/
-/*Двойные скобки обозначют что мы вызвали фукцию connect, а она
-* в свою очередь возвращает нам фукцию во вторых скобках*/
 export default connect<MapStateToPropsType, MapDispatchToPropsType, OwnPropsType, AppStateType>(mapStateToProps, {
     getContacts, createContacts, updateContacts,
-    setIsChangedContacts, setDefaultContacts, setIsShowSpinner
+    setIsChangedContacts: contactsActions.setIsChangedContacts,
+    setDefaultContacts: contactsActions.setDefaultContacts,
+    setIsShowSpinner: contactsActions.setIsShowSpinner
 })(ContactsContainer)
