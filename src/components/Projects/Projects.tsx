@@ -58,7 +58,7 @@ const Projects: FC<PropsType> = (props) => {
                 <Grid
                     container
                     direction="row"
-                    justify="space-evenly"
+                    justify="center"
                     alignItems="center"
                     spacing={3}
                     className={classes.pos}

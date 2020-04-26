@@ -50,7 +50,7 @@ export const Theme = createMuiTheme({
         },
         h4: {
             color: 'coral',
-            textShadow: '1px 1px 2px black'
+            textShadow: '2px 2px 4px black'
         }
     },
 });

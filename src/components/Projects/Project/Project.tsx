@@ -81,7 +81,7 @@ export const useStyles = makeStyles(theme => ({
     root: {
         display: 'flex',
         flexWrap: 'wrap',
-        justifyContent: 'space-evenly',
+        justifyContent: 'center',
         overflow: 'hidden',
         backgroundColor: theme.palette.background.paper,
     },

@@ -45,7 +45,7 @@ const Contacts: FC<PropsType> = (props) => {
                 <Grid
                     container
                     direction="row"
-                    justify="space-evenly"
+                    justify="center"
                     alignItems="flex-start"
                     spacing={3}
                     className={classes.pos}
@@ -55,79 +55,65 @@ const Contacts: FC<PropsType> = (props) => {
                             <>
                                 <Grow in={true} style={{transformOrigin: '0 0 0'}}
                                       {...(true ? {timeout: 1000} : {})}>
-                                    <Card>
+                                    <Card >
                                         <CardHeader/>
                                         <CardContent>
                                             <TableContainer className={classes.table} component={Paper}>
                                                 <Table  aria-label="simple table">
                                                     <TableBody>
                                                         <TableRow>
-                                                            <TableCell align="right"
-                                                                       component="th"
-                                                                       scope="row">Наименование</TableCell>
+                                                            <TableCell align="right">Наименование</TableCell>
                                                             <TableCell align="left">{props.contacts.length === 0 ? '' :
                                                                 props.contacts[0].companyName}</TableCell>
                                                         </TableRow>
                                                         <TableRow>
-                                                            <TableCell align="right" component="th"
-                                                                       scope="row">Адрес</TableCell>
-                                                            <TableCell
-                                                                align="left">{props.contacts.length === 0 ? '' : props.contacts[0].companyAddress}</TableCell>
+                                                            <TableCell align="right">Адрес</TableCell>
+                                                            <TableCell align="left">{props.contacts.length === 0 ? '' :
+                                                                props.contacts[0].companyAddress}</TableCell>
                                                         </TableRow>
                                                         <TableRow>
-                                                            <TableCell align="right" component="th" scope="row">Электронная
+                                                            <TableCell align="right">Электронная
                                                                 почта</TableCell>
-                                                            <TableCell
-                                                                align="left">{props.contacts.length === 0 ? '' : props.contacts[0].companyEmail}</TableCell>
+                                                            <TableCell align="left">{props.contacts.length === 0 ? '' :
+                                                                props.contacts[0].companyEmail}</TableCell>
                                                         </TableRow>
                                                         <TableRow>
-                                                            <TableCell align="right" component="th"
-                                                                       scope="row">Телефон</TableCell>
-                                                            <TableCell
-                                                                align="left">{props.contacts.length === 0 ? '' : props.contacts[0].companyPhone}</TableCell>
+                                                            <TableCell align="right">Телефон</TableCell>
+                                                            <TableCell align="left">{props.contacts.length === 0 ? '' :
+                                                                props.contacts[0].companyPhone}</TableCell>
                                                         </TableRow>
                                                         <TableRow>
                                                             {props.contacts.length !== 0 && props.contacts[0].phoneOwner01 !== '' && props.contacts[0].phone01 !== '' ? <>
-                                                                    <TableCell align="right" component="th"
-                                                                               scope="row">{props.contacts[0].phoneOwner01}</TableCell>
-                                                                    <TableCell
-                                                                        align="left">{props.contacts[0].phone01}</TableCell>
+                                                                    <TableCell align="right">{props.contacts[0].phoneOwner01}</TableCell>
+                                                                    <TableCell align="left">{props.contacts[0].phone01}</TableCell>
                                                                 </>
                                                                 : null}
                                                         </TableRow>
                                                         <TableRow>
                                                             {props.contacts.length !== 0 && props.contacts[0].phoneOwner02 !== '' && props.contacts[0].phone02 !== '' ? <>
-                                                                    <TableCell align="right" component="th"
-                                                                               scope="row">{props.contacts[0].phoneOwner02}</TableCell>
-                                                                    <TableCell
-                                                                        align="left">{props.contacts[0].phone02}</TableCell>
+                                                                    <TableCell align="right">{props.contacts[0].phoneOwner02}</TableCell>
+                                                                    <TableCell align="left">{props.contacts[0].phone02}</TableCell>
                                                                 </>
                                                                 : null}
                                                         </TableRow>
                                                         <TableRow>
                                                             {props.contacts.length !== 0 && props.contacts[0].phoneOwner03 !== '' && props.contacts[0].phone03 !== '' ? <>
-                                                                    <TableCell align="right" component="th"
-                                                                               scope="row">{props.contacts[0].phoneOwner03}</TableCell>
-                                                                    <TableCell
-                                                                        align="left">{props.contacts[0].phone03}</TableCell>
+                                                                    <TableCell align="right">{props.contacts[0].phoneOwner03}</TableCell>
+                                                                    <TableCell align="left">{props.contacts[0].phone03}</TableCell>
                                                                 </>
                                                                 : null}
                                                         </TableRow>
                                                         <TableRow>
                                                             {props.contacts.length !== 0 && props.contacts[0].phoneOwner04 !== '' && props.contacts[0].phone04 !== '' ? <>
-                                                                    <TableCell align="right" component="th"
-                                                                               scope="row">{props.contacts[0].phoneOwner04}</TableCell>
-                                                                    <TableCell
-                                                                        align="left">{props.contacts[0].phone04}</TableCell>
+                                                                    <TableCell align="right">{props.contacts[0].phoneOwner04}</TableCell>
+                                                                    <TableCell align="left">{props.contacts[0].phone04}</TableCell>
                                                                 </>
                                                                 : null}
                                                         </TableRow>
                                                         <TableRow>
                                                             {props.contacts.length !== 0 && props.contacts[0].phoneOwner05 !== '' && props.contacts[0].phone05 !== '' ? <>
-                                                                    <TableCell align="right" component="th"
-                                                                               scope="row">{props.contacts[0].phoneOwner05}</TableCell>
-                                                                    <TableCell
-                                                                        align="left">{props.contacts[0].phone05}</TableCell>
+                                                                    <TableCell align="right">{props.contacts[0].phoneOwner05}</TableCell>
+                                                                    <TableCell align="left">{props.contacts[0].phone05}</TableCell>
                                                                 </>
                                                                 : null}
                                                         </TableRow>

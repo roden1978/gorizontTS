@@ -45,7 +45,7 @@ const Gallery: FC<PropsType> = (props) => {
                 </Typography>
                 <Grid container
                       direction="row"
-                      justify="space-evenly"
+                      justify="center"
                       alignItems="center"
                       spacing={3}
                       className={classes.pos}
