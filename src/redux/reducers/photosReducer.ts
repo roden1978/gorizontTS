@@ -10,7 +10,8 @@ let initialState = {
     isClicked: false,
     url: '',
     albumName: '',
-    isShowSpinner: true
+    isShowSpinner: true,
+    currentPhotoIndex: 0
 }
 
 export type InitialStateType = typeof initialState
@@ -63,6 +64,11 @@ const photos_reducer = (state = initialState, action: PhotosActionsType): Initia
         case "GT/PHOTOS/SET_ALBUMS_IS_SHOW_SPINNER": {
             return {
                 ...state, isShowSpinner: action.payload
+            }
+        }
+        case "GT/PHOTOS/SET_CURRENT_PHOTO_INDEX":{
+            return {
+                ...state, currentPhotoIndex: action.payload
             }
         }
         default:

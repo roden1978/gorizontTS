@@ -2,7 +2,7 @@
 .App {
   min-height: 100vh;
   height: 100vh;
-  display: -ms-flexbox;
+  min-height: 100%;  display: -ms-flexbox;
   display: flex;
   -ms-flex-direction: column;
   flex-direction: column;

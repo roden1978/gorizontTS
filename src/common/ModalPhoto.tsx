@@ -16,22 +16,35 @@ const useStyles = makeStyles(theme => ({
         backgroundColor: theme.palette.background.paper,
         border: '2px solid coral',
         boxShadow: theme.shadows[5],
-        padding: theme.spacing(1, 1, 1)
+        padding: theme.spacing(1, 1, 1),
+        display: 'block',
     },
     im: {
         width: '100%',
     },
 }))
 
-const ModalPhoto:FC<PropsType> = (props) => {
+const ModalPhoto: FC<PropsType> = (props) => {
     const classes = useStyles()
     const [open, setOpen] = React.useState(true)
+    const [activeStep, setActiveStep] = React.useState(props.currentPhotoIndex);
+    const maxSteps = props.cards.length;
 
     const handleClose = () => {
         setOpen(false)
         props.changeClicked(false)
     }
 
+    const handlePhotoChange = () => {
+        if (activeStep === maxSteps - 1) {
+            setActiveStep(0);
+            props.setCurrentPhotoIndex(0)
+        } else {
+            setActiveStep((prevActiveStep) => prevActiveStep + 1);
+            props.setCurrentPhotoIndex(activeStep + 1)
+        }
+
+    }
     return (
         <div>
             <Modal
@@ -47,13 +60,14 @@ const ModalPhoto:FC<PropsType> = (props) => {
                 }}
             >
                 <Fade in={open}>
-                        <ButtonBase
-                            className={classes.paper}
-                            onClick={()=>{
-                            handleClose()
-                        }}>
-                            <img className={classes.im} src={props.url} alt=''/>
-                        </ButtonBase>
+                    <ButtonBase
+                        className={classes.paper}
+                        onClick={() => {
+                            handlePhotoChange()
+                        }}
+                    >
+                        <img className={classes.im} src={props.cards[props.currentPhotoIndex].url} alt=''/>
+                    </ButtonBase>
                 </Fade>
             </Modal>
         </div>
@@ -61,3 +75,4 @@ const ModalPhoto:FC<PropsType> = (props) => {
 }
 
 export default ModalPhoto
+

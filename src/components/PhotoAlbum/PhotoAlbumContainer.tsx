@@ -1,5 +1,5 @@
 import React from 'react'
-import {getPhotos, getPhotoWithUrl, changeClicked, getUrl} from '../../redux/actions/photosActions'
+import {getPhotos, getPhotoWithUrl, changeClicked, getUrl, photosActions} from '../../redux/actions/photosActions'
 import {connect} from "react-redux"
 import PhotoAlbum from "./PhotoAlbum"
 import Spinner from "../../common/Spinner"
@@ -12,6 +12,7 @@ type MapStateToPropsType = {
     isClicked: boolean
     url: string
     albumName: string
+    currentPhotoIndex: number
 }
 
 type MapDispatchToPropsType = {
@@ -19,6 +20,7 @@ type MapDispatchToPropsType = {
     getPhotoWithUrl: (id: string, card: PhotoType) => void /////////////
     changeClicked: (click: boolean) => void
     getUrl: (url: string) => void
+    setCurrentPhotoIndex: (currentPhotoIndex: number) => void
 }
 
 type OwnProps = {
@@ -53,7 +55,6 @@ class PhotoAlbumContainer extends React.Component<PropsType & OwnProps> {
     }
 
     render() {
-        //debugger
         return (
             <>
                 {!this.props.cards && this.props.cards!.length === 0 ? <Spinner/> : <PhotoAlbum {...this.props}/>}
@@ -62,28 +63,17 @@ class PhotoAlbumContainer extends React.Component<PropsType & OwnProps> {
     }
 }
 
-/*функция принимает state созданный в redux при помощи reducers
-* и возвращает требуемые нам данные из state*/
 let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
         photos: state.photos.photos,
         cards: state.photos.photosWithUrl,
         isClicked: state.photos.isClicked,
         url: state.photos.url,
-        albumName: state.photos.albumName
+        albumName: state.photos.albumName,
+        currentPhotoIndex: state.photos.currentPhotoIndex
     }
 }
 
-/*Создаем контейнерную кмпоненту MyNewsContainer*/
-/*Двойные скобки обозначют что мы вызвали фукцию connect, а она
-* в свою очередь возвращает нам фукцию во вторых скобках*/
 export default connect<MapStateToPropsType, MapDispatchToPropsType, OwnProps, AppStateType>(mapStateToProps,
-    {getPhotos, getPhotoWithUrl, changeClicked, getUrl})(PhotoAlbumContainer)
-
-/*
- cards={this.props.photosWithUrl}
-                            isClicked={this.props.isClicked}
-                            url={this.props.url}
-                            changeClicked={this.props.changeClicked}
-                            getUrl={this.props.getUrl}
- */
+    {getPhotos, getPhotoWithUrl, changeClicked, getUrl,
+        setCurrentPhotoIndex: photosActions.setCurrentPhotoIndex})(PhotoAlbumContainer)

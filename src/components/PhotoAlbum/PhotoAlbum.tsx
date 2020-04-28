@@ -23,11 +23,12 @@ const PhotoAlbum:FC<PropsType> = (props) => {
                     Фотоальбом: {props.albumName}
                 </Typography>
             <GridList cellHeight={400} className={classes.gridList} >
-                {props.cards.map(card => (
+                {props.cards.map((card, index) => (
                     <GridListTile key={card.url ? card.url : greyder} >
                         <ButtonBase   onClick={()=>{
                             props.changeClicked(true)
                             props.getUrl(card.url!)
+                            props.setCurrentPhotoIndex(index)
                         }}>
                             <Grow in={true} style={{ transformOrigin: '0 0 0' }}
                                   {...(true ? { timeout: 1000 } : {})}>

@@ -54,6 +54,12 @@ export const photosActions = {
             type: 'GT/PHOTOS/SET_ALBUMS_IS_SHOW_SPINNER',
             payload: isShowSpinner
         } as const
+    ),
+    setCurrentPhotoIndex: (currentPhotoIndex: number) =>(
+        {
+            type: 'GT/PHOTOS/SET_CURRENT_PHOTO_INDEX',
+            payload: currentPhotoIndex
+        } as const
     )
 }
 
