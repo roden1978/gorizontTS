@@ -143,7 +143,6 @@ const Project: FC<ProjectPropsType> = (props) => {
 
     if (props.albumIdForRedirect === props.albumId && props.currentProjectId === props._id) {
         props.setAlbumIdForRedirect('')
-        //redirectToAlbum(props.albumIdForRedirect)
         const path = '/album/' + props.albumIdForRedirect
         history.push(path)
     }
@@ -165,7 +164,6 @@ const Project: FC<ProjectPropsType> = (props) => {
                                     <img className={classes.katok} src={samosvalIcon} alt="Работа"/>
                                 </Avatar>
                             }
-
                 />
                 <CardContent>
                     <Typography variant="body1" color="textPrimary" paragraph>
