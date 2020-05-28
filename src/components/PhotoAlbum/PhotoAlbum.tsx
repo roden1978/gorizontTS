@@ -22,7 +22,7 @@ const PhotoAlbum:FC<PropsType> = (props) => {
                 <Typography variant="h4" align="center" gutterBottom>
                     Фотоальбом: {props.albumName}
                 </Typography>
-            <GridList cellHeight={400} className={classes.gridList} >
+            <GridList cellHeight={"auto"} className={classes.gridList} >
                 {props.cards.map((card, index) => (
                     <GridListTile key={card.url ? card.url : greyder} >
                         <ButtonBase   onClick={()=>{

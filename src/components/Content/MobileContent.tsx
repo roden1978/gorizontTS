@@ -11,6 +11,7 @@ import {useStyles} from "./ContentStyles"
 
 type MatchParams = {
     projectId: string
+    albumId: string
 }
 
 type MatchProps = RouteComponentProps<MatchParams>
@@ -27,7 +28,9 @@ const MobileContent = () => {
                     ({match}: MatchProps) => <ProjectsContainer projectId = {match.params.projectId}/>
                 }/>
                 <Route path='/gallery' component={GalleryContainer}/>
-                <Route path='/album/:albumId?' component={PhotoAlbumContainer}/>
+                <Route path='/album/:albumId?' render = {
+                    ({match}: MatchProps) => <PhotoAlbumContainer albumId = {match.params.albumId}/>
+                }/>
                 <Route path='/contacts' render={(props)=><ContactsContainer {...props} mobile = {true}/>}/>
                 <Route path='/about' component={AboutUsContainer}/>
                 <Route path='/job' component={JobsContainer}/>

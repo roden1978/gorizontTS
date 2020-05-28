@@ -37,7 +37,7 @@ class PhotoAlbumContainer extends React.Component<PropsType & OwnProps> {
     }
 
     componentDidUpdate(prevProps: PropsType, prevState: PrevStateType) {
-        //debugger
+
         if (prevProps.photos.length === 0) {
             this.updatePrimary()
         }
